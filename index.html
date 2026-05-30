@@ -56,6 +56,13 @@
         padding: 24px;
       }
 
+      .hero-score-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+      }
+
       h1,
       h2,
       h3,
@@ -762,6 +769,10 @@
           grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
+        .hero-score-grid {
+          grid-template-columns: 1fr;
+        }
+
         .section-title {
           font-size: 18px;
         }
@@ -823,6 +834,16 @@
               <strong>成长币</strong> 和 <strong>通关钥匙</strong>，暑假再按规则兑换奖励。
               目标是让 <strong>数学S题必保</strong>、<strong>语文阅读必保</strong>，其他任务做辅助。
             </p>
+            <div class="hero-score-grid">
+              <div class="score-card">
+                <div class="score-label">当前成长币</div>
+                <div class="score-value" id="coinTotal">0</div>
+              </div>
+              <div class="score-card">
+                <div class="score-label">当前通关钥匙</div>
+                <div class="score-value" id="keyTotal">0</div>
+              </div>
+            </div>
             <div class="tag-row">
               <div class="tag">双轨制：成长币 + 钥匙</div>
               <div class="tag">低难任务有上限</div>
@@ -831,14 +852,6 @@
             </div>
           </div>
           <div class="card hero-side">
-            <div class="score-card">
-              <div class="score-label">当前成长币</div>
-              <div class="score-value" id="coinTotal">0</div>
-            </div>
-            <div class="score-card">
-              <div class="score-label">当前通关钥匙</div>
-              <div class="score-value" id="keyTotal">0</div>
-            </div>
             <div class="score-card cloud-card">
               <div class="score-label">云同步</div>
               <div class="cloud-status">
@@ -1530,7 +1543,9 @@
       };
 
       let supabaseClient = null;
+      let cloudChannel = null;
       let cloudPushTimer = null;
+      let lastCloudUpdatedAt = "";
       let workspaceCode = loadWorkspaceCode();
       let cloudStatus = {
         tone: "wait",
@@ -1644,8 +1659,64 @@
         return workspaceCode;
       }
 
+      function applyIncomingCloudState(payload, updatedAt, message) {
+        state = normalizeState(payload);
+        lastCloudUpdatedAt = updatedAt || new Date().toISOString();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        renderAll();
+        setCloudStatus(
+          "ok",
+          "已开启实时同步",
+          message || `同步码 ${workspaceCode} 最近同步时间：${new Date(lastCloudUpdatedAt).toLocaleString("zh-CN")}`,
+        );
+      }
+
+      function unsubscribeCloudRealtime() {
+        if (!supabaseClient || !cloudChannel) return;
+        supabaseClient.removeChannel(cloudChannel);
+        cloudChannel = null;
+      }
+
+      function subscribeCloudRealtime() {
+        const client = ensureSupabaseClient();
+        if (!client || !workspaceCode) return;
+        unsubscribeCloudRealtime();
+        cloudChannel = client
+          .channel(`reward-game-${workspaceCode}`)
+          .on(
+            "postgres_changes",
+            {
+              event: "*",
+              schema: "public",
+              table: CLOUD_TABLE,
+              filter: `id=eq.${getCloudRowId()}`,
+            },
+            (payload) => {
+              const nextPayload = payload?.new?.payload;
+              const nextUpdatedAt = payload?.new?.updated_at;
+              if (!nextPayload || !nextUpdatedAt) return;
+              if (lastCloudUpdatedAt && nextUpdatedAt <= lastCloudUpdatedAt) return;
+              applyIncomingCloudState(
+                nextPayload,
+                nextUpdatedAt,
+                `同步码 ${workspaceCode} 检测到其他设备更新，已自动刷新。`,
+              );
+            },
+          )
+          .subscribe((status) => {
+            if (status === "SUBSCRIBED") {
+              setCloudStatus(
+                "ok",
+                "已开启实时同步",
+                `同步码 ${workspaceCode} 已连接云端。当前设备改动会自动上传，其他设备会自动刷新。`,
+              );
+            }
+          });
+      }
+
       async function pullCloudState(options = {}) {
         if (!applyWorkspaceCodeFromInput()) return false;
+        subscribeCloudRealtime();
         const client = ensureSupabaseClient();
         if (!client) {
           setCloudStatus("error", "云端未就绪", "Supabase SDK 未加载，或云端配置不完整。");
@@ -1678,12 +1749,9 @@
           return false;
         }
 
-        state = normalizeState(data.payload);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-        renderAll();
-        setCloudStatus(
-          "ok",
-          "已从云端同步",
+        applyIncomingCloudState(
+          data.payload,
+          data.updated_at,
           `同步码 ${workspaceCode} 最近更新时间：${new Date(data.updated_at).toLocaleString("zh-CN")}`,
         );
         return true;
@@ -1718,10 +1786,11 @@
           return false;
         }
 
+        lastCloudUpdatedAt = nowIso;
         setCloudStatus(
           "ok",
-          "已上传到云端",
-          `同步码 ${workspaceCode} 最近上传时间：${new Date(nowIso).toLocaleString("zh-CN")}`,
+          "已上传并保持实时同步",
+          `同步码 ${workspaceCode} 最近上传时间：${new Date(nowIso).toLocaleString("zh-CN")}。其他设备会自动收到更新。`,
         );
         return true;
       }
@@ -2480,6 +2549,7 @@
       dom.resetBtn.addEventListener("click", resetAll);
       dom.copyWorkspaceBtn.addEventListener("click", async () => {
         if (!applyWorkspaceCodeFromInput()) return;
+        subscribeCloudRealtime();
         try {
           await navigator.clipboard.writeText(workspaceCode);
           alert(`已复制家庭同步码：${workspaceCode}`);
@@ -2495,6 +2565,11 @@
       });
       dom.pushCloudBtn.addEventListener("click", async () => {
         await pushCloudState();
+      });
+      dom.workspaceCodeInput.addEventListener("change", async () => {
+        if (!applyWorkspaceCodeFromInput()) return;
+        subscribeCloudRealtime();
+        await pullCloudState({ silent: true });
       });
 
       document.addEventListener("click", (event) => {
@@ -2518,7 +2593,8 @@
         dom.eventDate.value = todayText();
         fillTemplate("math-section");
         renderCloudPanel();
-        setCloudStatus("wait", "正式版已启用", "当前页面会本地保存，并自动尝试同步到云端。");
+        setCloudStatus("wait", "正式版已启用", "当前页面会本地保存，并自动同步到云端。");
+        subscribeCloudRealtime();
         await pullCloudState({ silent: true });
         if (ensureAutoBonuses()) saveState();
         renderAll();

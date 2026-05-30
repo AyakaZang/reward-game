@@ -170,8 +170,27 @@
       }
 
       .hero-main h1 {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
         color: #ffffff;
         text-shadow: 0 2px 10px rgba(70, 87, 194, 0.18);
+      }
+
+      .hero-title-icon {
+        width: 22px;
+        height: 22px;
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.96);
+      }
+
+      .hero-title-icon svg {
+        width: 100%;
+        height: 100%;
+        display: block;
       }
 
       .subtitle {
@@ -181,12 +200,12 @@
       }
 
       .hero-main .hero-total-card {
-        background: rgba(255, 255, 255, 0.22);
-        border-color: rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.16);
+        border-color: rgba(255, 255, 255, 0.22);
         box-shadow:
-          inset 0 -3px 0 rgba(0, 0, 0, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(8px);
+          inset 0 1px 0 rgba(255, 255, 255, 0.18),
+          0 6px 14px rgba(69, 84, 174, 0.08);
+        backdrop-filter: blur(10px);
       }
 
       .hero-main .score-label {
@@ -421,6 +440,10 @@
         margin-bottom: 14px;
       }
 
+      .entry-primary-panel > .panel-head {
+        margin-bottom: 22px;
+      }
+
       .panel-head p {
         color: var(--muted);
         font-size: 14px;
@@ -451,8 +474,8 @@
       }
 
       .ticket-divider {
-        margin: 18px -16px;
-        border-top: 2px dashed rgba(144, 157, 224, 0.55);
+        margin: 18px 10px;
+        border-top: 1px dashed rgba(149, 156, 179, 0.34);
       }
 
       .subsection-title {
@@ -463,6 +486,35 @@
       .field {
         display: grid;
         gap: 6px;
+      }
+
+      .select-shell {
+        position: relative;
+      }
+
+      .select-caret {
+        position: absolute;
+        top: 50%;
+        right: 12px;
+        transform: translateY(-50%);
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-strong);
+        background: rgba(109, 132, 255, 0.12);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.92),
+          0 4px 10px rgba(109, 132, 255, 0.14);
+        pointer-events: none;
+      }
+
+      .select-caret svg {
+        width: 16px;
+        height: 16px;
+        display: block;
       }
 
       .field.wide {
@@ -486,11 +538,48 @@
       select,
       textarea {
         width: 100%;
+        min-width: 0;
         border: 1px solid var(--line);
         border-radius: 18px;
         padding: 12px 14px;
         background: #fff;
         color: var(--text);
+      }
+
+      #templateSelect,
+      #eventDate {
+        border-color: rgba(109, 132, 255, 0.34);
+        background: linear-gradient(180deg, #ffffff 0%, #f3f6ff 100%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.92),
+          0 8px 16px rgba(109, 132, 255, 0.12);
+        font-weight: 700;
+        color: var(--primary-strong);
+      }
+
+      #templateSelect {
+        appearance: none;
+        -webkit-appearance: none;
+        padding-right: 56px;
+        background-image: linear-gradient(180deg, #ffffff 0%, #f3f6ff 100%);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: auto;
+      }
+
+      #eventDate {
+        display: block;
+        appearance: none;
+        -webkit-appearance: none;
+        padding-right: 56px;
+        background-image: linear-gradient(180deg, #ffffff 0%, #f3f6ff 100%);
+        background-repeat: no-repeat;
+        background-position: 0 0;
+        background-size: auto;
+      }
+
+      #eventDate::-webkit-calendar-picker-indicator {
+        opacity: 0;
       }
 
       textarea {
@@ -528,8 +617,13 @@
       }
 
       .btn-secondary {
-        background: linear-gradient(180deg, #fff7ff 0%, #f2f0ff 100%);
-        color: var(--text);
+        background: linear-gradient(180deg, #f0f2f7 0%, #e3e6ee 100%);
+        color: #6f778f;
+        font-weight: 600;
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.95),
+          inset 0 -2px 0 rgba(170, 177, 194, 0.34),
+          0 6px 12px rgba(91, 101, 135, 0.08);
       }
 
       .btn-danger {
@@ -603,6 +697,15 @@
           0 10px 18px rgba(109, 132, 255, 0.12);
       }
 
+      #rewardFilterBar .chip.active {
+        background: linear-gradient(180deg, #90adff 0%, var(--primary) 64%, var(--primary-strong) 100%);
+        color: #fff;
+        border-color: rgba(89, 114, 242, 0.7);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.28),
+          0 12px 20px rgba(109, 132, 255, 0.24);
+      }
+
       .stat-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -610,7 +713,7 @@
       .progress-card {
         border: 1px solid var(--line);
         border-radius: 20px;
-        padding: 14px;
+        padding: 16px;
         background:
           radial-gradient(circle at top right, rgba(255, 198, 225, 0.18), transparent 28%),
           linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
@@ -632,7 +735,15 @@
         display: flex;
         justify-content: space-between;
         gap: 10px;
-        align-items: center;
+        align-items: flex-start;
+      }
+
+      .progress-top > div:first-child {
+        display: flex;
+        min-height: 54px;
+        flex-direction: column;
+        justify-content: center;
+        padding-block: 2px;
       }
 
       .progress-name {
@@ -642,7 +753,8 @@
       .progress-meta {
         color: var(--muted);
         font-size: 13px;
-        margin-top: 4px;
+        margin-top: 6px;
+        line-height: 1.45;
       }
 
       .bar {
@@ -838,7 +950,7 @@
       }
 
       .status.wait {
-        color: var(--warning);
+        color: #7a839f;
       }
 
       .history-list,
@@ -917,12 +1029,14 @@
       }
 
       .week-total {
-        padding: 10px 12px;
-        border-radius: 18px;
-        background: linear-gradient(180deg, #f8f9ff 0%, #eef1ff 100%);
-        color: var(--text);
+        padding: 0 0 2px;
+        border-radius: 0;
+        background: transparent;
+        color: var(--primary-strong);
         font-size: 14px;
         line-height: 1.5;
+        font-weight: 700;
+        text-align: left;
       }
 
       .week-row {
@@ -1187,6 +1301,13 @@
         white-space: nowrap;
       }
 
+      .reward-foot .btn[disabled] {
+        color: #7a839f;
+        cursor: default;
+        transform: none;
+        opacity: 1;
+      }
+
       .panel-balance-stats {
         display: flex;
         align-items: center;
@@ -1315,8 +1436,11 @@
         }
 
         .hero-main .hero-total-card {
-          background: rgba(255, 255, 255, 0.14);
-          border-color: rgba(255, 255, 255, 0.18);
+          background: rgba(255, 255, 255, 0.16);
+          border-color: rgba(255, 255, 255, 0.22);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.18),
+            0 6px 14px rgba(69, 84, 174, 0.08);
         }
 
         .hero-main .score-label {
@@ -1342,7 +1466,7 @@
         .progress-card.editable::after {
           content: "点一下可修改";
           display: inline-block;
-          margin-top: 10px;
+          margin-top: 12px;
           font-size: 12px;
           color: var(--primary);
           font-weight: 700;
@@ -1365,6 +1489,44 @@
         textarea {
           padding: 13px 14px;
           font-size: 16px;
+        }
+
+        #templateSelect,
+        #eventDate {
+          min-height: 50px;
+          border-width: 1.5px;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.92),
+            0 10px 18px rgba(109, 132, 255, 0.14);
+        }
+
+        #templateSelect {
+          padding-right: 58px;
+        }
+
+        #eventDate {
+          max-width: 100%;
+          overflow: hidden;
+        }
+
+        #rewardFilterBar .chip {
+          min-width: 58px;
+          justify-content: center;
+        }
+
+        #rewardFilterBar .chip.active {
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.32),
+            0 12px 22px rgba(109, 132, 255, 0.28);
+        }
+
+        .progress-card {
+          padding: 18px 16px 20px;
+        }
+
+        .progress-meta {
+          margin-top: 6px;
+          line-height: 1.5;
         }
 
         .shortcut-wrap {
@@ -1467,10 +1629,15 @@
 
         .entry-primary-panel .panel-head {
           align-items: flex-start;
-          padding: 12px 12px 0;
-          margin: -4px -4px 14px;
+          padding: 13px 14px 13px;
+          margin: -4px -4px 18px;
           border-radius: 16px;
           background: rgba(109, 132, 255, 0.08);
+        }
+
+        .entry-primary-panel .panel-head > div {
+          min-height: 24px;
+          padding-bottom: 2px;
         }
 
         .panel-balance-bar {
@@ -1514,9 +1681,12 @@
         <button class="tab-btn" data-main-tab="rewards">
           <span class="tab-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3.5" y="6.5" width="17" height="11" rx="2.5" />
-              <path d="M3.5 10.5h17" />
-              <path d="M8 14h3" />
+              <path d="M4.5 10.5h15v9h-15z" />
+              <path d="M12 10.5v9" />
+              <path d="M4.5 14.5h15" />
+              <path d="M6.5 10.5h11v-2a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2z" />
+              <path d="M12 6.5c0-1.8 1.2-3 2.8-3 1.2 0 2.2.9 2.2 2.1 0 1.1-.9 1.9-2.1 1.9H12z" />
+              <path d="M12 6.5c0-1.8-1.2-3-2.8-3-1.2 0-2.2.9-2.2 2.1 0 1.1.9 1.9 2.1 1.9H12z" />
             </svg>
           </span>
           <span class="tab-label">奖励兑换</span>
@@ -1535,10 +1705,22 @@
       <section class="tab-panel-main active" data-main-tab-panel="home">
         <section class="hero">
           <div class="card hero-main">
-            <h1>成长银行</h1>
+            <h1>
+              <span class="hero-title-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3.5 9 12 4l8.5 5" />
+                  <path d="M5.5 10.5h13" />
+                  <path d="M6.5 10.5v7.5" />
+                  <path d="M10 10.5v7.5" />
+                  <path d="M14 10.5v7.5" />
+                  <path d="M17.5 10.5v7.5" />
+                  <path d="M4.5 18.5h15" />
+                </svg>
+              </span>
+              <span>成长银行</span>
+            </h1>
             <p class="subtitle">
-              平时记录任务，累计 <strong>成长币</strong> 和 <strong>通关钥匙</strong>。<br />
-              按当前规则兑换奖励，主线和奖励都可随阶段调整。
+              平日记录任务，累计 <strong>成长币</strong> 和 <strong>通关钥匙</strong>，兑换暑假奖励。
             </p>
             <div class="hero-score-grid">
               <div class="score-card hero-total-card">
@@ -1608,7 +1790,6 @@
             <div class="panel-head">
               <div>
                 <h2 class="section-title">主线进度</h2>
-                <p>这里先放核心指标，方便随时看有没有偏离主线。</p>
               </div>
             </div>
             <div class="stat-grid">
@@ -1725,11 +1906,27 @@
             <div class="field-grid">
               <div class="field">
                 <label for="templateSelect">任务模板</label>
-                <select id="templateSelect"></select>
+                <div class="select-shell">
+                  <select id="templateSelect"></select>
+                  <span class="select-caret" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <path d="M5 7 9 3l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M5 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </span>
+                </div>
               </div>
               <div class="field">
                 <label for="eventDate">日期</label>
-                <input id="eventDate" type="date" />
+                <div class="select-shell">
+                  <input id="eventDate" type="date" />
+                  <span class="select-caret" aria-hidden="true">
+                    <svg viewBox="0 0 18 18" fill="none">
+                      <rect x="3" y="4" width="12" height="11" rx="2" stroke="currentColor" stroke-width="1.8" />
+                      <path d="M6 2.8v2.6M12 2.8v2.6M3 7.5h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                  </span>
+                </div>
               </div>
               <div class="field" id="taskNameField">
                 <label for="taskName">任务名称</label>

@@ -1,0 +1,2530 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>重点班冲刺成长银行</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --line: #dfe3f0;
+        --text: #1f2a44;
+        --muted: #667085;
+        --primary: #4f46e5;
+        --primary-soft: #eef2ff;
+        --success: #0f9d58;
+        --warning: #d97706;
+        --danger: #dc2626;
+        --shadow: 0 14px 36px rgba(31, 42, 68, 0.08);
+        --radius: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: linear-gradient(180deg, #eff2ff 0%, var(--bg) 220px);
+        color: var(--text);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+
+      .wrap {
+        width: min(1200px, calc(100% - 24px));
+        margin: 0 auto;
+        padding: 16px 0 120px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-main {
+        padding: 24px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      .subtitle {
+        margin-top: 10px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .tag-row,
+      .summary-grid,
+      .content-grid,
+      .stat-grid,
+      .reward-grid,
+      .rule-grid,
+      .tab-row {
+        display: grid;
+        gap: 12px;
+      }
+
+      .tag-row {
+        margin-top: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+
+      .tag {
+        background: var(--primary-soft);
+        color: var(--primary);
+        border-radius: 999px;
+        padding: 10px 14px;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      .hero-side {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .score-card {
+        padding: 16px;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+      }
+
+      .score-label {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+
+      .score-value {
+        font-size: 34px;
+        font-weight: 800;
+      }
+
+      .score-hint {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 6px;
+      }
+
+      .cloud-card {
+        display: grid;
+        gap: 12px;
+      }
+
+      .cloud-status {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .cloud-status-text {
+        font-weight: 800;
+      }
+
+      .cloud-status-detail {
+        margin-top: 4px;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        margin-top: 6px;
+        border-radius: 999px;
+        background: #cbd5e1;
+        flex: 0 0 auto;
+      }
+
+      .status-dot.ok {
+        background: var(--success);
+      }
+
+      .status-dot.wait {
+        background: var(--warning);
+      }
+
+      .status-dot.error {
+        background: var(--danger);
+      }
+
+      .cloud-note {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 16px;
+      }
+
+      .mini-card {
+        padding: 16px;
+      }
+
+      .mini-title {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .mini-value {
+        font-size: 26px;
+        font-weight: 800;
+        margin-top: 6px;
+      }
+
+      .mini-sub {
+        margin-top: 8px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .content-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: start;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .panel-head p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .section-title {
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .entry-layout {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 16px;
+        align-items: start;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+
+      .field.wide {
+        grid-column: 1 / -1;
+      }
+
+      label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      input,
+      select,
+      textarea,
+      button {
+        font: inherit;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 14px;
+        background: #fff;
+        color: var(--text);
+      }
+
+      textarea {
+        min-height: 88px;
+        resize: vertical;
+      }
+
+      .inline {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border: 0;
+        border-radius: 12px;
+        padding: 11px 16px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      .btn-primary {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .btn-secondary {
+        background: #eef2f7;
+        color: var(--text);
+      }
+
+      .btn-danger {
+        background: #fee2e2;
+        color: var(--danger);
+      }
+
+      .btn-ghost {
+        background: #fff;
+        color: var(--text);
+        border: 1px solid var(--line);
+      }
+
+      .tip {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .quick-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .shortcut-wrap {
+        margin: 4px 0 14px;
+        padding: 12px;
+        border-radius: 16px;
+        background: #f8faff;
+        border: 1px solid var(--line);
+      }
+
+      .shortcut-title {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+
+      .chip {
+        border: 1px solid var(--line);
+        background: #fff;
+        padding: 8px 10px;
+        border-radius: 999px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .progress-card {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 14px;
+        background: #fbfcff;
+      }
+
+      .progress-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .progress-name {
+        font-weight: 800;
+      }
+
+      .progress-meta {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 4px;
+      }
+
+      .bar {
+        margin-top: 10px;
+        height: 10px;
+        background: #e8ecf8;
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .bar > span {
+        display: block;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #7c83ff, #4f46e5);
+      }
+
+      .reward-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .reward-card {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 16px;
+        background: #fff;
+      }
+
+      .reward-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: flex-start;
+      }
+
+      .reward-name {
+        font-size: 17px;
+        font-weight: 800;
+      }
+
+      .reward-type {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #f1f5f9;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .reward-cost {
+        color: var(--primary);
+        font-weight: 800;
+        font-size: 14px;
+        text-align: right;
+      }
+
+      .reward-desc {
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .reward-foot {
+        margin-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .status {
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .status.ok {
+        color: var(--success);
+      }
+
+      .status.wait {
+        color: var(--warning);
+      }
+
+      .history-list,
+      .redeem-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .cap-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .cap-item {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fbfcff;
+        padding: 12px 14px;
+      }
+
+      .cap-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .cap-name {
+        font-weight: 800;
+      }
+
+      .cap-meta {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 5px;
+      }
+
+      .week-summary {
+        margin-top: 14px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .week-row {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        padding: 12px 14px;
+      }
+
+      .week-row-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .week-row-name {
+        font-weight: 800;
+      }
+
+      .week-row-meta {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .history-item {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px 14px;
+        background: #fff;
+      }
+
+      .history-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 6px;
+      }
+
+      .history-title {
+        font-weight: 800;
+      }
+
+      .history-time {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .history-sub {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .delta {
+        font-weight: 800;
+      }
+
+      .delta.plus {
+        color: var(--success);
+      }
+
+      .delta.minus {
+        color: var(--danger);
+      }
+
+      .rule-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .rule-card {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: #fbfcff;
+      }
+
+      .rule-card h3 {
+        font-size: 17px;
+        margin-bottom: 10px;
+      }
+
+      .rule-list {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.65;
+        padding-left: 18px;
+        margin: 0;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .empty {
+        padding: 18px;
+        border: 1px dashed var(--line);
+        border-radius: 14px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .tab-row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 16px;
+        align-items: center;
+        position: sticky;
+        top: 10px;
+        z-index: 30;
+        background: rgba(246, 247, 251, 0.88);
+        backdrop-filter: blur(14px);
+        padding: 8px;
+        border: 1px solid rgba(223, 227, 240, 0.9);
+        border-radius: 22px;
+        box-shadow: 0 14px 30px rgba(31, 42, 68, 0.08);
+      }
+
+      .tab-btn {
+        border: 1px solid #cfd7f6;
+        background: #f7f8ff;
+        border-radius: 18px;
+        padding: 15px 16px;
+        cursor: pointer;
+        font-weight: 700;
+        color: #4b5563;
+        text-align: center;
+        min-height: 58px;
+        font-size: 15px;
+      }
+
+      .tab-btn.active {
+        background: var(--primary);
+        color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 10px 24px rgba(79, 70, 229, 0.22);
+      }
+
+      .tab-panel-main {
+        display: none;
+      }
+
+      .tab-panel-main.active {
+        display: block;
+      }
+
+      .entry-panel {
+        padding-bottom: 12px;
+      }
+
+      .desktop-record-btn {
+        display: inline-flex;
+      }
+
+      .mobile-action-bar {
+        display: none;
+      }
+
+      .mobile-action-btn {
+        width: 100%;
+        min-height: 54px;
+        border-radius: 16px;
+        font-size: 16px;
+        box-shadow: 0 14px 30px rgba(79, 70, 229, 0.28);
+      }
+
+      .template-guide {
+        margin-top: 12px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fbfcff;
+        padding: 14px;
+      }
+
+      .template-guide-title {
+        font-weight: 800;
+        margin-bottom: 8px;
+      }
+
+      .guide-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .guide-item {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        padding: 10px 12px;
+      }
+
+      .guide-label {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .guide-value {
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 980px) {
+        .hero,
+        .content-grid,
+        .summary-grid,
+        .reward-grid,
+        .rule-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .field-grid,
+        .stat-grid,
+        .guide-grid,
+        .entry-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        body {
+          background: linear-gradient(180deg, #eef2ff 0%, #f8f9fc 180px);
+        }
+
+        .wrap {
+          width: min(100%, calc(100% - 16px));
+          padding: 12px 0 calc(110px + env(safe-area-inset-bottom));
+        }
+
+        .tab-row {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+          top: 8px;
+          margin-bottom: 14px;
+          border-radius: 20px;
+        }
+
+        .tab-btn {
+          min-height: 56px;
+          padding: 14px 10px;
+          font-size: 15px;
+        }
+
+        .hero-main,
+        .hero-side,
+        .mini-card,
+        .panel {
+          padding: 16px;
+        }
+
+        .score-value {
+          font-size: 30px;
+        }
+
+        .summary-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .section-title {
+          font-size: 18px;
+        }
+
+        input,
+        select,
+        textarea {
+          padding: 13px 14px;
+          font-size: 16px;
+        }
+
+        .desktop-record-btn {
+          display: none;
+        }
+
+        .shortcut-wrap {
+          display: none;
+        }
+
+        .entry-panel {
+          padding-bottom: 88px;
+        }
+
+        .mobile-action-bar {
+          position: fixed;
+          left: 12px;
+          right: 12px;
+          bottom: calc(12px + env(safe-area-inset-bottom));
+          z-index: 60;
+          padding: 10px;
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.92);
+          border: 1px solid rgba(223, 227, 240, 0.95);
+          box-shadow: 0 18px 40px rgba(31, 42, 68, 0.16);
+          backdrop-filter: blur(16px);
+        }
+
+        .mobile-action-bar.active {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="tab-row">
+        <button class="tab-btn active" data-main-tab="home">主页</button>
+        <button class="tab-btn" data-main-tab="entry">任务录入</button>
+        <button class="tab-btn" data-main-tab="rewards">奖励兑换</button>
+        <button class="tab-btn" data-main-tab="rules">规则说明</button>
+      </section>
+
+      <section class="tab-panel-main active" data-main-tab-panel="home">
+        <section class="hero">
+          <div class="card hero-main">
+            <h1>重点班冲刺成长银行</h1>
+            <p class="subtitle">
+              一个离线可用的单文件奖励系统。平时记录任务，实时累计
+              <strong>成长币</strong> 和 <strong>通关钥匙</strong>，暑假再按规则兑换奖励。
+              目标是让 <strong>数学S题必保</strong>、<strong>语文阅读必保</strong>，其他任务做辅助。
+            </p>
+            <div class="tag-row">
+              <div class="tag">双轨制：成长币 + 钥匙</div>
+              <div class="tag">低难任务有上限</div>
+              <div class="tag">高价值奖励要解锁</div>
+              <div class="tag">高难主线优先</div>
+            </div>
+          </div>
+          <div class="card hero-side">
+            <div class="score-card">
+              <div class="score-label">当前成长币</div>
+              <div class="score-value" id="coinTotal">0</div>
+            </div>
+            <div class="score-card">
+              <div class="score-label">当前通关钥匙</div>
+              <div class="score-value" id="keyTotal">0</div>
+            </div>
+            <div class="score-card cloud-card">
+              <div class="score-label">云同步</div>
+              <div class="cloud-status">
+                <span class="status-dot wait" id="cloudStatusDot"></span>
+                <div>
+                  <div class="cloud-status-text" id="cloudStatusText">准备连接云端</div>
+                  <div class="cloud-status-detail" id="cloudStatusDetail">
+                    电脑和手机只要填同一个家庭同步码，就会看同一份数据。
+                  </div>
+                </div>
+              </div>
+              <div class="field">
+                <label for="workspaceCodeInput">家庭同步码</label>
+                <input
+                  id="workspaceCodeInput"
+                  type="text"
+                  placeholder="例如：ayaka-home"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="inline">
+                <button class="btn btn-secondary" id="copyWorkspaceBtn">复制同步码</button>
+                <button class="btn btn-secondary" id="pullCloudBtn">从云端拉取</button>
+                <button class="btn btn-secondary" id="pushCloudBtn">上传到云端</button>
+              </div>
+              <div class="cloud-note">
+                这是家庭共享简化版。请不要存身份证、手机号等敏感信息。
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="summary-grid">
+          <div class="card mini-card">
+            <div class="mini-title">累计获得成长币</div>
+            <div class="mini-value" id="coinEarned">0</div>
+            <div class="mini-sub">不含已兑换扣除</div>
+          </div>
+          <div class="card mini-card">
+            <div class="mini-title">累计获得钥匙</div>
+            <div class="mini-value" id="keyEarned">0</div>
+            <div class="mini-sub">高难任务通关记录</div>
+          </div>
+          <div class="card mini-card">
+            <div class="mini-title">已兑换奖励数</div>
+            <div class="mini-value" id="redeemCount">0</div>
+            <div class="mini-sub">随时回看兑换历史</div>
+          </div>
+          <div class="card mini-card">
+            <div class="mini-title">当前可兑换奖励</div>
+            <div class="mini-value" id="availableRewards">0</div>
+            <div class="mini-sub">会自动根据币和钥匙变化</div>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <h2 class="section-title">主线进度</h2>
+                <p>这里先放核心指标，方便随时看有没有偏离主线。</p>
+              </div>
+            </div>
+            <div class="stat-grid">
+              <div class="progress-card">
+                <div class="progress-top">
+                  <div>
+                    <div class="progress-name">数学S题主题</div>
+                    <div class="progress-meta">目标 22 个主题，当前已完成约 9 个</div>
+                  </div>
+                  <strong id="mathThemeProgressText">9 / 22</strong>
+                </div>
+                <div class="bar"><span id="mathThemeBar" style="width: 40.9%"></span></div>
+              </div>
+              <div class="progress-card">
+                <div class="progress-top">
+                  <div>
+                    <div class="progress-name">语文阅读题型</div>
+                    <div class="progress-meta">建议先抓 6 个核心题型</div>
+                  </div>
+                  <strong id="readingTypeProgressText">0 / 6</strong>
+                </div>
+                <div class="bar"><span id="readingTypeBar" style="width: 0%"></span></div>
+              </div>
+            </div>
+            <div class="field-grid" style="margin-top: 14px">
+              <div class="field">
+                <label for="mathDoneInput">数学S题已完成主题数</label>
+                <input id="mathDoneInput" type="number" min="0" max="22" step="1" value="9" />
+              </div>
+              <div class="field">
+                <label for="readingDoneInput">语文阅读已攻克题型数</label>
+                <input id="readingDoneInput" type="number" min="0" max="6" step="1" value="0" />
+              </div>
+            </div>
+            <div class="inline" style="margin-top: 14px">
+              <button class="btn btn-primary" id="saveProgressBtn">保存主线进度</button>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <h2 class="section-title">本周统计</h2>
+                <p>自动看本周上限和当前拿分情况。</p>
+              </div>
+            </div>
+            <div class="cap-list" id="weeklyCapList"></div>
+            <div class="week-summary" id="weeklyScoreList"></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="tab-panel-main entry-panel" data-main-tab-panel="entry">
+        <div class="entry-layout">
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <h2 class="section-title">任务录入</h2>
+                <p>先选模板，再填本次记录内容，成功后会弹窗提示。</p>
+              </div>
+            </div>
+            <div class="shortcut-wrap">
+              <div class="shortcut-title">常用快捷记录</div>
+              <div class="quick-row" id="templateChips"></div>
+            </div>
+            <div class="field-grid">
+              <div class="field">
+                <label for="templateSelect">任务模板</label>
+                <select id="templateSelect"></select>
+              </div>
+              <div class="field">
+                <label for="eventDate">日期</label>
+                <input id="eventDate" type="date" />
+              </div>
+              <div class="field">
+                <label for="taskName">任务名称</label>
+                <input id="taskName" type="text" placeholder="例如：数学S题-主题3全通" />
+              </div>
+              <div class="field">
+                <label for="category">分类</label>
+                <input id="category" type="text" placeholder="例如：数学S题" />
+              </div>
+              <div class="field">
+                <label for="coinInput">成长币</label>
+                <input id="coinInput" type="number" min="-999" max="999" step="1" />
+              </div>
+              <div class="field">
+                <label for="keyInput">钥匙</label>
+                <input id="keyInput" type="number" min="-50" max="50" step="1" />
+              </div>
+              <div class="field wide">
+                <label for="noteInput">备注</label>
+                <textarea
+                  id="noteInput"
+                  placeholder="可写：第几主题、第几篇阅读、讲题情况、是谁验收的等"
+                ></textarea>
+              </div>
+            </div>
+            <div class="inline" style="margin-top: 14px">
+              <button class="btn btn-primary desktop-record-btn" id="addRecordBtn">记录任务</button>
+              <button class="btn btn-secondary" id="exportBtn">导出存档</button>
+              <button class="btn btn-secondary" id="importBtn">导入存档</button>
+              <button class="btn btn-danger" id="resetBtn">清空全部记录</button>
+              <input id="importFile" type="file" accept="application/json" hidden />
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <h2 class="section-title">模板说明</h2>
+                <p>这里会明确显示“什么时候可以记这1次分”。</p>
+              </div>
+            </div>
+            <div class="template-guide" id="templateGuide"></div>
+            <div class="panel-head" style="margin-top: 18px">
+              <div>
+                <h2 class="section-title">最近记录预览</h2>
+                <p>录入成功后，这里会立刻刷新，方便马上确认。</p>
+              </div>
+            </div>
+            <div class="history-list" id="entryHistoryList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel-main" data-main-tab-panel="rewards" style="margin-top: 16px">
+        <div class="content-grid">
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <h2 class="section-title">奖励兑换</h2>
+                <p>已把“旅行策划权”和“真正旅行落地”拆开了，不再重复。</p>
+              </div>
+            </div>
+            <div class="reward-grid" id="rewardList"></div>
+          </div>
+
+          <div class="card panel">
+            <div class="panel-head">
+              <div>
+                <h2 class="section-title">最近记录</h2>
+                <p>最新的任务和兑换都会显示在这里。</p>
+              </div>
+            </div>
+            <div class="history-list" id="historyList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel-main" data-main-tab-panel="rules" style="margin-top: 16px">
+        <div class="card panel">
+          <div class="panel-head">
+            <div>
+              <h2 class="section-title">规则说明</h2>
+              <p>给孩子看时也能直接打开这一页。</p>
+            </div>
+          </div>
+          <div class="rule-grid">
+            <div class="rule-card">
+              <h3>核心原则</h3>
+              <ul class="rule-list">
+                <li>成长币负责兑换，通关钥匙负责解锁高价值奖励。</li>
+                <li>低难任务有上限，防止只刷简单题。</li>
+                <li>数学S题和语文阅读是主线，大奖必须靠主线任务拿到。</li>
+                <li>学习习惯只记可观察结果，不记“自报认真”。</li>
+              </ul>
+            </div>
+            <div class="rule-card">
+              <h3>数学S题</h3>
+              <ul class="rule-list">
+                <li>每个小节最终刷新结果必须是 100% 无错，才算学完并给币。</li>
+                <li>一个主题全通后，再看能否讲出举一反三题。</li>
+                <li>完整精通一个主题，才给钥匙。</li>
+              </ul>
+            </div>
+            <div class="rule-card">
+              <h3>语文阅读</h3>
+              <ul class="rule-list">
+                <li>分层奖励：先做完，再看命中率，再看是否能说出方法。</li>
+                <li>题型攻克和口头输出都能加分。</li>
+                <li>题型攻克是第二主线，和数学S题一起保。</li>
+              </ul>
+            </div>
+            <div class="rule-card">
+              <h3>旅行奖励区别</h3>
+              <ul class="rule-list">
+                <li><strong>旅行策划官</strong>：拥有提出路线、选主题、选店、排活动的权利。</li>
+                <li><strong>旅行落地日</strong>：把被采纳的方案真正执行一次，属于更高阶大奖。</li>
+                <li>前者是“设计权”，后者是“真正成行”。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="mobile-action-bar" id="mobileActionBar">
+      <button class="btn btn-primary mobile-action-btn" id="floatingAddRecordBtn">记录任务</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const STORAGE_KEY = "reward-game-state-v2";
+      const WORKSPACE_CODE_KEY = "reward-game-workspace-code-v1";
+      const LEGACY_STORAGE_KEYS = ["reward-game-state-v1"];
+      const SUPABASE_PROJECT_ID = "quticqrrqpcbgamzdhyt";
+      const SUPABASE_URL = `https://${SUPABASE_PROJECT_ID}.supabase.co`;
+      const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_hvXcfr0-0uZwlXxQ3bVIyg_o4PU9M4U";
+      const CLOUD_TABLE = "reward_game_state";
+      const CLOUD_SYNC_DELAY_MS = 700;
+      const weeklyCoinCaps = {
+        数学日常: 14,
+        语文日常: 12,
+        英语: 10,
+        学习习惯: 7,
+      };
+
+      const rewardGroupLimits = [
+        {
+          id: "screen",
+          label: "屏幕类奖励",
+          scope: "week",
+          limit: 2,
+          rewardIds: ["mobile-level", "switch-20", "switch-60", "switch-island"],
+        },
+      ];
+
+      const rewardSingleLimits = {
+        "mall-half-day": { scope: "total", limit: 1, label: "半天逛商场" },
+        "visit-sister": { scope: "total", limit: 1, label: "去姐姐家玩一天" },
+        "switch-island": { scope: "total", limit: 1, label: "Switch建新岛" },
+        "special-play": { scope: "total", limit: 1, label: "周末特别玩半天" },
+        "trip-planner": { scope: "total", limit: 1, label: "暑假三人旅行策划官" },
+        "theme-day": { scope: "total", limit: 1, label: "孩子主题日" },
+        "amusement-park": { scope: "total", limit: 1, label: "去一次喜欢的游乐园" },
+        "trip-day": { scope: "total", limit: 1, label: "三人微旅行落地日" },
+      };
+
+      const templates = [
+        {
+          id: "math-section",
+          name: "数学S题-单个小节最终100%",
+          category: "数学S题",
+          coins: 3,
+          keys: 0,
+          note: "只有最终刷新结果100%无错才记录。",
+        },
+        {
+          id: "math-theme",
+          name: "数学S题-单个主题全部小节全通",
+          category: "数学S题",
+          coins: 8,
+          keys: 0,
+          note: "一个主题下所有小节全部通过。",
+        },
+        {
+          id: "math-transfer",
+          name: "数学S题-举一反三题讲明白",
+          category: "数学S题",
+          coins: 5,
+          keys: 0,
+          note: "家长当场抽题，能独立讲清思路。",
+        },
+        {
+          id: "math-key",
+          name: "数学S题-单个主题完整精通拿钥匙",
+          category: "数学S题",
+          coins: 0,
+          keys: 1,
+          note: "主题全通 + 举一反三都达标，再记钥匙。",
+        },
+        {
+          id: "math-daily",
+          name: "数学日常-口算满分",
+          category: "数学日常",
+          coins: 2,
+          keys: 0,
+          note: "非满分不给币；注意周上限。",
+        },
+        {
+          id: "math-school-95",
+          name: "数学校内-95到99分",
+          category: "数学校内",
+          coins: 5,
+          keys: 0,
+          note: "班级前5可自行手动再加。",
+        },
+        {
+          id: "math-school-100",
+          name: "数学校内-100分",
+          category: "数学校内",
+          coins: 8,
+          keys: 0,
+          note: "如同时班级前5，可手动调成8币。",
+        },
+        {
+          id: "reading-done",
+          name: "语文阅读-单篇完成并订正",
+          category: "语文阅读",
+          coins: 2,
+          keys: 0,
+          note: "先保完成，再看命中率加分。",
+        },
+        {
+          id: "reading-80",
+          name: "语文阅读-单篇命中率80%到89%",
+          category: "语文阅读",
+          coins: 2,
+          keys: 0,
+          note: "建议和完成记录分开记。",
+        },
+        {
+          id: "reading-90",
+          name: "语文阅读-单篇命中率90%到94%",
+          category: "语文阅读",
+          coins: 4,
+          keys: 0,
+          note: "",
+        },
+        {
+          id: "reading-95",
+          name: "语文阅读-单篇命中率95%以上",
+          category: "语文阅读",
+          coins: 6,
+          keys: 0,
+          note: "",
+        },
+        {
+          id: "reading-method",
+          name: "语文阅读-总结出1个题型方法",
+          category: "语文阅读",
+          coins: 4,
+          keys: 0,
+          note: "例如人物形象、句段作用等。",
+        },
+        {
+          id: "reading-output",
+          name: "语文阅读-当场讲清为什么这样答",
+          category: "语文阅读",
+          coins: 2,
+          keys: 0,
+          note: "连续3次清楚表达，可再手动记1钥匙。",
+        },
+        {
+          id: "reading-key",
+          name: "语文阅读-攻克2个核心题型拿钥匙",
+          category: "语文阅读",
+          coins: 0,
+          keys: 1,
+          note: "用来锁定主线价值。",
+        },
+        {
+          id: "chinese-expression",
+          name: "语文表达-单次训练达到3分",
+          category: "语文表达输出",
+          coins: 2,
+          keys: 0,
+          note: "说清对象、抓特点、顺序清楚、简洁不跑题。",
+        },
+        {
+          id: "chinese-expression-full",
+          name: "语文表达-单次训练达到4分",
+          category: "语文表达输出",
+          coins: 3,
+          keys: 0,
+          note: "连续3次4分，可手动加2币。",
+        },
+        {
+          id: "chinese-daily",
+          name: "语文日常-听写全对或背诵过关",
+          category: "语文日常",
+          coins: 2,
+          keys: 0,
+          note: "",
+        },
+        {
+          id: "chinese-notes",
+          name: "语文日常-整理好词好句或文学常识",
+          category: "语文日常",
+          coins: 1,
+          keys: 0,
+          note: "注意周上限。",
+        },
+        {
+          id: "chinese-school-95",
+          name: "语文校内-95到99分",
+          category: "语文校内",
+          coins: 4,
+          keys: 0,
+          note: "",
+        },
+        {
+          id: "chinese-school-100",
+          name: "语文校内-100分",
+          category: "语文校内",
+          coins: 6,
+          keys: 0,
+          note: "",
+        },
+        {
+          id: "english-perfect",
+          name: "英语-单次满分或全对",
+          category: "英语",
+          coins: 5,
+          keys: 0,
+          note: "英语是保状态项，但满分激励提高。",
+        },
+        {
+          id: "english-streak",
+          name: "英语-连续3次满分自动奖励",
+          category: "英语",
+          coins: 2,
+          keys: 1,
+          note: "英语更强的话，用连续稳定表现换一把钥匙。",
+        },
+        {
+          id: "english-note",
+          name: "英语-语法整理",
+          category: "英语",
+          coins: 2,
+          keys: 0,
+          note: "",
+        },
+        {
+          id: "habit-quality",
+          name: "学习习惯-质量加分",
+          category: "学习习惯",
+          coins: 1,
+          keys: 0,
+          note: "只记可观察结果；明显敷衍不给。",
+        },
+        {
+          id: "manual",
+          name: "手动自定义",
+          category: "自定义",
+          coins: 0,
+          keys: 0,
+          note: "特殊情况手动记录。",
+        },
+      ];
+
+      const rewards = [
+        {
+          id: "mobile-level",
+          name: "手机小游戏 1 关",
+          type: "小奖励",
+          coins: 6,
+          keys: 0,
+          description: "屏幕类奖励每周建议最多兑换2次。",
+        },
+        {
+          id: "craft-mini",
+          name: "一起做小手工/贴纸/拼豆",
+          type: "小奖励",
+          coins: 8,
+          keys: 0,
+          description: "一次轻量陪伴时光。",
+        },
+        {
+          id: "switch-20",
+          name: "Switch额外 20 分钟",
+          type: "小奖励",
+          coins: 8,
+          keys: 0,
+          description: "适合作为短线激励。",
+        },
+        {
+          id: "chat-night",
+          name: "专属聊天夜 20 分钟",
+          type: "小奖励",
+          coins: 12,
+          keys: 0,
+          description: "高质量陪伴，不带说教。",
+        },
+        {
+          id: "family-handcraft",
+          name: "三人一起做手工/拼图 1 小时",
+          type: "中等奖励",
+          coins: 16,
+          keys: 0,
+          description: "孩子偏爱的温暖型奖励。",
+        },
+        {
+          id: "sleepover",
+          name: "三人亲子陪睡 1 次",
+          type: "中等奖励",
+          coins: 20,
+          keys: 0,
+          description: "强吸引力奖励，适合作为阶段性鼓励。",
+        },
+        {
+          id: "switch-60",
+          name: "Switch额外 1 小时",
+          type: "中等奖励",
+          coins: 24,
+          keys: 0,
+          description: "建议和周屏幕上限联动。",
+        },
+        {
+          id: "mom-bed",
+          name: "妈妈屋大床睡 1 次",
+          type: "中等奖励",
+          coins: 28,
+          keys: 0,
+          description: "偏情感归属型奖励。",
+        },
+        {
+          id: "mall-half-day",
+          name: "半天逛商场",
+          type: "进阶奖励",
+          coins: 38,
+          keys: 1,
+          description: "需要有主线任务支撑，防止纯刷简单任务。",
+        },
+        {
+          id: "visit-sister",
+          name: "去姐姐家玩一天",
+          type: "进阶奖励",
+          coins: 50,
+          keys: 1,
+          description: "家庭体验型奖励，吸引力很强。",
+        },
+        {
+          id: "switch-island",
+          name: "Switch建一个新岛",
+          type: "进阶奖励",
+          coins: 58,
+          keys: 1,
+          description: "大一点的数字奖励，建议假期限1次。",
+        },
+        {
+          id: "special-play",
+          name: "周末升级成特别玩半天",
+          type: "进阶奖励",
+          coins: 60,
+          keys: 1,
+          description: "把原本普通玩升级成更有仪式感的半天。",
+        },
+        {
+          id: "trip-planner",
+          name: "暑假三人旅行策划官",
+          type: "大奖励",
+          coins: 80,
+          keys: 2,
+          description:
+            "拥有设计权：提1到3个目的地候选、安排每天重点活动、选1家想吃的店，但不等于旅行一定立刻成行。",
+        },
+        {
+          id: "theme-day",
+          name: "孩子主题日",
+          type: "大奖励",
+          coins: 88,
+          keys: 2,
+          description: "在合理预算和安全范围内，由孩子决定当天主题。",
+        },
+        {
+          id: "amusement-park",
+          name: "去一次喜欢的游乐园",
+          type: "大奖励",
+          coins: 120,
+          keys: 3,
+          description: "典型暑假高吸引力奖励。",
+        },
+        {
+          id: "trip-day",
+          name: "三人微旅行落地日",
+          type: "核心大奖",
+          coins: 160,
+          keys: 5,
+          description:
+            "把前面被采纳的旅行策划真正执行一次。这是“落地执行权”，不再和“策划官”重复。",
+        },
+      ];
+
+      const defaultState = {
+        progress: {
+          mathDone: 9,
+          mathTotal: 22,
+          readingDone: 0,
+          readingTotal: 6,
+        },
+        records: [],
+      };
+
+      const dom = {
+        templateSelect: document.getElementById("templateSelect"),
+        templateGuide: document.getElementById("templateGuide"),
+        eventDate: document.getElementById("eventDate"),
+        taskName: document.getElementById("taskName"),
+        category: document.getElementById("category"),
+        coinInput: document.getElementById("coinInput"),
+        keyInput: document.getElementById("keyInput"),
+        noteInput: document.getElementById("noteInput"),
+        addRecordBtn: document.getElementById("addRecordBtn"),
+        floatingAddRecordBtn: document.getElementById("floatingAddRecordBtn"),
+        mobileActionBar: document.getElementById("mobileActionBar"),
+        templateChips: document.getElementById("templateChips"),
+        rewardList: document.getElementById("rewardList"),
+        historyList: document.getElementById("historyList"),
+        entryHistoryList: document.getElementById("entryHistoryList"),
+        coinTotal: document.getElementById("coinTotal"),
+        keyTotal: document.getElementById("keyTotal"),
+        coinEarned: document.getElementById("coinEarned"),
+        keyEarned: document.getElementById("keyEarned"),
+        redeemCount: document.getElementById("redeemCount"),
+        availableRewards: document.getElementById("availableRewards"),
+        mathDoneInput: document.getElementById("mathDoneInput"),
+        readingDoneInput: document.getElementById("readingDoneInput"),
+        saveProgressBtn: document.getElementById("saveProgressBtn"),
+        weeklyCapList: document.getElementById("weeklyCapList"),
+        weeklyScoreList: document.getElementById("weeklyScoreList"),
+        mathThemeProgressText: document.getElementById("mathThemeProgressText"),
+        readingTypeProgressText: document.getElementById("readingTypeProgressText"),
+        mathThemeBar: document.getElementById("mathThemeBar"),
+        readingTypeBar: document.getElementById("readingTypeBar"),
+        exportBtn: document.getElementById("exportBtn"),
+        importBtn: document.getElementById("importBtn"),
+        importFile: document.getElementById("importFile"),
+        resetBtn: document.getElementById("resetBtn"),
+        cloudStatusDot: document.getElementById("cloudStatusDot"),
+        cloudStatusText: document.getElementById("cloudStatusText"),
+        cloudStatusDetail: document.getElementById("cloudStatusDetail"),
+        workspaceCodeInput: document.getElementById("workspaceCodeInput"),
+        copyWorkspaceBtn: document.getElementById("copyWorkspaceBtn"),
+        pullCloudBtn: document.getElementById("pullCloudBtn"),
+        pushCloudBtn: document.getElementById("pushCloudBtn"),
+      };
+
+      let supabaseClient = null;
+      let cloudPushTimer = null;
+      let workspaceCode = loadWorkspaceCode();
+      let cloudStatus = {
+        tone: "wait",
+        text: "准备连接云端",
+        detail: "电脑和手机只要填同一个家庭同步码，就会看同一份数据。",
+      };
+      let state = loadState();
+
+      function clearLegacyData() {
+        LEGACY_STORAGE_KEYS.forEach((key) => localStorage.removeItem(key));
+      }
+
+      function normalizeState(raw) {
+        return {
+          progress: {
+            ...defaultState.progress,
+            ...(raw?.progress || {}),
+          },
+          records: Array.isArray(raw?.records) ? raw.records : [],
+        };
+      }
+
+      function normalizeWorkspaceCode(value) {
+        return String(value || "")
+          .trim()
+          .toLowerCase()
+          .replace(/[^a-z0-9-]/g, "-")
+          .replace(/-+/g, "-")
+          .replace(/^-|-$/g, "")
+          .slice(0, 32);
+      }
+
+      function createWorkspaceCode() {
+        return `ayaka-${Math.random().toString(36).slice(2, 8)}`;
+      }
+
+      function loadWorkspaceCode() {
+        const saved = normalizeWorkspaceCode(localStorage.getItem(WORKSPACE_CODE_KEY));
+        if (saved) return saved;
+        const created = createWorkspaceCode();
+        localStorage.setItem(WORKSPACE_CODE_KEY, created);
+        return created;
+      }
+
+      function persistWorkspaceCode() {
+        localStorage.setItem(WORKSPACE_CODE_KEY, workspaceCode);
+      }
+
+      function getCloudRowId() {
+        return `workspace-${workspaceCode}`;
+      }
+
+      function setCloudStatus(tone, text, detail) {
+        cloudStatus = { tone, text, detail };
+        renderCloudPanel();
+      }
+
+      function loadPersistedState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) return structuredClone(defaultState);
+          return normalizeState(JSON.parse(raw));
+        } catch (error) {
+          console.error("读取存档失败", error);
+          return structuredClone(defaultState);
+        }
+      }
+
+      function loadState() {
+        return loadPersistedState();
+      }
+
+      function saveState(options = {}) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (!options.skipCloud) scheduleCloudPush();
+      }
+
+      function ensureSupabaseClient() {
+        if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) return null;
+        if (!window.supabase?.createClient) return null;
+        if (!supabaseClient) {
+          supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+            auth: {
+              persistSession: false,
+              autoRefreshToken: false,
+              detectSessionInUrl: false,
+            },
+          });
+        }
+        return supabaseClient;
+      }
+
+      function renderCloudPanel() {
+        if (!dom.cloudStatusText) return;
+        dom.workspaceCodeInput.value = workspaceCode;
+        dom.cloudStatusText.textContent = cloudStatus.text;
+        dom.cloudStatusDetail.textContent = cloudStatus.detail;
+        dom.cloudStatusDot.className = `status-dot ${cloudStatus.tone}`;
+      }
+
+      function applyWorkspaceCodeFromInput() {
+        const normalized = normalizeWorkspaceCode(dom.workspaceCodeInput.value);
+        if (!normalized) {
+          alert("请先填写一个家庭同步码，只能用英文字母、数字和横线。");
+          dom.workspaceCodeInput.value = workspaceCode;
+          return null;
+        }
+        workspaceCode = normalized;
+        persistWorkspaceCode();
+        dom.workspaceCodeInput.value = workspaceCode;
+        return workspaceCode;
+      }
+
+      async function pullCloudState(options = {}) {
+        if (!applyWorkspaceCodeFromInput()) return false;
+        const client = ensureSupabaseClient();
+        if (!client) {
+          setCloudStatus("error", "云端未就绪", "Supabase SDK 未加载，或云端配置不完整。");
+          return false;
+        }
+        setCloudStatus("wait", "正在从云端拉取", `当前同步码：${workspaceCode}`);
+        const { data, error } = await client
+          .from(CLOUD_TABLE)
+          .select("payload, updated_at")
+          .eq("id", getCloudRowId())
+          .maybeSingle();
+
+        if (error) {
+          console.error(error);
+          setCloudStatus(
+            "error",
+            "云端拉取失败",
+            "大概率是还没在 Supabase 执行建表 SQL。先建表，再点一次“从云端拉取”。",
+          );
+          if (!options.silent) alert("云端拉取失败。请先执行 supabase_setup.sql 里的建表 SQL。");
+          return false;
+        }
+
+        if (!data?.payload) {
+          setCloudStatus(
+            "wait",
+            "云端还是空的",
+            `同步码 ${workspaceCode} 还没有数据。先在当前设备录一条，再点“上传到云端”。`,
+          );
+          return false;
+        }
+
+        state = normalizeState(data.payload);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        renderAll();
+        setCloudStatus(
+          "ok",
+          "已从云端同步",
+          `同步码 ${workspaceCode} 最近更新时间：${new Date(data.updated_at).toLocaleString("zh-CN")}`,
+        );
+        return true;
+      }
+
+      async function pushCloudState(options = {}) {
+        if (!applyWorkspaceCodeFromInput()) return false;
+        const client = ensureSupabaseClient();
+        if (!client) {
+          setCloudStatus("error", "云端未就绪", "Supabase SDK 未加载，或云端配置不完整。");
+          return false;
+        }
+        const nowIso = new Date().toISOString();
+        setCloudStatus("wait", "正在上传到云端", `当前同步码：${workspaceCode}`);
+        const { error } = await client.from(CLOUD_TABLE).upsert(
+          {
+            id: getCloudRowId(),
+            payload: state,
+            updated_at: nowIso,
+          },
+          { onConflict: "id" },
+        );
+
+        if (error) {
+          console.error(error);
+          setCloudStatus(
+            "error",
+            "云端上传失败",
+            "大概率是还没在 Supabase 执行建表 SQL。先建表，再点一次“上传到云端”。",
+          );
+          if (!options.silent) alert("云端上传失败。请先执行 supabase_setup.sql 里的建表 SQL。");
+          return false;
+        }
+
+        setCloudStatus(
+          "ok",
+          "已上传到云端",
+          `同步码 ${workspaceCode} 最近上传时间：${new Date(nowIso).toLocaleString("zh-CN")}`,
+        );
+        return true;
+      }
+
+      function scheduleCloudPush() {
+        clearTimeout(cloudPushTimer);
+        setCloudStatus("wait", "已保存到本机", "正在准备上传到云端...");
+        cloudPushTimer = window.setTimeout(() => {
+          void pushCloudState({ silent: true });
+        }, CLOUD_SYNC_DELAY_MS);
+      }
+
+      function todayText() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const day = String(now.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function uid() {
+        return `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
+      }
+
+      function getTemplate(id) {
+        return templates.find((item) => item.id === id) || templates[0];
+      }
+
+      function getTemplateGuide(template) {
+        const map = {
+          "math-section": {
+            unit: "按单个小节记 1 次",
+            standard: "只看一个小节。这个小节最后刷新结果达到 100% 无错，就可以记 1 次。",
+            timing: "不是按整个主题记，也不是按当天总练习记。一个小节过关，就记这1次。",
+            example: "例：主题3下面有A、B、C三个小节。A小节最终100%，就可记录1次“数学S题小节最终100%”。",
+          },
+          "math-theme": {
+            unit: "按单个主题记 1 次",
+            standard: "这个主题下所有小节都已经过关。",
+            timing: "当主题内每个小节都已满足“小节最终100%”后，再记这1次。",
+            example: "不是做完一部分就记，必须整个主题小节都过了。",
+          },
+          "math-transfer": {
+            unit: "按单次讲题记 1 次",
+            standard: "家长当场给一道举一反三题，孩子能独立讲清思路。",
+            timing: "通常在主题接近吃透时记录。",
+            example: "如果只会做、讲不清，不记这一项。",
+          },
+          "math-key": {
+            unit: "按单个主题精通记 1 次",
+            standard: "主题全通 + 举一反三讲明白，两项都达标。",
+            timing: "这是拿钥匙，不是普通小分。",
+            example: "一个主题完整精通后记1把钥匙。",
+          },
+          "reading-done": {
+            unit: "按单篇阅读记 1 次",
+            standard: "阅读做完并认真订正。",
+            timing: "先记完成，再看命中率补记更高档。",
+            example: "同一篇可以既记“完成并订正”，又按命中率再记一条。",
+          },
+          "reading-80": {
+            unit: "按单篇阅读记 1 次",
+            standard: "这一篇阅读整体命中率在80%-89%。",
+            timing: "通常和“完成并订正”分开记录。",
+            example: "如果命中率90%以上，就选更高那档，不重复选80档。",
+          },
+          "reading-90": {
+            unit: "按单篇阅读记 1 次",
+            standard: "这一篇阅读整体命中率在90%-94%。",
+            timing: "和“完成并订正”可同时记录。",
+            example: "90分到94分记这一档；95以上记更高档。",
+          },
+          "reading-95": {
+            unit: "按单篇阅读记 1 次",
+            standard: "这一篇阅读整体命中率达到95%以上。",
+            timing: "是阅读命中率的最高档。",
+            example: "如果达到95%，只记95档，不再记90档。",
+          },
+          "reading-method": {
+            unit: "按单个题型方法记 1 次",
+            standard: "能总结出一个题型的答题方法或模版。",
+            timing: "适合做完一轮后整理时记录。",
+            example: "例：会总结“人物形象题怎么答”。",
+          },
+          "reading-output": {
+            unit: "按单次口头讲清记 1 次",
+            standard: "能说出“这题为什么这样答”。",
+            timing: "重点看表达清楚，不只是答案对。",
+            example: "如果连续3次都能讲清，可再考虑钥匙或额外奖励。",
+          },
+          "chinese-expression": {
+            unit: "按单次表达训练记 1 次",
+            standard: "评分达到3分：对象清楚、重点较清楚、顺序基本清楚。",
+            timing: "描述物品、事情、人物、场景都可以。",
+            example: "听的人基本能知道你在说什么，就接近可记分。",
+          },
+          "chinese-expression-full": {
+            unit: "按单次表达训练记 1 次",
+            standard: "评分达到4分：说清对象、抓住特点、顺序清楚、简洁不跑题。",
+            timing: "比3分档更强调“重点和简洁”。",
+            example: "如果讲得很完整、别人一听就能脑补出来，可记4分档。",
+          },
+          "english-perfect": {
+            unit: "按单次英语满分记 1 次",
+            standard: "一次英语任务达到满分或全对。",
+            timing: "每次满分都可以单独记录。",
+            example: "当前这一项是5币；系统会在累计3次后自动补发连续奖励。",
+          },
+          "english-streak": {
+            unit: "系统自动发放",
+            standard: "每累计3次“英语满分/全对”，自动送2币+1钥匙。",
+            timing: "不用手动选，系统自己补记录。",
+            example: "第3、6、9次英语满分时会自动触发。",
+          },
+        };
+
+        const fallback = {
+          unit: "按完成1次任务记 1 次",
+          standard: template.note || "满足当前模板写的任务要求即可记录。",
+          timing: "先确认达到标准，再点击记录。",
+          example: `当前模板分值：${template.coins}币${template.keys ? `，${template.keys}钥匙` : ""}。`,
+        };
+
+        return map[template.id] || fallback;
+      }
+
+      function fillTemplate(templateId) {
+        const template = getTemplate(templateId);
+        dom.templateSelect.value = template.id;
+        dom.taskName.value = template.name;
+        dom.category.value = template.category;
+        dom.coinInput.value = template.coins;
+        dom.keyInput.value = template.keys;
+        dom.noteInput.value = template.note || "";
+        renderTemplateGuide(template);
+      }
+
+      function renderTemplateGuide(template) {
+        const guide = getTemplateGuide(template);
+        dom.templateGuide.innerHTML = `
+          <div class="template-guide-title">这个模板什么时候可以记分？</div>
+          <div class="guide-grid">
+            <div class="guide-item">
+              <div class="guide-label">记分单位</div>
+              <div class="guide-value">${guide.unit}</div>
+            </div>
+            <div class="guide-item">
+              <div class="guide-label">当前分值</div>
+              <div class="guide-value">${template.coins} 币${template.keys ? `，${template.keys} 钥匙` : ""}</div>
+            </div>
+            <div class="guide-item">
+              <div class="guide-label">达标标准</div>
+              <div class="guide-value">${guide.standard}</div>
+            </div>
+            <div class="guide-item">
+              <div class="guide-label">什么时候记录1次</div>
+              <div class="guide-value">${guide.timing}</div>
+            </div>
+            <div class="guide-item" style="grid-column: 1 / -1">
+              <div class="guide-label">举例</div>
+              <div class="guide-value">${guide.example}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      function getStats() {
+        const earned = state.records
+          .filter((item) => item.kind === "earn")
+          .reduce(
+            (acc, item) => {
+              acc.coins += item.coins;
+              acc.keys += item.keys;
+              return acc;
+            },
+            { coins: 0, keys: 0 },
+          );
+
+        const spent = state.records
+          .filter((item) => item.kind === "redeem")
+          .reduce(
+            (acc, item) => {
+              acc.coins += Math.abs(item.coins);
+              acc.keys += Math.abs(item.keys);
+              return acc;
+            },
+            { coins: 0, keys: 0 },
+          );
+
+        const totals = {
+          coins: earned.coins - spent.coins,
+          keys: earned.keys - spent.keys,
+        };
+
+        return {
+          earned,
+          spent,
+          totals,
+          redeemCount: state.records.filter((item) => item.kind === "redeem").length,
+        };
+      }
+
+      function sortByDateAndId(list) {
+        return [...list].sort((a, b) => {
+          const dateDiff = String(a.date || "").localeCompare(String(b.date || ""));
+          if (dateDiff !== 0) return dateDiff;
+          return String(a.id || "").localeCompare(String(b.id || ""));
+        });
+      }
+
+      function parseLocalDate(text) {
+        const [year, month, day] = String(text).split("-").map(Number);
+        return new Date(year, (month || 1) - 1, day || 1);
+      }
+
+      function formatDateKey(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      }
+
+      function getWeekKey(text) {
+        const date = parseLocalDate(text || todayText());
+        const day = date.getDay() === 0 ? 7 : date.getDay();
+        date.setDate(date.getDate() - day + 1);
+        return formatDateKey(date);
+      }
+
+      function getWeeklyCategoryCoins(weekKey) {
+        return state.records
+          .filter((item) => item.kind === "earn" && getWeekKey(item.date) === weekKey)
+          .reduce((acc, item) => {
+            acc[item.category] = (acc[item.category] || 0) + Math.max(0, Number(item.coins || 0));
+            return acc;
+          }, {});
+      }
+
+      function getWeeklyScoreSummary(weekKey) {
+        return state.records
+          .filter((item) => item.kind === "earn" && getWeekKey(item.date) === weekKey)
+          .reduce((acc, item) => {
+            const key = item.category || "未分类";
+            if (!acc[key]) {
+              acc[key] = {
+                category: key,
+                coins: 0,
+                keys: 0,
+                count: 0,
+              };
+            }
+            acc[key].coins += Number(item.coins || 0);
+            acc[key].keys += Number(item.keys || 0);
+            acc[key].count += 1;
+            return acc;
+          }, {});
+      }
+
+      function getCurrentWeekCapStatus() {
+        const currentWeekKey = getWeekKey(todayText());
+        const used = getWeeklyCategoryCoins(currentWeekKey);
+        return Object.entries(weeklyCoinCaps).map(([category, limit]) => ({
+          category,
+          used: used[category] || 0,
+          limit,
+          left: Math.max(0, limit - (used[category] || 0)),
+        }));
+      }
+
+      function renderWeeklyCaps() {
+        const list = getCurrentWeekCapStatus();
+        dom.weeklyCapList.innerHTML = list
+          .map((item) => {
+            const percent = Math.min(100, (item.used / item.limit) * 100);
+            return `
+              <div class="cap-item">
+                <div class="cap-top">
+                  <div class="cap-name">${item.category}本周上限</div>
+                  <strong>${item.used} / ${item.limit}</strong>
+                </div>
+                <div class="bar"><span style="width:${percent}%"></span></div>
+                <div class="cap-meta">本周还可再拿 ${item.left} 币。超出后系统会提醒并拦截。</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderWeeklyScores() {
+        const weekKey = getWeekKey(todayText());
+        const summaryMap = getWeeklyScoreSummary(weekKey);
+        const order = [
+          "数学S题",
+          "语文阅读",
+          "数学校内",
+          "语文校内",
+          "语文表达输出",
+          "数学日常",
+          "语文日常",
+          "英语",
+          "学习习惯",
+          "自定义",
+          "未分类",
+        ];
+
+        const items = Object.values(summaryMap).sort((a, b) => {
+          const orderA = order.indexOf(a.category);
+          const orderB = order.indexOf(b.category);
+          if (orderA !== orderB) {
+            if (orderA === -1) return 1;
+            if (orderB === -1) return -1;
+            return orderA - orderB;
+          }
+          return b.coins - a.coins;
+        });
+
+        if (!items.length) {
+          dom.weeklyScoreList.innerHTML = `<div class="empty">本周还没有得分记录。</div>`;
+          return;
+        }
+
+        const totalCoins = items.reduce((sum, item) => sum + item.coins, 0);
+        const totalKeys = items.reduce((sum, item) => sum + item.keys, 0);
+
+        dom.weeklyScoreList.innerHTML = `
+          <div class="cap-item">
+            <div class="cap-top">
+              <div class="cap-name">本周自动统计</div>
+              <strong>${weekKey} 这一周</strong>
+            </div>
+            <div class="cap-meta">本周累计 ${totalCoins} 币，${totalKeys} 钥匙。下面按分类自动汇总。</div>
+          </div>
+          ${items
+            .map(
+              (item) => `
+                <div class="week-row">
+                  <div class="week-row-top">
+                    <div class="week-row-name">${item.category}</div>
+                    <strong>${item.coins} 币${item.keys ? ` · ${item.keys} 钥匙` : ""}</strong>
+                  </div>
+                  <div class="week-row-meta">本周共记录 ${item.count} 次。</div>
+                </div>
+              `,
+            )
+            .join("")}
+        `;
+      }
+
+      function ensureAutoBonuses() {
+        const perfectRecords = sortByDateAndId(
+          state.records.filter(
+            (item) => item.kind === "earn" && item.templateId === "english-perfect",
+          ),
+        );
+        const autoBonusRecords = sortByDateAndId(
+          state.records.filter(
+            (item) =>
+              item.kind === "earn" &&
+              item.templateId === "english-streak" &&
+              item.autoGenerated === true,
+          ),
+        );
+
+        const template = getTemplate("english-streak");
+        const neededBonusCount = Math.floor(perfectRecords.length / 3);
+        let changed = false;
+
+        for (let i = autoBonusRecords.length; i < neededBonusCount; i += 1) {
+          const sourceIndex = (i + 1) * 3 - 1;
+          const sourceRecord = perfectRecords[sourceIndex];
+          state.records.push({
+            id: uid(),
+            kind: "earn",
+            templateId: "english-streak",
+            autoGenerated: true,
+            name: template.name,
+            category: template.category,
+            coins: template.coins,
+            keys: template.keys,
+            date: sourceRecord?.date || todayText(),
+            note: `系统自动发放：已累计记录 ${(i + 1) * 3} 次英语满分。`,
+          });
+          changed = true;
+        }
+
+        return changed;
+      }
+
+      function countRedeemedReward(rewardId, scope) {
+        const target = rewards.find((item) => item.id === rewardId);
+        if (!target) return 0;
+        return state.records.filter((item) => {
+          if (item.kind !== "redeem" || item.name !== target.name) return false;
+          if (scope === "week") return getWeekKey(item.date) === getWeekKey(todayText());
+          return true;
+        }).length;
+      }
+
+      function getRewardAvailability(reward, totals) {
+        const missingCoins = Math.max(0, reward.coins - totals.coins);
+        const missingKeys = Math.max(0, reward.keys - totals.keys);
+        if (missingCoins > 0 || missingKeys > 0) {
+          const parts = [];
+          if (missingCoins > 0) parts.push(`${missingCoins}币`);
+          if (missingKeys > 0) parts.push(`${missingKeys}钥匙`);
+          return { ok: false, reason: `还差 ${parts.join(" / ")}` };
+        }
+
+        const singleLimit = rewardSingleLimits[reward.id];
+        if (singleLimit) {
+          const used = countRedeemedReward(reward.id, singleLimit.scope);
+          if (used >= singleLimit.limit) {
+            return { ok: false, reason: "该奖励已达兑换上限" };
+          }
+        }
+
+        const groupLimit = rewardGroupLimits.find((group) => group.rewardIds.includes(reward.id));
+        if (groupLimit) {
+          const used = groupLimit.rewardIds.reduce(
+            (sum, id) => sum + countRedeemedReward(id, groupLimit.scope),
+            0,
+          );
+          if (used >= groupLimit.limit) {
+            return { ok: false, reason: `${groupLimit.label}本周已达上限` };
+          }
+        }
+
+        return { ok: true, reason: "现在可兑换" };
+      }
+
+      function canRedeem(reward, totals) {
+        return getRewardAvailability(reward, totals).ok;
+      }
+
+      function renderSummary() {
+        const stats = getStats();
+        const available = rewards.filter((reward) => canRedeem(reward, stats.totals)).length;
+        dom.coinTotal.textContent = stats.totals.coins;
+        dom.keyTotal.textContent = stats.totals.keys;
+        dom.coinEarned.textContent = stats.earned.coins;
+        dom.keyEarned.textContent = stats.earned.keys;
+        dom.redeemCount.textContent = stats.redeemCount;
+        dom.availableRewards.textContent = available;
+      }
+
+      function renderRewards() {
+        const stats = getStats();
+        dom.rewardList.innerHTML = "";
+
+        rewards.forEach((reward) => {
+          const availability = getRewardAvailability(reward, stats.totals);
+          const ok = availability.ok;
+          const wrap = document.createElement("div");
+          wrap.className = "reward-card";
+          wrap.innerHTML = `
+            <div class="reward-top">
+              <div>
+                <div class="reward-name">${reward.name}</div>
+                <span class="reward-type">${reward.type}</span>
+              </div>
+              <div class="reward-cost">${reward.coins} 币${reward.keys ? ` + ${reward.keys} 钥匙` : ""}</div>
+            </div>
+            <div class="reward-desc">${reward.description}</div>
+            <div class="reward-foot">
+              <span class="status ${ok ? "ok" : "wait"}">${availability.reason}</span>
+              <button class="btn ${ok ? "btn-primary" : "btn-secondary"}" ${ok ? "" : "disabled"} data-reward-id="${reward.id}">
+                ${ok ? "兑换奖励" : "暂不可换"}
+              </button>
+            </div>
+          `;
+          dom.rewardList.appendChild(wrap);
+        });
+      }
+
+      function formatDelta(value, isSpend = false) {
+        if (value === 0) return isSpend ? "-0" : "+0";
+        return `${isSpend ? "-" : "+"}${Math.abs(value)}`;
+      }
+
+      function buildHistoryHtml(limit = 12, emptyText = "还没有记录。先录入第一个任务吧。") {
+        const recent = [...state.records].reverse().slice(0, limit);
+        if (!recent.length) {
+          return `<div class="empty">${emptyText}</div>`;
+        }
+
+        return recent
+          .map((item) => {
+            const isRedeem = item.kind === "redeem";
+            const deltaClass = isRedeem ? "minus" : "plus";
+            return `
+              <div class="history-item">
+                <div class="history-top">
+                  <div class="history-title">${item.name}</div>
+                  <div class="history-time">${item.date || ""}</div>
+                </div>
+                <div class="history-sub">
+                  <strong>${item.category}</strong>
+                  · ${isRedeem ? "兑换奖励" : "完成任务"}
+                  · <span class="delta ${deltaClass}">${formatDelta(item.coins, isRedeem)} 币</span>
+                  · <span class="delta ${deltaClass}">${formatDelta(item.keys, isRedeem)} 钥匙</span>
+                </div>
+                ${
+                  item.note
+                    ? `<div class="history-sub" style="margin-top:6px">${item.note}</div>`
+                    : ""
+                }
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderHistory() {
+        dom.historyList.innerHTML = buildHistoryHtml(12, "还没有记录。先录入第一个任务吧。");
+        dom.entryHistoryList.innerHTML = buildHistoryHtml(5, "这里会显示刚刚录入的最近几条记录。");
+      }
+
+      function renderProgress() {
+        const { mathDone, mathTotal, readingDone, readingTotal } = state.progress;
+        const mathPercent = Math.max(0, Math.min(100, (mathDone / mathTotal) * 100));
+        const readingPercent = Math.max(0, Math.min(100, (readingDone / readingTotal) * 100));
+
+        dom.mathDoneInput.value = mathDone;
+        dom.readingDoneInput.value = readingDone;
+        dom.mathThemeProgressText.textContent = `${mathDone} / ${mathTotal}`;
+        dom.readingTypeProgressText.textContent = `${readingDone} / ${readingTotal}`;
+        dom.mathThemeBar.style.width = `${mathPercent}%`;
+        dom.readingTypeBar.style.width = `${readingPercent}%`;
+      }
+
+      function renderTemplates() {
+        dom.templateSelect.innerHTML = templates
+          .map(
+            (item) =>
+              `<option value="${item.id}">${item.name}（${item.coins}币${item.keys ? `，${item.keys}钥匙` : ""}）</option>`,
+          )
+          .join("");
+
+        const hot = [
+          "math-daily",
+          "math-section",
+          "reading-done",
+          "chinese-daily",
+          "english-perfect",
+          "habit-quality",
+          "chinese-expression-full",
+        ];
+
+        dom.templateChips.innerHTML = hot
+          .map((id) => {
+            const template = getTemplate(id);
+            return `<button class="chip" type="button" data-template-id="${template.id}">${template.name}</button>`;
+          })
+          .join("");
+      }
+
+      function renderAll() {
+        renderSummary();
+        renderRewards();
+        renderHistory();
+        renderProgress();
+        renderWeeklyCaps();
+        renderWeeklyScores();
+        renderCloudPanel();
+        updateFloatingAction();
+      }
+
+      function getActiveMainTab() {
+        return document.querySelector("[data-main-tab].active")?.dataset.mainTab || "home";
+      }
+
+      function updateFloatingAction() {
+        const isEntryTab = getActiveMainTab() === "entry";
+        dom.mobileActionBar.classList.toggle("active", isEntryTab);
+      }
+
+      function setRecordButtonsState(disabled, text) {
+        [dom.addRecordBtn, dom.floatingAddRecordBtn].forEach((button) => {
+          if (!button) return;
+          button.disabled = disabled;
+          button.textContent = text;
+        });
+      }
+
+      function addEarnRecord() {
+        if (dom.addRecordBtn.disabled || dom.floatingAddRecordBtn.disabled) return;
+        const name = dom.taskName.value.trim();
+        const category = dom.category.value.trim() || "未分类";
+        let coins = Number(dom.coinInput.value || 0);
+        const keys = Number(dom.keyInput.value || 0);
+        const date = dom.eventDate.value || todayText();
+        const note = dom.noteInput.value.trim();
+
+        if (!name) {
+          alert("请先填写任务名称。");
+          return;
+        }
+
+        const cap = weeklyCoinCaps[category];
+        if (cap && coins > 0) {
+          const weekKey = getWeekKey(date);
+          const usedMap = getWeeklyCategoryCoins(weekKey);
+          const used = usedMap[category] || 0;
+          const left = Math.max(0, cap - used);
+          if (left <= 0) {
+            alert(`${category} 本周上限已满，当前这条记录不能再加币。你仍然可以把币改成0只做完成记录。`);
+            return;
+          }
+          if (coins > left) {
+            const confirmed = window.confirm(
+              `${category} 本周还剩 ${left} 币可记。是否自动把本次记录从 ${coins} 币调整为 ${left} 币？`,
+            );
+            if (!confirmed) return;
+            coins = left;
+            dom.coinInput.value = left;
+          }
+        }
+
+        state.records.push({
+          id: uid(),
+          kind: "earn",
+          templateId: dom.templateSelect.value,
+          name,
+          category,
+          coins,
+          keys,
+          date,
+          note,
+        });
+
+        const autoChanged = ensureAutoBonuses();
+
+        saveState();
+        if (autoChanged) saveState();
+        renderAll();
+        const autoText = autoChanged ? "；并自动补发了英语连续满分奖励" : "";
+        setRecordButtonsState(true, "已记录");
+        window.setTimeout(() => {
+          setRecordButtonsState(false, "记录任务");
+        }, 1000);
+        const recordCount = state.records.length;
+        alert(
+          `记录成功：${name}\n本次记入 ${coins} 币${keys ? `，${keys} 钥匙` : ""}${autoText}\n当前总记录数：${recordCount} 条`,
+        );
+      }
+
+      function redeemReward(rewardId) {
+        const reward = rewards.find((item) => item.id === rewardId);
+        if (!reward) return;
+        const stats = getStats();
+        const availability = getRewardAvailability(reward, stats.totals);
+        if (!availability.ok) {
+          alert(`当前不能兑换：${availability.reason}`);
+          return;
+        }
+
+        const confirmed = window.confirm(
+          `确定兑换“${reward.name}”吗？将扣除 ${reward.coins} 币${reward.keys ? ` 和 ${reward.keys} 把钥匙` : ""}。`,
+        );
+        if (!confirmed) return;
+
+        state.records.push({
+          id: uid(),
+          kind: "redeem",
+          name: reward.name,
+          category: reward.type,
+          coins: -reward.coins,
+          keys: -reward.keys,
+          date: todayText(),
+          note: reward.description,
+        });
+
+        saveState();
+        renderAll();
+      }
+
+      function exportState() {
+        const data = JSON.stringify(state, null, 2);
+        const blob = new Blob([data], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `成长银行存档-${todayText()}.json`;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      function importState(file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const parsed = JSON.parse(String(reader.result || "{}"));
+            state = {
+              ...normalizeState(parsed),
+            };
+            if (ensureAutoBonuses()) saveState();
+            saveState();
+            renderAll();
+            alert("导入成功。");
+          } catch (error) {
+            console.error(error);
+            alert("导入失败，请确认是本工具导出的JSON文件。");
+          }
+        };
+        reader.readAsText(file);
+      }
+
+      function resetAll() {
+        const confirmed = window.confirm("确定要清空全部记录和进度吗？此操作不可恢复。");
+        if (!confirmed) return;
+        state = structuredClone(defaultState);
+        saveState();
+        fillTemplate("math-section");
+        dom.eventDate.value = todayText();
+        renderAll();
+      }
+
+      dom.templateSelect.addEventListener("change", (event) => {
+        fillTemplate(event.target.value);
+      });
+
+      dom.templateChips.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-template-id]");
+        if (!button) return;
+        fillTemplate(button.dataset.templateId);
+      });
+
+      dom.addRecordBtn.addEventListener("click", addEarnRecord);
+      dom.floatingAddRecordBtn.addEventListener("click", addEarnRecord);
+
+      dom.rewardList.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-reward-id]");
+        if (!button) return;
+        redeemReward(button.dataset.rewardId);
+      });
+
+      dom.saveProgressBtn.addEventListener("click", () => {
+        const mathDone = Number(dom.mathDoneInput.value || 0);
+        const readingDone = Number(dom.readingDoneInput.value || 0);
+        state.progress.mathDone = Math.max(0, Math.min(state.progress.mathTotal, mathDone));
+        state.progress.readingDone = Math.max(
+          0,
+          Math.min(state.progress.readingTotal, readingDone),
+        );
+        saveState();
+        renderProgress();
+      });
+
+      dom.exportBtn.addEventListener("click", exportState);
+      dom.importBtn.addEventListener("click", () => dom.importFile.click());
+      dom.importFile.addEventListener("change", (event) => {
+        const file = event.target.files?.[0];
+        if (file) importState(file);
+        event.target.value = "";
+      });
+      dom.resetBtn.addEventListener("click", resetAll);
+      dom.copyWorkspaceBtn.addEventListener("click", async () => {
+        if (!applyWorkspaceCodeFromInput()) return;
+        try {
+          await navigator.clipboard.writeText(workspaceCode);
+          alert(`已复制家庭同步码：${workspaceCode}`);
+        } catch (error) {
+          console.error(error);
+          alert(`复制失败。你也可以手动复制这个同步码：${workspaceCode}`);
+        }
+      });
+      dom.pullCloudBtn.addEventListener("click", async () => {
+        const confirmed = window.confirm("从云端拉取会用云端数据覆盖当前页面。确定继续吗？");
+        if (!confirmed) return;
+        await pullCloudState();
+      });
+      dom.pushCloudBtn.addEventListener("click", async () => {
+        await pushCloudState();
+      });
+
+      document.addEventListener("click", (event) => {
+        const mainTabBtn = event.target.closest("[data-main-tab]");
+        if (mainTabBtn) {
+          const target = mainTabBtn.dataset.mainTab;
+          document.querySelectorAll("[data-main-tab]").forEach((button) => {
+            button.classList.toggle("active", button.dataset.mainTab === target);
+          });
+          document.querySelectorAll("[data-main-tab-panel]").forEach((panel) => {
+            panel.classList.toggle("active", panel.dataset.mainTabPanel === target);
+          });
+          updateFloatingAction();
+        }
+
+      });
+
+      async function init() {
+        clearLegacyData();
+        renderTemplates();
+        dom.eventDate.value = todayText();
+        fillTemplate("math-section");
+        renderCloudPanel();
+        setCloudStatus("wait", "正式版已启用", "当前页面会本地保存，并自动尝试同步到云端。");
+        await pullCloudState({ silent: true });
+        if (ensureAutoBonuses()) saveState();
+        renderAll();
+      }
+
+      void init();
+    </script>
+  </body>
+  </html>

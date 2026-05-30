@@ -125,6 +125,22 @@
         color: var(--muted);
         font-size: 13px;
         margin-bottom: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .score-label-icon {
+        width: 15px;
+        height: 15px;
+        color: currentColor;
+        flex: 0 0 auto;
+      }
+
+      .score-label-icon svg {
+        width: 100%;
+        height: 100%;
+        display: block;
       }
 
       .score-value {
@@ -242,6 +258,12 @@
       .panel-head p {
         color: var(--muted);
         font-size: 14px;
+      }
+
+      .compact-note {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .section-title {
@@ -386,6 +408,15 @@
         background: #fbfcff;
       }
 
+      .progress-card.editable {
+        cursor: pointer;
+      }
+
+      .progress-card.editable.active {
+        border-color: rgba(79, 70, 229, 0.45);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.08);
+      }
+
       .progress-top {
         display: flex;
         justify-content: space-between;
@@ -416,6 +447,25 @@
         height: 100%;
         border-radius: 999px;
         background: linear-gradient(90deg, #7c83ff, #4f46e5);
+      }
+
+      .progress-editor-hint {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .progress-editor {
+        margin-top: 14px;
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+      }
+
+      .progress-editor-title {
+        font-size: 14px;
+        font-weight: 800;
+        margin-bottom: 10px;
       }
 
       .reward-grid {
@@ -499,11 +549,43 @@
         margin-top: 12px;
       }
 
-      .cap-item {
+      .weekly-board {
+        display: grid;
+        gap: 14px;
+        margin-top: 12px;
+        padding: 14px;
         border: 1px solid var(--line);
-        border-radius: 14px;
+        border-radius: 16px;
         background: #fbfcff;
-        padding: 12px 14px;
+      }
+
+      .weekly-section {
+        display: grid;
+        gap: 10px;
+      }
+
+      .weekly-section + .weekly-section {
+        padding-top: 14px;
+        border-top: 1px solid rgba(149, 156, 179, 0.24);
+      }
+
+      .weekly-section-title {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--muted);
+      }
+
+      .cap-item {
+        border: 0;
+        border-bottom: 1px solid rgba(149, 156, 179, 0.24);
+        border-radius: 0;
+        background: transparent;
+        padding: 0 0 10px;
+      }
+
+      .cap-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
       }
 
       .cap-top {
@@ -524,16 +606,30 @@
       }
 
       .week-summary {
-        margin-top: 14px;
         display: grid;
         gap: 10px;
       }
 
+      .week-total {
+        padding: 10px 12px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #f5f3ff 0%, #eef2ff 100%);
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
       .week-row {
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: #fff;
-        padding: 12px 14px;
+        border: 0;
+        border-bottom: 1px solid rgba(149, 156, 179, 0.24);
+        border-radius: 0;
+        background: transparent;
+        padding: 0 0 10px;
+      }
+
+      .week-row:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
       }
 
       .week-row-top {
@@ -646,23 +742,47 @@
       }
 
       .tab-btn {
-        border: 1px solid #cfd7f6;
-        background: #f7f8ff;
-        border-radius: 18px;
-        padding: 15px 16px;
+        border: 0;
+        background: transparent;
+        border-radius: 999px;
+        padding: 10px 14px;
         cursor: pointer;
         font-weight: 700;
         color: #4b5563;
         text-align: center;
-        min-height: 58px;
-        font-size: 15px;
+        min-height: 56px;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition:
+          background 0.2s ease,
+          color 0.2s ease,
+          transform 0.2s ease;
+      }
+
+      .tab-icon {
+        width: 18px;
+        height: 18px;
+        color: currentColor;
+        flex: 0 0 auto;
+      }
+
+      .tab-icon svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .tab-label {
+        white-space: nowrap;
       }
 
       .tab-btn.active {
-        background: var(--primary);
-        color: #fff;
-        border-color: var(--primary);
-        box-shadow: 0 10px 24px rgba(79, 70, 229, 0.22);
+        background: #edf0f4;
+        color: var(--primary);
+        box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18);
       }
 
       .tab-panel-main {
@@ -705,29 +825,73 @@
         padding: 14px;
       }
 
-      .template-guide-title {
-        font-weight: 800;
-        margin-bottom: 8px;
+      .panel-balance-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+        padding: 8px 10px;
+        border: 1px solid rgba(99, 102, 241, 0.12);
+        border-radius: 999px;
+        background: rgba(244, 247, 255, 0.96);
       }
 
-      .guide-grid {
+      .panel-balance-title {
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .panel-balance-stats {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+      }
+
+      .panel-balance-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(255, 255, 255, 0.95);
+        text-align: left;
+      }
+
+      .panel-balance-pill .score-label {
+        margin-bottom: 0;
+        font-size: 12px;
+      }
+
+      .panel-balance-pill .score-value {
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .guide-list {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 10px;
       }
 
-      .guide-item {
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: #fff;
-        padding: 10px 12px;
+      .guide-row {
+        display: grid;
+        gap: 4px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed rgba(149, 156, 179, 0.35);
+      }
+
+      .guide-row:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
       }
 
       .guide-label {
         color: var(--muted);
         font-size: 12px;
         font-weight: 700;
-        margin-bottom: 6px;
       }
 
       .guide-value {
@@ -746,7 +910,6 @@
 
         .field-grid,
         .stat-grid,
-        .guide-grid,
         .entry-layout {
           grid-template-columns: 1fr;
         }
@@ -791,6 +954,31 @@
           padding: 16px;
         }
 
+        .hero-main {
+          background:
+            radial-gradient(circle at top right, rgba(255, 255, 255, 0.22), transparent 34%),
+            linear-gradient(135deg, #4f46e5 0%, #6366f1 55%, #7c83ff 100%);
+          color: #fff;
+          border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .hero-main .subtitle {
+          color: rgba(255, 255, 255, 0.84);
+        }
+
+        .hero-main .hero-total-card {
+          background: rgba(255, 255, 255, 0.14);
+          border-color: rgba(255, 255, 255, 0.18);
+        }
+
+        .hero-main .score-label {
+          color: rgba(255, 255, 255, 0.72);
+        }
+
+        .hero-main .score-value {
+          color: #fff;
+        }
+
         .score-value {
           font-size: 24px;
         }
@@ -801,6 +989,23 @@
 
         .section-title {
           font-size: 18px;
+        }
+
+        .progress-card.editable::after {
+          content: "点一下可修改";
+          display: inline-block;
+          margin-top: 10px;
+          font-size: 12px;
+          color: var(--primary);
+          font-weight: 700;
+        }
+
+        .progress-editor {
+          display: none;
+        }
+
+        .progress-editor.active {
+          display: block;
         }
 
         .subtitle {
@@ -814,10 +1019,6 @@
           font-size: 16px;
         }
 
-        .desktop-record-btn {
-          display: none;
-        }
-
         .shortcut-wrap {
           display: none;
         }
@@ -829,7 +1030,7 @@
         }
 
         .hero-side-grid {
-          grid-template-columns: 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .hero-total-card {
@@ -846,25 +1047,86 @@
         }
 
         .entry-panel {
-          padding-bottom: 88px;
+          padding-bottom: 24px;
         }
 
         .mobile-action-bar {
-          position: fixed;
-          left: 12px;
-          right: 12px;
-          bottom: calc(12px + env(safe-area-inset-bottom));
-          z-index: 60;
-          padding: 10px;
-          border-radius: 20px;
-          background: rgba(255, 255, 255, 0.92);
-          border: 1px solid rgba(223, 227, 240, 0.95);
-          box-shadow: 0 18px 40px rgba(31, 42, 68, 0.16);
-          backdrop-filter: blur(16px);
+          display: none !important;
         }
 
         .mobile-action-bar.active {
-          display: block;
+          display: none !important;
+        }
+
+        .tab-row {
+          position: fixed;
+          left: 12px;
+          right: 12px;
+          top: auto;
+          bottom: calc(12px + env(safe-area-inset-bottom));
+          z-index: 80;
+          display: grid;
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+          gap: 8px;
+          overflow: visible;
+          margin-bottom: 0;
+          padding: 10px;
+          border-radius: 22px;
+          background: rgba(255, 255, 255, 0.96);
+          box-shadow: 0 18px 40px rgba(31, 42, 68, 0.16);
+        }
+
+        .tab-btn {
+          min-width: 0;
+          min-height: 58px;
+          padding: 8px 6px;
+          font-size: 12px;
+          border-radius: 999px;
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .tab-icon {
+          width: 20px;
+          height: 20px;
+        }
+
+        .tab-label {
+          font-size: 11px;
+          letter-spacing: 0.01em;
+        }
+
+        .desktop-record-btn {
+          display: inline-flex;
+          min-height: 44px;
+          padding: 10px 14px;
+          white-space: nowrap;
+        }
+
+        .entry-primary-panel {
+          background: linear-gradient(180deg, #f8faff 0%, #ffffff 100%);
+          border-color: #d8def7;
+        }
+
+        .entry-primary-panel .panel-head {
+          align-items: flex-start;
+          padding: 12px 12px 0;
+          margin: -4px -4px 14px;
+          border-radius: 16px;
+          background: rgba(79, 70, 229, 0.06);
+        }
+
+        .panel-balance-bar {
+          position: static;
+          align-items: center;
+          flex-direction: row;
+          padding: 8px 10px;
+        }
+
+        .panel-balance-stats {
+          width: auto;
+          min-width: 0;
+          flex-wrap: wrap;
         }
       }
     </style>
@@ -872,10 +1134,45 @@
   <body>
     <div class="wrap">
       <section class="tab-row">
-        <button class="tab-btn active" data-main-tab="home">首页</button>
-        <button class="tab-btn" data-main-tab="entry">任务录入</button>
-        <button class="tab-btn" data-main-tab="rewards">奖励兑换</button>
-        <button class="tab-btn" data-main-tab="rules">配置与规则</button>
+        <button class="tab-btn active" data-main-tab="home">
+          <span class="tab-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3.5 10.5 12 3.5l8.5 7" />
+              <path d="M6.5 9.5V20h11V9.5" />
+            </svg>
+          </span>
+          <span class="tab-label">首页</span>
+        </button>
+        <button class="tab-btn" data-main-tab="entry">
+          <span class="tab-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v12A1.5 1.5 0 0 1 19 19.5H5A1.5 1.5 0 0 1 3.5 18V6A1.5 1.5 0 0 1 5 4.5Z" />
+              <path d="M7.5 8.5h9" />
+              <path d="M7.5 12h9" />
+              <path d="M7.5 15.5h5" />
+            </svg>
+          </span>
+          <span class="tab-label">任务录入</span>
+        </button>
+        <button class="tab-btn" data-main-tab="rewards">
+          <span class="tab-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3.5" y="6.5" width="17" height="11" rx="2.5" />
+              <path d="M3.5 10.5h17" />
+              <path d="M8 14h3" />
+            </svg>
+          </span>
+          <span class="tab-label">奖励兑换</span>
+        </button>
+        <button class="tab-btn" data-main-tab="rules">
+          <span class="tab-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1 1 0 0 0 .2 1.1l.1.1a1 1 0 0 1 0 1.4l-1 1a1 1 0 0 1-1.4 0l-.1-.1a1 1 0 0 0-1.1-.2 1 1 0 0 0-.6.9V20a1 1 0 0 1-1 1h-1.4a1 1 0 0 1-1-1v-.2a1 1 0 0 0-.7-.9 1 1 0 0 0-1.1.2l-.1.1a1 1 0 0 1-1.4 0l-1-1a1 1 0 0 1 0-1.4l.1-.1a1 1 0 0 0 .2-1.1 1 1 0 0 0-.9-.6H4a1 1 0 0 1-1-1v-1.4a1 1 0 0 1 1-1h.2a1 1 0 0 0 .9-.7 1 1 0 0 0-.2-1.1l-.1-.1a1 1 0 0 1 0-1.4l1-1a1 1 0 0 1 1.4 0l.1.1a1 1 0 0 0 1.1.2 1 1 0 0 0 .6-.9V4a1 1 0 0 1 1-1h1.4a1 1 0 0 1 1 1v.2a1 1 0 0 0 .7.9 1 1 0 0 0 1.1-.2l.1-.1a1 1 0 0 1 1.4 0l1 1a1 1 0 0 1 0 1.4l-.1.1a1 1 0 0 0-.2 1.1 1 1 0 0 0 .9.6H20a1 1 0 0 1 1 1v1.4a1 1 0 0 1-1 1h-.2a1 1 0 0 0-.9.7Z" />
+            </svg>
+          </span>
+          <span class="tab-label">配置规则</span>
+        </button>
       </section>
 
       <section class="tab-panel-main active" data-main-tab-panel="home">
@@ -889,11 +1186,31 @@
             </p>
             <div class="hero-score-grid">
               <div class="score-card hero-total-card">
-                <div class="score-label">成长币</div>
+                <div class="score-label">
+                  <span class="score-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="7.5" />
+                      <path d="M9.5 9.5h5" />
+                      <path d="M9 12h6" />
+                      <path d="M10 14.5h4" />
+                    </svg>
+                  </span>
+                  <span>成长币</span>
+                </div>
                 <div class="score-value" id="coinTotal">0</div>
               </div>
               <div class="score-card hero-total-card">
-                <div class="score-label">钥匙</div>
+                <div class="score-label">
+                  <span class="score-label-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="8.5" cy="10" r="3.5" />
+                      <path d="M12 10h8.5" />
+                      <path d="M17 10v2.5" />
+                      <path d="M20 10v2.5" />
+                    </svg>
+                  </span>
+                  <span>钥匙</span>
+                </div>
                 <div class="score-value" id="keyTotal">0</div>
               </div>
             </div>
@@ -931,7 +1248,7 @@
         </section>
 
         <section class="content-grid">
-          <div class="card panel">
+          <div class="card panel entry-primary-panel">
             <div class="panel-head">
               <div>
                 <h2 class="section-title">主线进度</h2>
@@ -939,7 +1256,7 @@
               </div>
             </div>
             <div class="stat-grid">
-              <div class="progress-card">
+              <div class="progress-card editable" data-progress-target="math">
                 <div class="progress-top">
                   <div>
                     <div class="progress-name">数学S题主题</div>
@@ -949,7 +1266,7 @@
                 </div>
                 <div class="bar"><span id="mathThemeBar" style="width: 40.9%"></span></div>
               </div>
-              <div class="progress-card">
+              <div class="progress-card editable" data-progress-target="reading">
                 <div class="progress-top">
                   <div>
                     <div class="progress-name">语文阅读题型</div>
@@ -960,18 +1277,24 @@
                 <div class="bar"><span id="readingTypeBar" style="width: 0%"></span></div>
               </div>
             </div>
-            <div class="field-grid" style="margin-top: 14px">
-              <div class="field">
-                <label for="mathDoneInput">数学S题已完成主题数</label>
-                <input id="mathDoneInput" type="number" min="0" max="22" step="1" value="9" />
-              </div>
-              <div class="field">
-                <label for="readingDoneInput">语文阅读已攻克题型数</label>
-                <input id="readingDoneInput" type="number" min="0" max="8" step="1" value="0" />
-              </div>
+            <div class="progress-editor-hint" id="progressEditorHint">
+              手机端先点上面的进度条，再修改对应进度。
             </div>
-            <div class="inline" style="margin-top: 14px">
-              <button class="btn btn-primary" id="saveProgressBtn">保存主线进度</button>
+            <div class="progress-editor" id="progressEditor">
+              <div class="progress-editor-title" id="progressEditorTitle">修改主线进度</div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="mathDoneInput">数学S题已完成主题数</label>
+                  <input id="mathDoneInput" type="number" min="0" max="22" step="1" value="9" />
+                </div>
+                <div class="field">
+                  <label for="readingDoneInput">语文阅读已攻克题型数</label>
+                  <input id="readingDoneInput" type="number" min="0" max="8" step="1" value="0" />
+                </div>
+              </div>
+              <div class="inline" style="margin-top: 14px">
+                <button class="btn btn-primary" id="saveProgressBtn">保存主线进度</button>
+              </div>
             </div>
           </div>
 
@@ -982,19 +1305,60 @@
                 <p>自动看本周上限和当前拿分情况。</p>
               </div>
             </div>
-            <div class="cap-list" id="weeklyCapList"></div>
-            <div class="week-summary" id="weeklyScoreList"></div>
+            <div class="weekly-board">
+              <div class="weekly-section">
+                <div class="weekly-section-title">上限类</div>
+                <div class="cap-list" id="weeklyCapList"></div>
+              </div>
+              <div class="weekly-section">
+                <div class="weekly-section-title">获币明细</div>
+                <div class="week-summary" id="weeklyScoreList"></div>
+              </div>
+            </div>
           </div>
         </section>
       </section>
 
       <section class="tab-panel-main entry-panel" data-main-tab-panel="entry">
+        <div class="panel-balance-bar">
+          <div class="panel-balance-title">成长银行</div>
+          <div class="panel-balance-stats">
+            <div class="panel-balance-pill">
+              <div class="score-label">
+                <span class="score-label-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="7.5" />
+                    <path d="M9.5 9.5h5" />
+                    <path d="M9 12h6" />
+                    <path d="M10 14.5h4" />
+                  </svg>
+                </span>
+                <span>成长币</span>
+              </div>
+              <div class="score-value" data-balance-coins>0</div>
+            </div>
+            <div class="panel-balance-pill">
+              <div class="score-label">
+                <span class="score-label-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="8.5" cy="10" r="3.5" />
+                    <path d="M12 10h8.5" />
+                    <path d="M17 10v2.5" />
+                    <path d="M20 10v2.5" />
+                  </svg>
+                </span>
+                <span>钥匙</span>
+              </div>
+              <div class="score-value" data-balance-keys>0</div>
+            </div>
+          </div>
+        </div>
         <div class="entry-layout">
           <div class="card panel">
             <div class="panel-head">
               <div>
                 <h2 class="section-title">任务录入</h2>
-                <p>常用任务可直接点快捷按钮记录；只有特别奖励才需要手填。</p>
+                <p>先选模板，再点右侧按钮记录；特别奖励才需要手填。</p>
               </div>
               <button class="btn btn-primary desktop-record-btn" id="addRecordBtn">记录任务</button>
             </div>
@@ -1042,16 +1406,16 @@
             <div class="panel-head">
               <div>
                 <h2 class="section-title">模板说明</h2>
-                <p>按当前模板显示记分标准。</p>
+                <p>会跟随上面当前选择的模板自动变化。</p>
               </div>
             </div>
             <div class="template-guide" id="templateGuide"></div>
             <div class="panel-head" style="margin-top: 18px">
               <div>
                 <h2 class="section-title">最近记录预览</h2>
-                <p>录入成功后，这里会立刻刷新，方便马上确认。</p>
+                <p class="compact-note">录入后会立刻刷新，方便确认。</p>
               </div>
-              <button class="btn btn-danger" id="resetBtn">清空全部</button>
+              <button class="btn btn-danger" id="resetBtn">清空</button>
             </div>
             <div class="history-list" id="entryHistoryList"></div>
           </div>
@@ -1059,6 +1423,39 @@
       </section>
 
       <section class="tab-panel-main" data-main-tab-panel="rewards" style="margin-top: 16px">
+        <div class="panel-balance-bar">
+          <div class="panel-balance-title">成长银行</div>
+          <div class="panel-balance-stats">
+            <div class="panel-balance-pill">
+              <div class="score-label">
+                <span class="score-label-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="7.5" />
+                    <path d="M9.5 9.5h5" />
+                    <path d="M9 12h6" />
+                    <path d="M10 14.5h4" />
+                  </svg>
+                </span>
+                <span>成长币</span>
+              </div>
+              <div class="score-value" data-balance-coins>0</div>
+            </div>
+            <div class="panel-balance-pill">
+              <div class="score-label">
+                <span class="score-label-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="8.5" cy="10" r="3.5" />
+                    <path d="M12 10h8.5" />
+                    <path d="M17 10v2.5" />
+                    <path d="M20 10v2.5" />
+                  </svg>
+                </span>
+                <span>钥匙</span>
+              </div>
+              <div class="score-value" data-balance-keys>0</div>
+            </div>
+          </div>
+        </div>
         <div class="content-grid">
           <div class="card panel">
             <div class="panel-head">
@@ -1583,6 +1980,9 @@
         mathDoneInput: document.getElementById("mathDoneInput"),
         readingDoneInput: document.getElementById("readingDoneInput"),
         saveProgressBtn: document.getElementById("saveProgressBtn"),
+        progressEditor: document.getElementById("progressEditor"),
+        progressEditorHint: document.getElementById("progressEditorHint"),
+        progressEditorTitle: document.getElementById("progressEditorTitle"),
         weeklyCapList: document.getElementById("weeklyCapList"),
         weeklyScoreList: document.getElementById("weeklyScoreList"),
         mathThemeProgressText: document.getElementById("mathThemeProgressText"),
@@ -1610,6 +2010,7 @@
       let lastCloudUpdatedAt = "";
       let workspaceCode = loadWorkspaceCode();
       let isLocalOnlyMode = loadLocalOnlyMode();
+      let activeProgressEditor = "";
       let cloudStatus = {
         tone: "wait",
         text: "准备连接云端",
@@ -2020,24 +2421,24 @@
       function renderTemplateGuide(template) {
         const guide = getTemplateGuide(template);
         dom.templateGuide.innerHTML = `
-          <div class="guide-grid">
-            <div class="guide-item">
+          <div class="guide-list">
+            <div class="guide-row">
               <div class="guide-label">记分单位</div>
               <div class="guide-value">${guide.unit}</div>
             </div>
-            <div class="guide-item">
+            <div class="guide-row">
               <div class="guide-label">当前分值</div>
               <div class="guide-value">${template.coins} 币${template.keys ? `，${template.keys} 钥匙` : ""}</div>
             </div>
-            <div class="guide-item">
+            <div class="guide-row">
               <div class="guide-label">达标标准</div>
               <div class="guide-value">${guide.standard}</div>
             </div>
-            <div class="guide-item">
+            <div class="guide-row">
               <div class="guide-label">什么时候记录1次</div>
               <div class="guide-value">${guide.timing}</div>
             </div>
-            <div class="guide-item" style="grid-column: 1 / -1">
+            <div class="guide-row">
               <div class="guide-label">举例</div>
               <div class="guide-value">${guide.example}</div>
             </div>
@@ -2210,13 +2611,7 @@
         const totalKeys = items.reduce((sum, item) => sum + item.keys, 0);
 
         dom.weeklyScoreList.innerHTML = `
-          <div class="cap-item">
-            <div class="cap-top">
-              <div class="cap-name">本周自动统计</div>
-              <strong>${weekKey} 这一周</strong>
-            </div>
-            <div class="cap-meta">本周累计 ${totalCoins} 币，${totalKeys} 钥匙。下面按分类自动汇总。</div>
-          </div>
+          <div class="week-total">${weekKey} 这一周累计 ${totalCoins} 币，${totalKeys} 钥匙。</div>
           ${items
             .map(
               (item) => `
@@ -2324,6 +2719,12 @@
         const available = rewards.filter((reward) => canRedeem(reward, stats.totals)).length;
         dom.coinTotal.textContent = stats.totals.coins;
         dom.keyTotal.textContent = stats.totals.keys;
+        document.querySelectorAll("[data-balance-coins]").forEach((node) => {
+          node.textContent = stats.totals.coins;
+        });
+        document.querySelectorAll("[data-balance-keys]").forEach((node) => {
+          node.textContent = stats.totals.keys;
+        });
         dom.coinEarned.textContent = stats.earned.coins;
         dom.keyEarned.textContent = stats.earned.keys;
         dom.redeemCount.textContent = stats.redeemCount;
@@ -2413,6 +2814,7 @@
         dom.readingTypeProgressText.textContent = `${readingDone} / ${readingTotal}`;
         dom.mathThemeBar.style.width = `${mathPercent}%`;
         dom.readingTypeBar.style.width = `${readingPercent}%`;
+        updateProgressEditor();
       }
 
       function renderTemplates() {
@@ -2430,7 +2832,6 @@
           "reading-done",
           "reading-90",
           "chinese-daily",
-          "english-perfect",
           "english-note",
           "manual",
         ];
@@ -2443,7 +2844,7 @@
           "reading-90": "阅读扣2",
           "chinese-daily": "语文日常",
           "english-perfect": "英语满分",
-          "english-note": "英语语法/作文",
+          "english-note": "英语日常",
           manual: "特别奖励",
         };
 
@@ -2473,6 +2874,47 @@
       function updateFloatingAction() {
         const isEntryTab = getActiveMainTab() === "entry";
         dom.mobileActionBar.classList.toggle("active", isEntryTab);
+      }
+
+      function isMobileViewport() {
+        return window.innerWidth <= 768;
+      }
+
+      function updateProgressEditor() {
+        document.querySelectorAll("[data-progress-target]").forEach((card) => {
+          card.classList.toggle("active", card.dataset.progressTarget === activeProgressEditor);
+        });
+
+        if (!isMobileViewport()) {
+          dom.progressEditor.classList.add("active");
+          dom.progressEditorHint.style.display = "none";
+          dom.progressEditorTitle.textContent = "修改主线进度";
+          return;
+        }
+
+        const hasTarget = Boolean(activeProgressEditor);
+        dom.progressEditor.classList.toggle("active", hasTarget);
+        dom.progressEditorHint.style.display = hasTarget ? "none" : "block";
+
+        if (activeProgressEditor === "math") {
+          dom.progressEditorTitle.textContent = "修改数学S题进度";
+        } else if (activeProgressEditor === "reading") {
+          dom.progressEditorTitle.textContent = "修改语文阅读进度";
+        } else {
+          dom.progressEditorTitle.textContent = "修改主线进度";
+        }
+      }
+
+      function openProgressEditor(target) {
+        activeProgressEditor = target;
+        updateProgressEditor();
+        if (!isMobileViewport()) return;
+        dom.progressEditor.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (target === "math") {
+          dom.mathDoneInput.focus();
+        } else if (target === "reading") {
+          dom.readingDoneInput.focus();
+        }
       }
 
       function setRecordButtonsState(disabled, text) {
@@ -2671,6 +3113,9 @@
           Math.min(state.progress.readingTotal, readingDone),
         );
         saveState();
+        if (isMobileViewport()) {
+          activeProgressEditor = "";
+        }
         renderProgress();
       });
 
@@ -2718,9 +3163,17 @@
             panel.classList.toggle("active", panel.dataset.mainTabPanel === target);
           });
           updateFloatingAction();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          return;
         }
 
+        const progressCard = event.target.closest("[data-progress-target]");
+        if (progressCard) {
+          openProgressEditor(progressCard.dataset.progressTarget);
+        }
       });
+
+      window.addEventListener("resize", updateProgressEditor);
 
       async function init() {
         clearLegacyData();

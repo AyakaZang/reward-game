@@ -1289,7 +1289,7 @@
 
       .cloud-actions {
         display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
+        grid-template-columns: repeat(6, minmax(0, 1fr));
         gap: 8px;
         margin-top: 6px;
       }
@@ -1299,6 +1299,45 @@
         font-size: 13px;
         justify-content: center;
         white-space: nowrap;
+      }
+
+      .sync-toast {
+        position: fixed;
+        left: 50%;
+        bottom: 28px;
+        z-index: 120;
+        min-width: min(420px, calc(100vw - 32px));
+        max-width: min(420px, calc(100vw - 32px));
+        padding: 12px 14px;
+        border-radius: 18px;
+        border: 1px solid rgba(119, 140, 255, 0.22);
+        background: rgba(255, 255, 255, 0.96);
+        color: var(--text);
+        box-shadow: 0 20px 40px rgba(80, 95, 174, 0.2);
+        backdrop-filter: blur(12px);
+        transform: translate(-50%, 16px);
+        opacity: 0;
+        pointer-events: none;
+        transition:
+          transform 180ms ease,
+          opacity 180ms ease;
+      }
+
+      .sync-toast.visible {
+        transform: translate(-50%, 0);
+        opacity: 1;
+      }
+
+      .sync-toast-title {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--primary-strong);
+      }
+
+      .sync-toast-body {
+        margin-top: 4px;
+        font-size: 14px;
+        line-height: 1.5;
       }
 
       .reward-foot .btn[disabled] {
@@ -1549,6 +1588,12 @@
 
         .cloud-actions {
           grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .sync-toast {
+          bottom: calc(92px + env(safe-area-inset-bottom));
+          min-width: calc(100vw - 24px);
+          max-width: calc(100vw - 24px);
         }
 
 
@@ -2065,6 +2110,7 @@
               />
             </div>
             <div class="cloud-actions">
+              <button class="btn btn-secondary" id="enableNotifyBtn">开启提醒</button>
               <button class="btn btn-secondary" id="copyWorkspaceBtn">复制码</button>
               <button class="btn btn-secondary" id="pullCloudBtn">拉取云端</button>
               <button class="btn btn-secondary" id="pushCloudBtn">上传云端</button>
@@ -2072,7 +2118,7 @@
               <button class="btn btn-secondary desktop-hide-mobile" id="importBtn">导入存档</button>
             </div>
             <div class="cloud-note">
-              这是家庭共享简化版。请不要存身份证、手机号等敏感信息。
+              这是家庭共享简化版。远端设备有新记录时，本页会弹提醒；如已开启系统提醒，后台时也能收到通知。请不要存身份证、手机号等敏感信息。
             </div>
           </div>
           <div class="rule-grid">
@@ -2133,10 +2179,16 @@
       <button class="btn btn-primary mobile-action-btn" id="floatingAddRecordBtn">记录任务</button>
     </div>
 
+    <div class="sync-toast" id="syncToast" role="status" aria-live="polite" hidden>
+      <div class="sync-toast-title" id="syncToastTitle"></div>
+      <div class="sync-toast-body" id="syncToastBody"></div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
       const STORAGE_KEY = "reward-game-state-v2";
       const WORKSPACE_CODE_KEY = "reward-game-workspace-code-v1";
+      const WORKSPACE_CODE_MIGRATION_KEY = "reward-game-workspace-code-migrated-v1";
+      const DEFAULT_WORKSPACE_CODE = "ayaka-80jhn2";
       const LEGACY_STORAGE_KEYS = ["reward-game-state-v1"];
       const SUPABASE_PROJECT_ID = "quticqrrqpcbgamzdhyt";
       const SUPABASE_URL = `https://${SUPABASE_PROJECT_ID}.supabase.co`;
@@ -2556,19 +2608,25 @@
         cloudStatusText: document.getElementById("cloudStatusText"),
         cloudStatusDetail: document.getElementById("cloudStatusDetail"),
         workspaceCodeInput: document.getElementById("workspaceCodeInput"),
+        enableNotifyBtn: document.getElementById("enableNotifyBtn"),
         copyWorkspaceBtn: document.getElementById("copyWorkspaceBtn"),
         pullCloudBtn: document.getElementById("pullCloudBtn"),
         pushCloudBtn: document.getElementById("pushCloudBtn"),
+        syncToast: document.getElementById("syncToast"),
+        syncToastTitle: document.getElementById("syncToastTitle"),
+        syncToastBody: document.getElementById("syncToastBody"),
       };
 
       let supabaseClient = null;
       let cloudChannel = null;
       let cloudPushTimer = null;
+      let toastTimer = null;
       let lastCloudUpdatedAt = "";
       let workspaceCode = loadWorkspaceCode();
       let isLocalOnlyMode = loadLocalOnlyMode();
       let activeProgressEditor = "";
       let currentRewardFilter = "all";
+      let notificationsEnabled = loadNotificationPreference();
       let cloudStatus = {
         tone: "wait",
         text: "准备连接云端",
@@ -2601,11 +2659,17 @@
       }
 
       function createWorkspaceCode() {
-        return `ayaka-${Math.random().toString(36).slice(2, 8)}`;
+        return DEFAULT_WORKSPACE_CODE;
       }
 
       function loadWorkspaceCode() {
         const saved = normalizeWorkspaceCode(localStorage.getItem(WORKSPACE_CODE_KEY));
+        const migrated = localStorage.getItem(WORKSPACE_CODE_MIGRATION_KEY) === "1";
+        if (!migrated) {
+          localStorage.setItem(WORKSPACE_CODE_KEY, DEFAULT_WORKSPACE_CODE);
+          localStorage.setItem(WORKSPACE_CODE_MIGRATION_KEY, "1");
+          return DEFAULT_WORKSPACE_CODE;
+        }
         if (saved) return saved;
         const created = createWorkspaceCode();
         localStorage.setItem(WORKSPACE_CODE_KEY, created);
@@ -2622,6 +2686,14 @@
         return false;
       }
 
+      function loadNotificationPreference() {
+        return localStorage.getItem("reward_game_notify_enabled") === "1";
+      }
+
+      function persistNotificationPreference(enabled) {
+        localStorage.setItem("reward_game_notify_enabled", enabled ? "1" : "0");
+      }
+
       function getCloudRowId() {
         return `workspace-${workspaceCode}`;
       }
@@ -2629,6 +2701,82 @@
       function setCloudStatus(tone, text, detail = "") {
         cloudStatus = { tone, text, detail };
         renderCloudPanel();
+      }
+
+      function renderNotificationButton() {
+        if (!dom.enableNotifyBtn) return;
+        const permission =
+          "Notification" in window ? Notification.permission : "unsupported";
+
+        if (permission === "unsupported") {
+          dom.enableNotifyBtn.textContent = "设备不支持提醒";
+          dom.enableNotifyBtn.disabled = true;
+          return;
+        }
+
+        if (notificationsEnabled && permission === "granted") {
+          dom.enableNotifyBtn.textContent = "已开启提醒";
+          dom.enableNotifyBtn.disabled = false;
+          return;
+        }
+
+        if (permission === "denied") {
+          dom.enableNotifyBtn.textContent = "系统提醒被拒绝";
+          dom.enableNotifyBtn.disabled = true;
+          return;
+        }
+
+        dom.enableNotifyBtn.textContent = notificationsEnabled ? "等待系统授权" : "开启提醒";
+        dom.enableNotifyBtn.disabled = false;
+      }
+
+      function showSyncToast(title, body) {
+        if (!dom.syncToast || !dom.syncToastTitle || !dom.syncToastBody) return;
+        dom.syncToastTitle.textContent = title;
+        dom.syncToastBody.textContent = body;
+        dom.syncToast.hidden = false;
+        dom.syncToast.classList.add("visible");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => {
+          dom.syncToast.classList.remove("visible");
+          window.setTimeout(() => {
+            dom.syncToast.hidden = true;
+          }, 180);
+        }, 3200);
+      }
+
+      function notifyRemoteUpdate(record) {
+        if (!record) return;
+        const actionText = record.kind === "redeem" ? "兑换了奖励" : "提交了任务";
+        const deltaText =
+          record.kind === "redeem"
+            ? `${Math.abs(Number(record.coins || 0))}币${record.keys ? `，${Math.abs(Number(record.keys || 0))}钥匙` : ""}`
+            : `${Number(record.coins || 0)}币${record.keys ? `，${Number(record.keys || 0)}钥匙` : ""}`;
+        const body = `${record.name}，${actionText}，变动 ${deltaText}`;
+        showSyncToast("其他设备刚刚有更新", body);
+
+        if (!notificationsEnabled) return;
+        if (!("Notification" in window)) return;
+        if (Notification.permission !== "granted") return;
+        if (document.visibilityState === "visible") return;
+
+        try {
+          const notification = new Notification("成长银行有新同步", {
+            body,
+            tag: "reward-game-remote-update",
+          });
+          window.setTimeout(() => notification.close(), 5000);
+        } catch (error) {
+          console.error("系统提醒发送失败", error);
+        }
+      }
+
+      function findNewRemoteRecord(currentRecords, nextRecords) {
+        const currentIds = new Set((currentRecords || []).map((item) => item.id));
+        const nextList = Array.isArray(nextRecords) ? nextRecords : [];
+        const added = nextList.filter((item) => !currentIds.has(item.id));
+        if (!added.length) return null;
+        return added.sort((a, b) => String(b.id || "").localeCompare(String(a.id || "")))[0];
       }
 
       function loadPersistedState() {
@@ -2677,6 +2825,7 @@
           ? "当前是测试链接：只保存在当前浏览器，不上传云端。"
           : "当前是正式同步链接：会自动同步云端；如需测试请打开 ?mode=test。";
         dom.cloudCard.style.display = isLocalOnlyMode ? "none" : "block";
+        renderNotificationButton();
       }
 
       function applyWorkspaceCodeFromInput() {
@@ -2692,8 +2841,12 @@
         return workspaceCode;
       }
 
-      function applyIncomingCloudState(payload, updatedAt, message) {
-        state = normalizeState(payload);
+      function applyIncomingCloudState(payload, updatedAt, message, options = {}) {
+        const nextState = normalizeState(payload);
+        const remoteRecord = options.notifyRemote
+          ? findNewRemoteRecord(state.records, nextState.records)
+          : null;
+        state = nextState;
         lastCloudUpdatedAt = updatedAt || new Date().toISOString();
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         renderAll();
@@ -2702,6 +2855,7 @@
           "已开启实时同步",
           message || "",
         );
+        if (remoteRecord) notifyRemoteUpdate(remoteRecord);
       }
 
       function unsubscribeCloudRealtime() {
@@ -2734,6 +2888,7 @@
                 nextPayload,
                 nextUpdatedAt,
                 "",
+                { notifyRemote: true },
               );
             },
           )
@@ -3730,6 +3885,25 @@
         } catch (error) {
           console.error(error);
           alert(`复制失败。你也可以手动复制这个同步码：${workspaceCode}`);
+        }
+      });
+      dom.enableNotifyBtn.addEventListener("click", async () => {
+        if (!("Notification" in window)) {
+          alert("当前浏览器不支持系统提醒，但页内弹提醒仍可用。");
+          return;
+        }
+        if (Notification.permission === "denied") {
+          alert("系统提醒已被浏览器拒绝。需要去浏览器站点权限里手动重新允许。");
+          return;
+        }
+        const permission = await Notification.requestPermission();
+        notificationsEnabled = permission === "granted";
+        persistNotificationPreference(notificationsEnabled);
+        renderNotificationButton();
+        if (notificationsEnabled) {
+          showSyncToast("提醒已开启", "后续其他设备有新记录时，本页会弹提醒；切到后台时也会发系统通知。");
+        } else {
+          alert("未开启系统提醒。你仍然会在页面内看到同步提醒。");
         }
       });
       dom.pullCloudBtn.addEventListener("click", async () => {

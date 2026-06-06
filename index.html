@@ -1801,7 +1801,7 @@
               <div class="tag">成长币+钥匙</div>
               <div class="tag">低难任务有上限</div>
               <div class="tag">高价值奖励要解锁</div>
-              <div class="tag">高难主线优先</div>
+              <div class="tag">A+主线 + S挑战</div>
             </div>
           </div>
           <div class="card hero-side">
@@ -1841,8 +1841,8 @@
               <div class="progress-card editable" data-progress-target="math">
                 <div class="progress-top">
                   <div>
-                    <div class="progress-name">数学S题主题</div>
-                    <div class="progress-meta">目标 22 个主题，当前已完成约 9 个</div>
+                    <div class="progress-name">数学A+主题</div>
+                    <div class="progress-meta">目标 22 个主题，先保A+主线，S挑战作为加速线</div>
                   </div>
                   <strong id="mathThemeProgressText">9 / 22</strong>
                 </div>
@@ -1866,7 +1866,7 @@
               <div class="progress-editor-title" id="progressEditorTitle">修改主线进度</div>
               <div class="field-grid">
                 <div class="field">
-                  <label for="mathDoneInput">数学S题已完成主题数</label>
+                  <label for="mathDoneInput">数学A+已完成主题数</label>
                   <input id="mathDoneInput" type="number" min="0" max="22" step="1" value="9" />
                 </div>
                 <div class="field">
@@ -1975,11 +1975,11 @@
               </div>
               <div class="field" id="taskNameField">
                 <label for="taskName">任务名称</label>
-                <input id="taskName" type="text" placeholder="例如：数学S题-主题3全通" />
+                <input id="taskName" type="text" placeholder="例如：数学A+-主题3全通" />
               </div>
               <div class="field" id="categoryField">
                 <label for="category">分类</label>
-                <input id="category" type="text" placeholder="例如：数学S题" />
+                <input id="category" type="text" placeholder="例如：数学A+" />
               </div>
               <div class="field" id="coinField">
                 <label for="coinInput">成长币</label>
@@ -2127,26 +2127,28 @@
               <ul class="rule-list">
                 <li>成长币负责兑换，通关钥匙负责解锁高价值奖励。</li>
                 <li>低难任务有上限，防止只刷简单题。</li>
-                <li>数学S题和语文阅读是主线，大奖必须靠主线任务拿到。</li>
+                <li>数学A+和语文阅读是主线，数学S挑战是可选加速线。</li>
+                <li>只有有产出、能验收的任务，才允许点完成。</li>
                 <li>学习习惯只记可观察结果，不记“自报认真”。</li>
               </ul>
             </div>
             <div class="rule-card">
-              <h3>数学S题</h3>
+              <h3>数学A+ / S挑战</h3>
               <ul class="rule-list">
-                <li>每个小节最终刷新结果必须是 100% 无错，才算学完并给币。</li>
-                <li>一个主题全通后，再看能否讲出举一反三题。</li>
-                <li>完整精通一个主题，才给钥匙。</li>
+                <li>A+是主线：一个主题全部小节过关后，记 6 币。</li>
+                <li>A+每累计 2 个主题扎实通关，可记 1 把钥匙；全部A+主题完成后，再额外补记 1 把钥匙。</li>
+                <li>S挑战是加速线：单个小节讲清并做对记 4 币；单个主题挑战完成可再记 1 把钥匙。</li>
+                <li>A+不做小节零散记分，避免基础线太容易刷币。</li>
               </ul>
             </div>
             <div class="rule-card">
               <h3>语文阅读</h3>
               <ul class="rule-list">
-                <li>分层奖励：先做完，再看命中率，再看是否能说出方法。</li>
-                <li>题型攻克和口头输出都能加分。</li>
+                <li>先学会并背会 1 个题型的答题方法，再去做通关验证。</li>
+                <li>通关验证口径：能讲清怎么做，并完成同类 3 题全对。</li>
                 <li>建议先抓 8 个核心题型，通用阅读和说明文专项都覆盖进去。</li>
-                <li>“攻克1个题型”的意思是：能总结方法，再找同类题讲清思路并基本做对。</li>
-                <li>题型攻克是第二主线，和数学S题一起保。</li>
+                <li>每攻克 2 个核心题型，可记 1 把钥匙。</li>
+                <li>题型攻克是第二主线，和数学A+一起保。</li>
               </ul>
             </div>
             <div class="rule-card">
@@ -2232,35 +2234,35 @@
       const templates = [
         {
           id: "math-section",
-          name: "数学S题-单个小节最终精通",
-          category: "数学S题",
-          coins: 2,
+          name: "数学S挑战-单个小节讲清并做对",
+          category: "数学S挑战",
+          coins: 4,
           keys: 0,
-          note: "这个小节最后刷新结果100%无错，才算最终精通。",
+          note: "围绕1个S挑战小节，做对并能讲清思路，才算通过。",
         },
         {
           id: "math-theme",
-          name: "数学S题-单个主题全部小节全通",
-          category: "数学S题",
-          coins: 8,
+          name: "数学A+-单个主题全部小节全通",
+          category: "数学A+",
+          coins: 6,
           keys: 0,
-          note: "一个主题下所有小节全部通过。",
+          note: "A+主线按主题记分，不按单个小节零散记币。",
         },
         {
           id: "math-transfer",
-          name: "数学S题-单个小节举一反三讲明白",
-          category: "数学S题",
-          coins: 2,
-          keys: 0,
-          note: "围绕单个小节，当场换一道同类题，能独立讲清思路。",
+          name: "数学S挑战-单个主题挑战完成拿钥匙",
+          category: "数学S挑战",
+          coins: 0,
+          keys: 1,
+          note: "一个主题里的S挑战完成到位后，可作为加速线补1把钥匙。",
         },
         {
           id: "math-key",
-          name: "数学S题-单个主题完整精通拿钥匙",
-          category: "数学S题",
+          name: "数学A+-阶段扎实通关拿钥匙",
+          category: "数学A+",
           coins: 0,
           keys: 1,
-          note: "主题全通 + 举一反三都达标，再记钥匙。",
+          note: "每累计2个A+主题扎实通关记1次；A+全部完成后，最后收官可再补记1次。",
         },
         {
           id: "math-daily",
@@ -2288,35 +2290,19 @@
         },
         {
           id: "reading-90",
-          name: "语文阅读-单篇正确率扣2分以内",
-          category: "语文阅读",
-          coins: 4,
-          keys: 0,
-          note: "建议把这一档当成主目标。",
-        },
-        {
-          id: "reading-95",
-          name: "语文阅读-单篇正确率只扣1分或满分",
-          category: "语文阅读",
-          coins: 5,
-          keys: 0,
-          note: "这是阅读正确率最高档。",
-        },
-        {
-          id: "reading-method",
-          name: "语文阅读-总结出1个题型方法",
-          category: "语文阅读",
-          coins: 4,
-          keys: 0,
-          note: "例如人物形象、句段作用等。",
-        },
-        {
-          id: "reading-output",
-          name: "语文阅读-用总结的方法讲清1道同类题",
+          name: "语文阅读-学会并背会1个题型方法",
           category: "语文阅读",
           coins: 2,
           keys: 0,
-          note: "先有题型方法，再找同类题讲清思路；连续3次清楚表达，可再手动记1钥匙。",
+          note: "先把这个题型的答题方法学会、背下来，再准备进入通关验证。",
+        },
+        {
+          id: "reading-95",
+          name: "语文阅读-讲清并完成同类3题全对",
+          category: "语文阅读",
+          coins: 4,
+          keys: 0,
+          note: "能讲清怎么做，并找同类3题都按这个方法答对，才算真的攻克。",
         },
         {
           id: "reading-key",
@@ -3020,57 +3006,59 @@
         const map = {
           "math-section": {
             unit: "按单个小节记 1 次",
-            standard: "只看一个小节。这个小节最后刷新结果达到 100% 无错，就可以记 1 次。",
-            timing: "不是按整个主题记，也不是按当天总练习记。一个小节过关，就记这1次。",
-            example: "例：主题3下面有A、B、C、D四个小节。A小节最终100%无错，就可记录1次“小节最终精通”。",
+            standard: "围绕1个S挑战小节，题目做对，并能把关键思路讲清。",
+            timing: "这是S挑战的小节奖励，不是A+主线奖励。",
+            example: "例：某个S挑战小节有3道题。孩子能做对并讲清这组题为什么这么做，就可记1次。",
+            output: "必须有这组题的完成结果、错题订正，以及当场讲题。",
+            verify: "家长看题目结果，并现场听孩子把关键思路讲清。",
           },
           "math-theme": {
             unit: "按单个主题记 1 次",
-            standard: "这个主题下所有小节都已经过关。",
-            timing: "当主题内每个小节都已满足“小节最终100%”后，再记这1次。",
-            example: "不是做完一部分就记，必须整个主题小节都过了。",
+            standard: "A+这个主题下所有小节都过关，错题已订正，整主题可以收口。",
+            timing: "A+主线按主题记，不按单个小节零散记币。",
+            example: "A+主题3下有2个小节，每个小节题数很多。两个小节都完成并订正后，再记这1次。",
+            output: "必须有该主题所有小节完成结果、错题订正，以及主题收口记录。",
+            verify: "家长确认这个主题的小节都过关，不是只做了一半。",
           },
           "math-transfer": {
-            unit: "按单个小节记 1 次",
-            standard: "围绕刚精通的这个小节，家长当场换一道同类题，孩子能独立讲清思路。",
-            timing: "是小节维度奖励，不是整个主题只记1次。",
-            example: "如果主题3有6个小节，那么每个小节都可以各自争取这1币的举一反三奖励。",
+            unit: "按单个主题挑战记 1 次",
+            standard: "这个主题里的S挑战完成到位，达到家长认可的挑战标准。",
+            timing: "S挑战是数学加速线；完成1个主题挑战后，可额外补1把钥匙。",
+            example: "例：主题3里挑的S挑战题都做对并讲清了，就可以记1次主题挑战钥匙。",
+            output: "必须有该主题S挑战题完成结果，并能说明为什么算挑战完成。",
+            verify: "家长按约定标准验收，确认不是只做了1道就算整主题挑战。",
           },
           "math-key": {
-            unit: "按单个主题精通记 1 次",
-            standard: "主题全通，并且这个主题下各小节的举一反三都讲明白。",
-            timing: "这是拿钥匙，不是普通小分。",
-            example: "一个主题完整精通后记1把钥匙。",
-          },
-          "reading-done": {
-            unit: "按单篇阅读记 1 次",
-            standard: "阅读做完并认真订正。",
-            timing: "先记完成，再看正确率扣分档。",
-            example: "同一篇可以先记“完成并订正”，再按扣分情况补记一条。",
+            unit: "按阶段里程碑记 1 次",
+            standard: "每累计2个A+主题扎实通关，可记1次；全部A+主题完成后，最后收官再额外补记1次。",
+            timing: "这是A+主线的钥匙入口，不是每个主题都直接给钥匙。",
+            example: "例：已扎实通关A+主题3和主题4，就可记1把钥匙；全部A+做完后，最后还可再补记1次。",
+            output: "必须已经有对应主题全通记录，并且能说明这2个主题确实扎实过关。",
+            verify: "家长对照前面的A+主题记录核验，不单靠口头说“做完了”。",
           },
           "reading-90": {
-            unit: "按单篇阅读记 1 次",
-            standard: "这一篇阅读总扣分在2分以内。",
-            timing: "建议把这一档当成阅读主目标。",
-            example: "如果一篇20分的阅读只扣2分，或18分的阅读只扣1到2分，可以记这一档。",
+            unit: "按单个题型方法记 1 次",
+            standard: "这个题型怎么做已经学会，答题方法能背下来。",
+            timing: "先把方法学会，再进入通关验证。",
+            example: "例：已经能背出“句段作用题”或“说明方法作用题”的答法，就可记这1次。",
+            output: "必须有题型方法卡、总结页，或能当场背出关键答题模板。",
+            verify: "家长现场抽问：这类题怎么答、分几步答。",
           },
           "reading-95": {
-            unit: "按单篇阅读记 1 次",
-            standard: "这一篇阅读只扣1分或满分。",
-            timing: "是阅读正确率的最高档。",
-            example: "如果只错1分，或者整篇满分，就记这一档，不再记扣2分档。",
+            unit: "按单个题型通关记 1 次",
+            standard: "能讲清这个题型怎么做，并完成同类3题全对。",
+            timing: "这是题型真正攻克的验证，不是只会背模版就算。",
+            example: "例：会讲“限制性词语作用题”的答法，再找3道同类题都按这个方法答对，就可记1次。",
+            output: "必须有同类3题作答结果，并能把思路讲清。",
+            verify: "家长看3题结果，并现场听孩子讲“为什么这么答”。",
           },
-          "reading-method": {
-            unit: "按单个题型方法记 1 次",
-            standard: "能总结出一个题型的答题方法或模版。",
-            timing: "适合做完一轮后整理时记录。",
-            example: "例：会总结“人物形象题怎么答”。",
-          },
-          "reading-output": {
-            unit: "按单次口头讲清记 1 次",
-            standard: "先有题型方法，再找1道同类题，能按这个方法把思路讲清。",
-            timing: "更适合在做完题型总结后记录，不是随便讲1题就算。",
-            example: "例如刚总结完“句段作用题”的答法，再找一道同类题，能照这个方法讲清，就可记1次。",
+          "reading-key": {
+            unit: "按核心题型里程碑记 1 次",
+            standard: "每真正攻克2个核心题型，就可以拿1把钥匙。",
+            timing: "阅读是第二主线，钥匙按题型里程碑来发。",
+            example: "例：已经完成2个题型的“背会方法 + 讲清并3题全对”，就记1把钥匙。",
+            output: "必须已经有2个题型的通关记录，不是只学过但没验证。",
+            verify: "家长对照前面的题型记录核验后，再记钥匙。",
           },
           "chinese-expression": {
             unit: "按单次表达训练记 1 次",
@@ -3103,6 +3091,8 @@
           standard: template.note || "满足当前模板写的任务要求即可记录。",
           timing: "先确认达到标准，再点击记录。",
           example: `当前模板分值：${template.coins}币${template.keys ? `，${template.keys}钥匙` : ""}。`,
+          output: "至少要有能看见的产出，例如作业、订正、口头讲解、提纲或作文。",
+          verify: "建议由家长现场核验后再点击记录。",
         };
 
         return map[template.id] || fallback;
@@ -3147,6 +3137,14 @@
             <div class="guide-row">
               <div class="guide-label">什么时候记录1次</div>
               <div class="guide-value">${guide.timing}</div>
+            </div>
+            <div class="guide-row">
+              <div class="guide-label">必须产出</div>
+              <div class="guide-value">${guide.output}</div>
+            </div>
+            <div class="guide-row">
+              <div class="guide-label">谁来验收</div>
+              <div class="guide-value">${guide.verify}</div>
             </div>
             <div class="guide-row">
               <div class="guide-label">举例</div>
@@ -3288,7 +3286,8 @@
         const weekKey = getWeekKey(todayText());
         const summaryMap = getWeeklyScoreSummary(weekKey);
         const order = [
-          "数学S题",
+          "数学A+",
+          "数学S挑战",
           "语文阅读",
           "数学校内",
           "语文校内",
@@ -3565,25 +3564,24 @@
           .join("");
 
         const hot = [
-          "math-daily",
-          "math-section",
           "math-theme",
-          "reading-done",
+          "math-key",
+          "math-section",
+          "math-transfer",
           "reading-90",
+          "reading-95",
           "chinese-daily",
-          "english-note",
           "manual",
         ];
 
         const quickLabels = {
-          "math-daily": "数学日常",
           "math-section": "S小节",
-          "math-theme": "S主题",
-          "reading-done": "阅读完成",
-          "reading-90": "阅读扣2",
+          "math-theme": "A+主题",
+          "math-transfer": "S主题钥匙",
+          "math-key": "A+阶段钥匙",
+          "reading-90": "阅读背会",
+          "reading-95": "阅读通关",
           "chinese-daily": "语文日常",
-          "english-perfect": "英语满分",
-          "english-note": "英语日常",
           manual: "特别奖励",
         };
 
@@ -3636,7 +3634,7 @@
         dom.progressEditorHint.style.display = hasTarget ? "none" : "block";
 
         if (activeProgressEditor === "math") {
-          dom.progressEditorTitle.textContent = "修改数学S题进度";
+          dom.progressEditorTitle.textContent = "修改数学A+进度";
         } else if (activeProgressEditor === "reading") {
           dom.progressEditorTitle.textContent = "修改语文阅读进度";
         } else {
@@ -3819,7 +3817,7 @@
         if (!confirmed) return;
         state = structuredClone(defaultState);
         saveState();
-        fillTemplate("math-section");
+        fillTemplate("math-theme");
         dom.eventDate.value = todayText();
         renderAll();
       }
@@ -3947,7 +3945,7 @@
         clearLegacyData();
         renderTemplates();
         dom.eventDate.value = todayText();
-        fillTemplate("math-section");
+        fillTemplate("math-theme");
         renderCloudPanel();
         if (isLocalOnlyMode) {
           setCloudStatus("wait", "测试模式已开启");

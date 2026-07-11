@@ -1801,7 +1801,7 @@
               <div class="tag">成长币+钥匙</div>
               <div class="tag">低难任务有上限</div>
               <div class="tag">高价值奖励要解锁</div>
-              <div class="tag">A+主线 + S挑战</div>
+              <div class="tag">A题 + S挑战</div>
             </div>
           </div>
           <div class="card hero-side">
@@ -1841,8 +1841,8 @@
               <div class="progress-card editable" data-progress-target="math">
                 <div class="progress-top">
                   <div>
-                    <div class="progress-name">数学A+主题</div>
-                    <div class="progress-meta">目标 22 个主题，先保A+主线，S挑战作为加速线</div>
+                    <div class="progress-name">数学暑假章节</div>
+                    <div class="progress-meta">A题只记新学章节，S挑战新旧都可；记录时请写清章节</div>
                   </div>
                   <strong id="mathThemeProgressText">9 / 22</strong>
                 </div>
@@ -1851,10 +1851,10 @@
               <div class="progress-card editable" data-progress-target="reading">
                 <div class="progress-top">
                   <div>
-                    <div class="progress-name">语文阅读题型</div>
-                    <div class="progress-meta">建议先抓 8 个核心题型</div>
+                    <div class="progress-name">语文 / AI 里程碑</div>
+                    <div class="progress-meta">可把阅读阶段目标、AI作品完成数手动记在这里</div>
                   </div>
-                  <strong id="readingTypeProgressText">0 / 8</strong>
+                  <strong id="readingTypeProgressText">0 / 10</strong>
                 </div>
                 <div class="bar"><span id="readingTypeBar" style="width: 0%"></span></div>
               </div>
@@ -1866,12 +1866,12 @@
               <div class="progress-editor-title" id="progressEditorTitle">修改主线进度</div>
               <div class="field-grid">
                 <div class="field">
-                  <label for="mathDoneInput">数学A+已完成主题数</label>
+                  <label for="mathDoneInput">数学已完成新学章节数</label>
                   <input id="mathDoneInput" type="number" min="0" max="22" step="1" value="9" />
                 </div>
                 <div class="field">
-                  <label for="readingDoneInput">语文阅读已攻克题型数</label>
-                  <input id="readingDoneInput" type="number" min="0" max="8" step="1" value="0" />
+                  <label for="readingDoneInput">语文 / AI 已完成里程碑数</label>
+                  <input id="readingDoneInput" type="number" min="0" max="10" step="1" value="0" />
                 </div>
               </div>
               <div class="inline" style="margin-top: 14px">
@@ -1973,13 +1973,17 @@
                   </span>
                 </div>
               </div>
+              <div class="field" id="trackField">
+                <label for="trackInput">章节 / 作品名</label>
+                <input id="trackInput" type="text" placeholder="例如：六上-第1单元-第2课" />
+              </div>
               <div class="field" id="taskNameField">
                 <label for="taskName">任务名称</label>
-                <input id="taskName" type="text" placeholder="例如：数学A+-主题3全通" />
+                <input id="taskName" type="text" placeholder="例如：数学A题-六上第1课全通" />
               </div>
               <div class="field" id="categoryField">
                 <label for="category">分类</label>
-                <input id="category" type="text" placeholder="例如：数学A+" />
+                <input id="category" type="text" placeholder="例如：数学A题" />
               </div>
               <div class="field" id="coinField">
                 <label for="coinInput">成长币</label>
@@ -2126,42 +2130,40 @@
               <h3>核心原则</h3>
               <ul class="rule-list">
                 <li>成长币负责兑换，通关钥匙负责解锁高价值奖励。</li>
-                <li>低难任务有上限，防止只刷简单题。</li>
-                <li>数学A+和语文阅读是主线，数学S挑战是可选加速线。</li>
+                <li>暑假日常任务会变多，但每个日常模板每天最多记 1 次，避免一直刷同一项。</li>
+                <li>低难任务按分类有周上限，刚好支持“每天都做一遍”，但不支持无限刷。</li>
+                <li>数学A题只记新学章节；数学S挑战更重要，新旧章节都可以做。</li>
                 <li>只有有产出、能验收的任务，才允许点完成。</li>
-                <li>学习习惯只记可观察结果，不记“自报认真”。</li>
+                <li>钥匙在暑假版会更少，主要来自 S 挑战里程碑、英语听力高难项和 AI 实践作品。</li>
               </ul>
             </div>
             <div class="rule-card">
-              <h3>数学A+ / S挑战</h3>
+              <h3>数学A题 / S挑战</h3>
               <ul class="rule-list">
-                <li>A+是主线：一个主题全部小节过关后，记 6 币。</li>
-                <li>A+每累计 2 个主题扎实通关，可记 1 把钥匙；全部A+主题完成后，再额外补记 1 把钥匙。</li>
-                <li>S挑战是加速线：单个小节讲清并做对记 4 币；单个主题挑战完成可再记 1 把钥匙。</li>
-                <li>A+不做小节零散记分，避免基础线太容易刷币。</li>
+                <li>A题只记暑假新学章节：一个章节全通记 4 币，不再从 A 题发钥匙。</li>
+                <li>S挑战新旧章节都可以：累计 2 个小节通关记 4 币。</li>
+                <li>钥匙只从 S 挑战来：建议累计 2 个已经讲清的小节，再记 1 把钥匙。</li>
+                <li>数学录入时必须写章节 / 小节，后面回看才不会乱。</li>
               </ul>
             </div>
             <div class="rule-card">
-              <h3>语文阅读</h3>
+              <h3>语文 / 阅读</h3>
               <ul class="rule-list">
-                <li>单篇阅读不按“做完就给分”，只有全对或只扣 1 分，才记 3 币。</li>
-                <li>建议先抓 8 个核心题型，通用阅读和说明文专项都覆盖进去。</li>
-                <li>如果要走题型攻克路线，必须做到：会说方法、能讲思路、同类题能真正做对。</li>
-                <li>每攻克 2 个核心题型，可记 1 把钥匙。</li>
-                <li>阅读现在更偏辅助线：单篇全对补币，题型真正攻克补钥匙。</li>
+                <li>语文日常改成暑假基础版：基础预习并听写过关、阅读完成并订正、每日小练笔都算日常。</li>
+                <li>小练笔单次记 2 币，连续 3 次完成再奖励 3 币，力度高于阅读连续奖励。</li>
+                <li>阅读完成并订正记 1 币；连续 3 篇阅读全对后，再记 2 币奖励。</li>
+                <li>暑假版阅读先不发钥匙，避免钥匙增长太快。</li>
+                <li>阅读奖励重点是“持续做题”，而不是只抓单篇高分。</li>
               </ul>
             </div>
             <div class="rule-card">
-              <h3>语文阅读8类题型</h3>
+              <h3>英语 / AI</h3>
               <ul class="rule-list">
-                <li><strong>内容概括/信息提取</strong>：适合问“文章写了什么”“从哪几方面介绍了什么”。</li>
-                <li><strong>人物形象/事物特点</strong>：记叙文看人物，说明文看说明对象的特点。</li>
-                <li><strong>词句理解</strong>：解释关键词、重点句子的含义。</li>
-                <li><strong>句段作用</strong>：开头、中间、结尾段作用，过渡句作用。</li>
-                <li><strong>中心主旨/情感体会</strong>：更适合记叙文、散文类阅读。</li>
-                <li><strong>说明方法及作用</strong>：举例子、列数字、作比较、打比方，是说明文高频。</li>
-                <li><strong>限制性词语作用/语言准确性</strong>：比如“大约、左右、可能、几乎、之一”等，删掉后表述会过于绝对、不准确。</li>
-                <li><strong>说明顺序/结构</strong>：时间顺序、空间顺序、逻辑顺序；总分、总分总等，也是常见能力点。</li>
+                <li>英语日常改成听力和阅读刷题，两项都各自每天最多记 1 次。</li>
+                <li>听力完成 1 个 part 后，如认真改正错误，可额外记 1 把钥匙。</li>
+                <li>英语阅读连续 3 次全对，可再记 2 币奖励。</li>
+                <li>AI实践要有作品：先记雏形币，再由“能展示、能讲清”来发钥匙。</li>
+                <li>AI 作品建议写清作品名 / 主题，方便后面回看成品。</li>
               </ul>
             </div>
             <div class="rule-card">
@@ -2200,11 +2202,22 @@
       const DAILY_SPECIAL_COIN_CAP = 20;
       const weeklyCoinCaps = {
         数学日常: 10,
-        语文日常: 12,
-        语文阅读: 12,
-        英语: 14,
+        语文日常: 18,
+        英语: 12,
         学习习惯: 7,
-        语文表达输出: 8,
+        AI实践: 12,
+      };
+
+      const templateDailyLimits = {
+        "math-daily": 1,
+        "math-bigmul": 1,
+        "chinese-daily": 1,
+        "chinese-writing": 1,
+        "reading-daily": 1,
+        "english-listen-key": 1,
+        "english-listen": 1,
+        "english-read": 1,
+        "habit-quality": 1,
       };
 
       const rewardGroupLimits = [
@@ -2235,147 +2248,121 @@
       const templates = [
         {
           id: "math-section",
-          name: "数学S挑战-单个小节讲清并做对",
+          name: "数学S挑战-累计2个小节通关",
           category: "数学S挑战",
           coins: 4,
           keys: 0,
-          note: "围绕1个S挑战小节，做对并能讲清思路，才算通过。",
+          note: "S挑战新旧章节都可；累计2个小节通关后记4币，需写清这2个小节。",
+          trackLabel: "对应章节 / 小节",
+          trackPlaceholder: "例如：第2小节 + 第3小节",
         },
         {
           id: "math-theme",
-          name: "数学A+-单个主题全部小节全通",
-          category: "数学A+",
-          coins: 6,
+          name: "数学A题-新学章节全通",
+          category: "数学A题",
+          coins: 4,
           keys: 0,
-          note: "A+主线按主题记分，不按单个小节零散记币。",
+          note: "A题只记暑假新学章节；旧章节复习不在这一项记分，需写清章节。",
+          trackLabel: "新学章节",
+          trackPlaceholder: "例如：六上-圆-第1课",
         },
         {
           id: "math-transfer",
-          name: "数学S挑战-单个主题挑战完成拿钥匙",
+          name: "数学S挑战-累计2个讲清小节拿钥匙",
           category: "数学S挑战",
           coins: 0,
           keys: 1,
-          note: "一个主题里的S挑战完成到位后，可作为加速线补1把钥匙。",
-        },
-        {
-          id: "math-key",
-          name: "数学A+-阶段扎实通关拿钥匙",
-          category: "数学A+",
-          coins: 0,
-          keys: 1,
-          note: "每累计2个A+主题扎实通关记1次；A+全部完成后，最后收官可再补记1次。",
+          note: "钥匙只从S挑战来；建议累计2个已经讲清的小节后，再记1把钥匙。",
+          trackLabel: "对应小节",
+          trackPlaceholder: "例如：第2课+第3课",
         },
         {
           id: "math-daily",
-          name: "数学日常-口算满分",
+          name: "数学日常-计算练习过关",
           category: "数学日常",
-          coins: 2,
+          coins: 1,
           keys: 0,
-          note: "非满分不给币；注意周上限。",
+          note: "每日1次；要自己算，不是看答案改对。",
         },
         {
-          id: "math-school-95",
-          name: "数学校内-95到99分",
-          category: "数学校内",
-          coins: 5,
+          id: "math-bigmul",
+          name: "数学日常-大数乘法1题做对为止",
+          category: "数学日常",
+          coins: 1,
           keys: 0,
-          note: "班级前5可自行手动再加。",
+          note: "每日1题；必须写出具体步骤，不能抄答案。",
         },
         {
-          id: "math-school-100",
-          name: "数学校内-100分",
-          category: "数学校内",
-          coins: 8,
-          keys: 0,
-          note: "如同时班级前5，可手动调成8币。",
-        },
-        {
-          id: "reading-perfect",
-          name: "语文阅读-单篇全对或只扣1分",
-          category: "语文阅读",
-          coins: 3,
-          keys: 0,
-          note: "阅读不按“做完就给分”，只有单篇质量真的到位才记币。",
-        },
-        {
-          id: "reading-key",
-          name: "语文阅读-攻克2个核心题型拿钥匙",
-          category: "语文阅读",
-          coins: 0,
-          keys: 1,
-          note: "建议按8个核心题型来记：每真正攻克2个核心题型，再记1把钥匙。",
-        },
-        {
-          id: "chinese-expression",
-          name: "语文表达-单次训练达到3分",
-          category: "语文表达输出",
-          coins: 2,
-          keys: 0,
-          note: "说清对象、抓特点、顺序清楚、简洁不跑题。",
-        },
-        {
-          id: "chinese-expression-full",
-          name: "语文表达-单次训练达到4分",
-          category: "语文表达输出",
-          coins: 3,
-          keys: 0,
-          note: "连续3次4分，可手动加2币。",
-        },
-        {
-          id: "chinese-daily",
-          name: "语文日常-听写全对或背诵过关",
-          category: "语文日常",
-          coins: 2,
-          keys: 0,
-          note: "",
-        },
-        {
-          id: "chinese-notes",
-          name: "语文日常-整理好词好句或文学常识",
+          id: "reading-daily",
+          name: "语文日常-阅读完成并订正1篇",
           category: "语文日常",
           coins: 1,
           keys: 0,
-          note: "注意周上限。",
+          note: "阅读也归到语文日常里；每篇做完并订正可记1次。",
         },
         {
-          id: "chinese-school-95",
-          name: "语文校内-95到99分",
-          category: "语文校内",
-          coins: 4,
+          id: "reading-streak",
+          name: "语文日常-阅读连续3篇全对奖励",
+          category: "语文日常",
+          coins: 2,
           keys: 0,
-          note: "",
+          note: "连续3篇阅读全对后再记这1次；力度低于小练笔连续奖励。",
         },
         {
-          id: "chinese-school-100",
-          name: "语文校内-100分",
-          category: "语文校内",
-          coins: 6,
+          id: "chinese-daily",
+          name: "语文日常-基础预习并听写过关",
+          category: "语文日常",
+          coins: 1,
           keys: 0,
-          note: "",
+          note: "暑假语文基础字词预习项；预习后再听写过关。",
         },
         {
-          id: "english-perfect",
-          name: "英语-单次满分或全对",
+          id: "chinese-writing",
+          name: "语文日常-每日小练笔完成",
+          category: "语文日常",
+          coins: 2,
+          keys: 0,
+          note: "篇幅不用长，但要独立写；因为更难，所以单次给2币。",
+        },
+        {
+          id: "chinese-writing-streak",
+          name: "语文日常-小练笔连续3次完成奖励",
+          category: "语文日常",
+          coins: 3,
+          keys: 0,
+          note: "为了鼓励坚持；连续3次完成小练笔后，再记这1次奖励。",
+        },
+        {
+          id: "english-listen",
+          name: "英语日常-听力刷题完成",
           category: "英语",
-          coins: 5,
+          coins: 1,
           keys: 0,
-          note: "英语是保状态项，但满分激励提高。",
+          note: "暑假听力作为日常项，每天完成1次即可。",
+        },
+        {
+          id: "english-listen-key",
+          name: "英语日常-听力高难通关1个part",
+          category: "英语",
+          coins: 0,
+          keys: 1,
+          note: "完成1个part并且认真改正错误后，可记1把钥匙。",
+        },
+        {
+          id: "english-read",
+          name: "英语日常-阅读刷题完成",
+          category: "英语",
+          coins: 1,
+          keys: 0,
+          note: "暑假英语阅读作为日常项，每天完成1次即可。",
         },
         {
           id: "english-streak",
-          name: "英语-连续3次满分自动奖励",
-          category: "英语",
-          coins: 2,
-          keys: 1,
-          note: "英语更强的话，用连续稳定表现换一把钥匙。",
-        },
-        {
-          id: "english-note",
-          name: "英语-语法整理或英语作文达标",
+          name: "英语日常-阅读连续3次全对奖励",
           category: "英语",
           coins: 2,
           keys: 0,
-          note: "语法整理可记；英语作文要以语法基本正确为前提。",
+          note: "连续3次阅读全对后再记这1次，不再额外给钥匙。",
         },
         {
           id: "habit-quality",
@@ -2384,6 +2371,26 @@
           coins: 1,
           keys: 0,
           note: "只记可观察结果；明显敷衍不给。",
+        },
+        {
+          id: "ai-draft",
+          name: "AI实践-完成一个作品雏形",
+          category: "AI实践",
+          coins: 4,
+          keys: 0,
+          note: "要能打开、能演示，不只是停留在想法。",
+          trackLabel: "作品名 / 主题",
+          trackPlaceholder: "例如：AI故事机 / 旅行海报生成器",
+        },
+        {
+          id: "ai-key",
+          name: "AI实践-作品可展示并讲清拿钥匙",
+          category: "AI实践",
+          coins: 0,
+          keys: 1,
+          note: "要能给家人演示、讲清做了什么和怎么用，才记钥匙。",
+          trackLabel: "作品名 / 主题",
+          trackPlaceholder: "例如：AI故事机 / 旅行海报生成器",
         },
         {
           id: "manual",
@@ -2435,6 +2442,22 @@
           coins: 16,
           keys: 0,
           description: "孩子偏爱的温暖型奖励。",
+        },
+        {
+          id: "dinner-show",
+          name: "选一次晚饭看的电视节目",
+          type: "小奖励",
+          coins: 10,
+          keys: 0,
+          description: "把选择权给孩子，属于轻量但稳定有吸引力的奖励。",
+        },
+        {
+          id: "movie-night",
+          name: "孩子选一次全家电影夜",
+          type: "中等奖励",
+          coins: 20,
+          keys: 0,
+          description: "由孩子定电影、零食或观影流程，更自然地替代“大床睡”类奖励。",
         },
         {
           id: "sleepover",
@@ -2532,7 +2555,7 @@
           mathDone: 9,
           mathTotal: 22,
           readingDone: 0,
-          readingTotal: 8,
+          readingTotal: 10,
         },
         records: [],
       };
@@ -2541,11 +2564,13 @@
         templateSelect: document.getElementById("templateSelect"),
         templateGuide: document.getElementById("templateGuide"),
         eventDate: document.getElementById("eventDate"),
+        trackInput: document.getElementById("trackInput"),
         taskName: document.getElementById("taskName"),
         category: document.getElementById("category"),
         coinInput: document.getElementById("coinInput"),
         keyInput: document.getElementById("keyInput"),
         noteInput: document.getElementById("noteInput"),
+        trackField: document.getElementById("trackField"),
         taskNameField: document.getElementById("taskNameField"),
         categoryField: document.getElementById("categoryField"),
         coinField: document.getElementById("coinField"),
@@ -2998,76 +3023,116 @@
       function getTemplateGuide(template) {
         const map = {
           "math-section": {
-            unit: "按单个小节记 1 次",
-            standard: "围绕1个S挑战小节，题目做对，并能把关键思路讲清。",
-            timing: "这是S挑战的小节奖励，不是A+主线奖励。",
-            example: "例：某个S挑战小节有3道题。孩子能做对并讲清这组题为什么这么做，就可记1次。",
-            output: "必须有这组题的完成结果、错题订正，以及当场讲题。",
-            verify: "家长看题目结果，并现场听孩子把关键思路讲清。",
+            unit: "按 2 个小节合并记 1 次",
+            standard: "累计 2 个 S 挑战小节都通关后，才记这 1 次 4 币奖励；新旧章节都可以。",
+            timing: "不是单个小节就记币，必须凑够 2 个小节再记 1 次。",
+            example: "例：六上《分数乘法》第 2 小节和第 3 小节都通关后，再记 1 次“S挑战2小节通关”。",
+            output: "必须有这 2 个小节的完成结果、订正结果，并能看出分别是哪些小节。",
+            verify: "家长核对这 2 个小节都真的通关了，不是把同一个小节反复记两次。",
           },
           "math-theme": {
-            unit: "按单个主题记 1 次",
-            standard: "A+这个主题下所有小节都过关，错题已订正，整主题可以收口。",
-            timing: "A+主线按主题记，不按单个小节零散记币。",
-            example: "A+主题3下有2个小节，每个小节题数很多。两个小节都完成并订正后，再记这1次。",
-            output: "必须有该主题所有小节完成结果、错题订正，以及主题收口记录。",
-            verify: "家长确认这个主题的小节都过关，不是只做了一半。",
+            unit: "按单个新学章节记 1 次",
+            standard: "A题只记暑假新学章节；该章节内容已做完、订正完、基本过关。",
+            timing: "每完成 1 个新学章节记 1 次；旧章节复习不在这一项记分。",
+            example: "例：六上《圆》第 1 课整课做完并订正后，记 1 次“A题新学章节全通”。",
+            output: "必须有该新学章节的完成结果、订正结果，并写清章节。",
+            verify: "家长核对这是不是暑假新学章节，不是旧章节回头再做。",
           },
           "math-transfer": {
-            unit: "按单个主题挑战记 1 次",
-            standard: "这个主题里的S挑战完成到位，达到家长认可的挑战标准。",
-            timing: "S挑战是数学加速线；完成1个主题挑战后，可额外补1把钥匙。",
-            example: "例：主题3里挑的S挑战题都做对并讲清了，就可以记1次主题挑战钥匙。",
-            output: "必须有该主题S挑战题完成结果，并能说明为什么算挑战完成。",
-            verify: "家长按约定标准验收，确认不是只做了1道就算整主题挑战。",
+            unit: "按 S 里程碑记 1 次",
+            standard: "累计 2 个已经讲清的小节后，才记 1 把钥匙。",
+            timing: "钥匙从 S 挑战来，不再从 A 题直接发。",
+            example: "例：已经有 2 个 S 小节既做对又讲清，就记 1 次“S钥匙里程碑”。",
+            output: "必须能对应到 2 个已讲清的小节，建议在输入框里写清这两个小节。",
+            verify: "家长现场听讲并核对记录，确认这 2 个小节确实讲明白了。",
           },
-          "math-key": {
-            unit: "按阶段里程碑记 1 次",
-            standard: "每累计2个A+主题扎实通关，可记1次；全部A+主题完成后，最后收官再额外补记1次。",
-            timing: "这是A+主线的钥匙入口，不是每个主题都直接给钥匙。",
-            example: "例：已扎实通关A+主题3和主题4，就可记1把钥匙；全部A+做完后，最后还可再补记1次。",
-            output: "必须已经有对应主题全通记录，并且能说明这2个主题确实扎实过关。",
-            verify: "家长对照前面的A+主题记录核验，不单靠口头说“做完了”。",
-          },
-          "reading-perfect": {
+          "reading-daily": {
             unit: "按单篇阅读记 1 次",
-            standard: "这一篇阅读全对，或整篇只扣1分。",
-            timing: "阅读做完不直接给分，只有质量到位才记这1次。",
-            example: "例：一篇阅读总分15到20分，最后只丢了1分以内，就可记1次。",
-            output: "必须有这篇阅读的完整作答结果和批改结果，能看出分数确实达标。",
-            verify: "家长看原题和批改结果，确认不是只做完而是质量真的过线。",
+            standard: "完成 1 篇阅读，并且认真订正。",
+            timing: "阅读归到语文日常里；每天最多记 1 次。",
+            example: "例：今天完成 1 篇阅读并改错，就记 1 次“语文日常-阅读”。",
+            output: "必须有作答结果和订正痕迹，不是只写了答案就算。",
+            verify: "家长看这篇是否真正做完并订正。",
           },
-          "reading-key": {
-            unit: "按核心题型里程碑记 1 次",
-            standard: "每真正攻克2个核心题型，就可以拿1把钥匙。",
-            timing: "如果近期阅读不走每日主线，也可以按题型攻克里程碑来记钥匙。",
-            example: "例：已经真正攻克“句段作用”和“说明方法作用”2类题型，就可记1把钥匙。",
-            output: "必须能说清这2个题型怎么做，并有同类题练习结果支撑，不是只背过方法。",
-            verify: "家长抽问题型方法，并查看同类题练习结果后，再记钥匙。",
+          "reading-streak": {
+            unit: "按连续奖励记 1 次",
+            standard: "连续 3 篇阅读都全对后，才能记这 1 次奖励。",
+            timing: "这是阅读连胜奖励，不是单篇高分奖励。",
+            example: "例：周一、周二、周三 3 篇阅读都全对，就记 1 次“阅读连续 3 篇全对奖励”。",
+            output: "必须能对应到连续 3 篇全对记录，最好备注写清是哪 3 篇。",
+            verify: "家长对照前面 3 篇记录核验，不靠口头说“差不多都对”。",
           },
-          "chinese-expression": {
-            unit: "按单次表达训练记 1 次",
-            standard: "评分达到3分：对象清楚、重点较清楚、顺序基本清楚。",
-            timing: "描述物品、事情、人物、场景都可以。",
-            example: "听的人基本能知道你在说什么，就接近可记分。",
+          "chinese-daily": {
+            unit: "按单次日常记 1 次",
+            standard: "完成基础预习，并且听写过关。",
+            timing: "这是暑假语文字词日常；每天最多记 1 次。",
+            example: "例：今天把字词预习完，再听写过关，就记 1 次。",
+            output: "必须有预习痕迹和听写结果。",
+            verify: "家长看预习与听写结果，确认不是看答案直接过。",
           },
-          "chinese-expression-full": {
-            unit: "按单次表达训练记 1 次",
-            standard: "评分达到4分：说清对象、抓住特点、顺序清楚、简洁不跑题。",
-            timing: "比3分档更强调“重点和简洁”。",
-            example: "如果讲得很完整、别人一听就能脑补出来，可记4分档。",
+          "chinese-writing": {
+            unit: "按单次日常记 1 次",
+            standard: "完成 1 次独立小练笔。",
+            timing: "这是暑假语文日常；每天最多记 1 次。",
+            example: "例：按当天题目写完一段小练笔，就记 1 次。",
+            output: "必须有自己写的文字，不是抄范文或拼贴答案。",
+            verify: "家长看是否独立完成，并且主题清楚。",
           },
-          "english-perfect": {
-            unit: "按单次英语满分记 1 次",
-            standard: "一次英语任务达到满分或全对。",
-            timing: "每次满分都可以单独记录。",
-            example: "当前这一项是5币；系统会在累计3次后自动补发连续奖励。",
+          "chinese-writing-streak": {
+            unit: "按连续奖励记 1 次",
+            standard: "连续 3 次都完成小练笔后，才能记这 1 次额外奖励。",
+            timing: "这是为了鼓励坚持，比阅读连续全对奖励更高。",
+            example: "例：连续 3 个学习日都完成小练笔，就记 1 次小练笔连续奖励。",
+            output: "必须能对应到前面连续 3 次小练笔记录。",
+            verify: "家长对照前面记录核验，不靠口头累计。",
+          },
+          "english-listen": {
+            unit: "按单次日常记 1 次",
+            standard: "完成 1 次英语听力刷题。",
+            timing: "暑假英语听力日常；每天最多记 1 次。",
+            example: "例：今天完成 1 组听力题，就记 1 次。",
+            output: "必须有听力题结果，不是只说“听过了”。",
+            verify: "家长确认题目确实完成，并有结果可看。",
+          },
+          "english-listen-key": {
+            unit: "按高难项记 1 次",
+            standard: "完成 1 个听力 part，并且认真改正错误后，才能记这 1 把钥匙。",
+            timing: "这是英语听力的高难奖励；先完成听力日常，再决定要不要记这把钥匙。",
+            example: "例：今天完成 1 个 part，并把错题都订正清楚后，就记 1 次“听力高难通关”。",
+            output: "必须有该 part 的作答结果和订正痕迹。",
+            verify: "家长看结果和订正，确认不是草草做完就记钥匙。",
           },
           "english-streak": {
-            unit: "系统自动发放",
-            standard: "每累计3次“英语满分/全对”，自动送2币+1钥匙。",
-            timing: "不用手动选，系统自己补记录。",
-            example: "第3、6、9次英语满分时会自动触发。",
+            unit: "按连续奖励记 1 次",
+            standard: "英语阅读连续 3 次全对后，才能记 1 次奖励。",
+            timing: "这是英语阅读连胜奖励，不再额外给钥匙。",
+            example: "例：连续 3 次英语阅读都全对，就记 1 次“英语阅读连胜”。",
+            output: "必须能对应到连续 3 次全对记录。",
+            verify: "家长对照前面 3 次阅读记录核验。",
+          },
+          "english-read": {
+            unit: "按单次日常记 1 次",
+            standard: "完成 1 次英语阅读刷题。",
+            timing: "暑假英语阅读日常；每天最多记 1 次。",
+            example: "例：今天完成 1 篇英语阅读，就记 1 次。",
+            output: "必须有英语阅读作答结果。",
+            verify: "家长确认题目确实完成，而不是只看答案。",
+          },
+          "ai-draft": {
+            unit: "按单个作品记 1 次",
+            standard: "完成 1 个可打开、可演示的作品雏形。",
+            timing: "AI 实践先拿币；录入时要写清作品名 / 主题。",
+            example: "例：做出一个能跑起来的 AI 故事机原型，就记 1 次。",
+            output: "必须有能展示的页面、海报、对话流程或其他作品雏形。",
+            verify: "家长能当场看到作品，不是只有想法或截图。",
+          },
+          "ai-key": {
+            unit: "按作品验收记 1 次",
+            standard: "作品不仅能展示，还能讲清做了什么、怎么用、哪里是自己做的。",
+            timing: "这是 AI 实践拿钥匙的入口，建议每个作品最多记 1 次。",
+            example: "例：给家人演示作品并讲清功能后，再记 1 把钥匙。",
+            output: "必须有成品演示、讲解过程和作品名记录。",
+            verify: "家长实际看演示并提问后再通过。",
           },
         };
 
@@ -3092,9 +3157,13 @@
         dom.coinInput.value = template.coins;
         dom.keyInput.value = template.keys;
         dom.noteInput.value = template.note || "";
+        dom.trackInput.value = "";
+        dom.trackInput.placeholder = template.trackPlaceholder || "例如：六上-第1单元-第2课";
+        dom.trackField.querySelector("label").textContent = template.trackLabel || "章节 / 作品名";
         dom.category.readOnly = !isManual;
         dom.coinInput.readOnly = !isManual;
         dom.keyInput.readOnly = !isManual;
+        dom.trackField.style.display = template.trackLabel ? "grid" : "none";
         dom.taskNameField.style.display = isManual ? "grid" : "none";
         dom.categoryField.style.display = isManual ? "grid" : "none";
         dom.coinField.style.display = isManual ? "grid" : "none";
@@ -3115,6 +3184,11 @@
               <div class="guide-label">当前分值</div>
               <div class="guide-value">${template.coins} 币${template.keys ? `，${template.keys} 钥匙` : ""}</div>
             </div>
+            ${
+              template.trackLabel
+                ? `<div class="guide-row"><div class="guide-label">录入时必填</div><div class="guide-value">${template.trackLabel}</div></div>`
+                : ""
+            }
             <div class="guide-row">
               <div class="guide-label">达标标准</div>
               <div class="guide-value">${guide.standard}</div>
@@ -3143,6 +3217,12 @@
         return state.records
           .filter((item) => item.kind === "earn" && item.date === dateText && item.category === category)
           .reduce((sum, item) => sum + Math.max(0, Number(item.coins || 0)), 0);
+      }
+
+      function getDailyTemplateCount(dateText, templateId) {
+        return state.records.filter(
+          (item) => item.kind === "earn" && item.date === dateText && item.templateId === templateId,
+        ).length;
       }
 
       function getStats() {
@@ -3271,16 +3351,16 @@
         const weekKey = getWeekKey(todayText());
         const summaryMap = getWeeklyScoreSummary(weekKey);
         const order = [
-          "数学A+",
+          "数学A题",
           "数学S挑战",
-          "语文阅读",
+          "语文日常",
+          "数学日常",
+          "英语",
+          "AI实践",
+          "学习习惯",
           "数学校内",
           "语文校内",
           "语文表达输出",
-          "数学日常",
-          "语文日常",
-          "英语",
-          "学习习惯",
           "自定义",
           "未分类",
         ];
@@ -3323,43 +3403,8 @@
       }
 
       function ensureAutoBonuses() {
-        const perfectRecords = sortByDateAndId(
-          state.records.filter(
-            (item) => item.kind === "earn" && item.templateId === "english-perfect",
-          ),
-        );
-        const autoBonusRecords = sortByDateAndId(
-          state.records.filter(
-            (item) =>
-              item.kind === "earn" &&
-              item.templateId === "english-streak" &&
-              item.autoGenerated === true,
-          ),
-        );
-
-        const template = getTemplate("english-streak");
-        const neededBonusCount = Math.floor(perfectRecords.length / 3);
-        let changed = false;
-
-        for (let i = autoBonusRecords.length; i < neededBonusCount; i += 1) {
-          const sourceIndex = (i + 1) * 3 - 1;
-          const sourceRecord = perfectRecords[sourceIndex];
-          state.records.push({
-            id: uid(),
-            kind: "earn",
-            templateId: "english-streak",
-            autoGenerated: true,
-            name: template.name,
-            category: template.category,
-            coins: template.coins,
-            keys: template.keys,
-            date: sourceRecord?.date || todayText(),
-            note: `系统自动发放：已累计记录 ${(i + 1) * 3} 次英语满分。`,
-          });
-          changed = true;
-        }
-
-        return changed;
+        // 暑假版改成手动里程碑口径，停用旧的英语自动补奖，避免历史记录被重复换算。
+        return false;
       }
 
       function countRedeemedReward(rewardId, scope) {
@@ -3511,6 +3556,11 @@
                   · <span class="delta ${deltaClass}">${formatDelta(item.keys, isRedeem)} 钥匙</span>
                 </div>
                 ${
+                  item.track
+                    ? `<div class="history-sub" style="margin-top:6px">记录对象：${item.track}</div>`
+                    : ""
+                }
+                ${
                   item.note
                     ? `<div class="history-sub" style="margin-top:6px">${item.note}</div>`
                     : ""
@@ -3550,21 +3600,29 @@
 
         const hot = [
           "math-theme",
-          "math-key",
           "math-section",
           "math-transfer",
-          "reading-perfect",
+          "math-bigmul",
           "chinese-daily",
+          "chinese-writing",
+          "reading-daily",
+          "english-listen",
+          "english-read",
+          "ai-draft",
           "manual",
         ];
 
         const quickLabels = {
           "math-section": "S小节",
-          "math-theme": "A+主题",
-          "math-transfer": "S主题钥匙",
-          "math-key": "A+阶段钥匙",
-          "reading-perfect": "阅读全对",
-          "chinese-daily": "语文日常",
+          "math-theme": "A新章",
+          "math-transfer": "S拿钥匙",
+          "math-bigmul": "大数乘法",
+          "chinese-daily": "字词预习",
+          "chinese-writing": "小练笔",
+          "reading-daily": "语文阅读",
+          "english-listen": "英语听力",
+          "english-read": "英语阅读",
+          "ai-draft": "AI作品",
           manual: "特别奖励",
         };
 
@@ -3617,9 +3675,9 @@
         dom.progressEditorHint.style.display = hasTarget ? "none" : "block";
 
         if (activeProgressEditor === "math") {
-          dom.progressEditorTitle.textContent = "修改数学A+进度";
+          dom.progressEditorTitle.textContent = "修改数学暑假章节进度";
         } else if (activeProgressEditor === "reading") {
-          dom.progressEditorTitle.textContent = "修改语文阅读进度";
+          dom.progressEditorTitle.textContent = "修改语文 / AI 里程碑进度";
         } else {
           dom.progressEditorTitle.textContent = "修改主线进度";
         }
@@ -3654,6 +3712,7 @@
         let coins = Number(dom.coinInput.value || 0);
         const keys = Number(dom.keyInput.value || 0);
         const date = dom.eventDate.value || todayText();
+        const track = dom.trackInput.value.trim();
         const note = dom.noteInput.value.trim();
 
         if (!name) {
@@ -3661,10 +3720,24 @@
           return;
         }
 
+        if (template.trackLabel && !track) {
+          alert(`请先填写“${template.trackLabel}”。`);
+          return;
+        }
+
         if (!isManual) {
           coins = template.coins;
           dom.coinInput.value = template.coins;
           dom.keyInput.value = template.keys;
+        }
+
+        const dailyLimit = templateDailyLimits[template.id];
+        if (dailyLimit) {
+          const usedToday = getDailyTemplateCount(date, template.id);
+          if (usedToday >= dailyLimit) {
+            alert(`${template.name} 今天已经记录过了。暑假版每个日常模板每天最多记 ${dailyLimit} 次。`);
+            return;
+          }
         }
 
         const cap = weeklyCoinCaps[category];
@@ -3713,6 +3786,7 @@
           coins,
           keys,
           date,
+          track,
           note,
         });
 
@@ -3721,14 +3795,14 @@
         saveState();
         if (autoChanged) saveState();
         renderAll();
-        const autoText = autoChanged ? "；并自动补发了英语连续满分奖励" : "";
+        const autoText = autoChanged ? "；并自动补发了历史连续奖励" : "";
         setRecordButtonsState(true, "已记录");
         window.setTimeout(() => {
           setRecordButtonsState(false, "记录任务");
         }, 1000);
         const recordCount = state.records.length;
         alert(
-          `记录成功：${name}\n本次记入 ${coins} 币${keys ? `，${keys} 钥匙` : ""}${autoText}\n当前总记录数：${recordCount} 条`,
+          `记录成功：${name}${track ? `\n本次记录：${track}` : ""}\n本次记入 ${coins} 币${keys ? `，${keys} 钥匙` : ""}${autoText}\n当前总记录数：${recordCount} 条`,
         );
       }
 

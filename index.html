@@ -665,6 +665,111 @@
         color: var(--muted);
       }
 
+      .template-group {
+        margin-top: 12px;
+      }
+
+      .template-group:first-of-type {
+        margin-top: 10px;
+      }
+
+      .template-group-title {
+        margin: 0 0 8px;
+        font-size: 12px;
+        font-weight: 800;
+        color: var(--primary-strong);
+      }
+
+      .template-group-note {
+        margin: 6px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .proof-upload {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .proof-upload input[type="file"] {
+        display: none;
+      }
+
+      .proof-upload-meta {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .proof-preview {
+        display: none;
+        align-items: flex-start;
+        gap: 10px;
+        margin-top: 8px;
+      }
+
+      .proof-preview.active {
+        display: flex;
+      }
+
+      .proof-preview img {
+        width: 78px;
+        height: 78px;
+        border-radius: 14px;
+        object-fit: cover;
+        border: 1px solid rgba(109, 132, 255, 0.2);
+        box-shadow: 0 10px 20px rgba(109, 132, 255, 0.12);
+        background: #f5f7ff;
+      }
+
+      .proof-preview-info {
+        min-width: 0;
+        flex: 1;
+      }
+
+      .proof-preview-name {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--primary-strong);
+        word-break: break-all;
+      }
+
+      .proof-preview-tip {
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .history-proof {
+        margin-top: 8px;
+      }
+
+      .history-proof a {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .history-proof img {
+        width: 72px;
+        height: 72px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 1px solid rgba(109, 132, 255, 0.18);
+        background: #f6f8ff;
+      }
+
+      .history-proof span {
+        font-size: 12px;
+        color: var(--primary-strong);
+        font-weight: 700;
+      }
+
       .chip {
         border: 1px solid var(--line);
         background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
@@ -957,6 +1062,25 @@
       .redeem-list {
         display: grid;
         gap: 10px;
+      }
+
+      .history-toolbar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0 12px;
+        flex-wrap: wrap;
+      }
+
+      .history-search {
+        flex: 1 1 220px;
+        min-width: 0;
+      }
+
+      .history-count {
+        color: var(--muted);
+        font-size: 13px;
+        margin-bottom: 10px;
       }
 
       .cap-list {
@@ -1940,12 +2064,12 @@
             <div class="panel-head">
               <div>
                 <h2 class="section-title">任务录入</h2>
-                <p>先选模板，再点右侧按钮记录；特别奖励才需要手填。</p>
+                <p>模板已分成每日必做、额外奖励、挑战任务；特别奖励才需要手填。</p>
               </div>
               <button class="btn btn-primary desktop-record-btn" id="addRecordBtn">记录任务</button>
             </div>
             <div class="shortcut-wrap">
-              <div class="shortcut-title">常用快捷记录</div>
+              <div class="shortcut-title">按任务分组快捷选择</div>
               <div class="quick-row" id="templateChips"></div>
             </div>
             <div class="field-grid">
@@ -1999,6 +2123,22 @@
                   id="noteInput"
                   placeholder="可写：第几主题、第几篇阅读、讲题情况、是谁验收的等"
                 ></textarea>
+              </div>
+              <div class="field wide" id="proofField">
+                <label for="proofImageInput">上传凭证图片</label>
+                <div class="proof-upload">
+                  <label class="btn btn-secondary" for="proofImageInput">选择图片</label>
+                  <button class="btn btn-secondary" type="button" id="clearProofBtn">清除图片</button>
+                  <div class="proof-upload-meta">拍作业、作品、运动记录都可以，系统会自动压缩后保存。</div>
+                  <input id="proofImageInput" type="file" accept="image/*" />
+                </div>
+                <div class="proof-preview" id="proofPreview">
+                  <img id="proofPreviewImage" alt="凭证预览" />
+                  <div class="proof-preview-info">
+                    <div class="proof-preview-name" id="proofPreviewName"></div>
+                    <div class="proof-preview-tip">记录后，这张图会跟着这条任务一起保存，后面翻历史就能直接看出来做了什么。</div>
+                  </div>
+                </div>
               </div>
             </div>
             <input id="importFile" type="file" accept="application/json" hidden />
@@ -2082,6 +2222,16 @@
                 <p>最新的任务和兑换都会显示在这里。</p>
               </div>
             </div>
+            <div class="history-toolbar">
+              <input
+                class="history-search"
+                id="historySearchInput"
+                type="text"
+                placeholder="搜任务名、章节、备注、日期"
+              />
+              <button class="btn btn-secondary" type="button" id="toggleHistoryBtn">查看全部</button>
+            </div>
+            <div class="history-count" id="historyCountText"></div>
             <div class="history-list" id="historyList"></div>
           </div>
         </div>
@@ -2159,11 +2309,11 @@
             <div class="rule-card">
               <h3>英语 / AI</h3>
               <ul class="rule-list">
-                <li>英语日常改成听力和阅读刷题，两项都各自每天最多记 1 次。</li>
+                <li>英语日常改成听力、背单词、阅读刷题三项；其中背单词分值更小，适合做成轻量补充。</li>
                 <li>听力完成 1 个 part 后，如认真改正错误，可额外记 1 把钥匙。</li>
                 <li>英语阅读连续 3 次全对，可再记 2 币奖励。</li>
                 <li>AI实践要有作品：先记雏形币，再由“能展示、能讲清”来发钥匙。</li>
-                <li>AI 作品建议写清作品名 / 主题，方便后面回看成品。</li>
+                <li>任务录入现在支持上传图片凭证，拍作业、作品或运动结果后，翻历史能直接看出做了什么。</li>
               </ul>
             </div>
             <div class="rule-card">
@@ -2204,6 +2354,9 @@
         数学日常: 10,
         语文日常: 18,
         英语: 12,
+        体育日常: 19,
+        作息日常: 5,
+        体育加成: 12,
         学习习惯: 7,
         AI实践: 12,
       };
@@ -2216,8 +2369,24 @@
         "reading-daily": 1,
         "english-listen-key": 1,
         "english-listen": 1,
+        "english-word": 1,
         "english-read": 1,
+        "sports-daily": 1,
+        "sleep-early": 1,
+        "sports-morning": 1,
         "habit-quality": 1,
+      };
+
+      const templateWeeklyLimits = {
+        "reading-streak": 1,
+        "chinese-writing-streak": 1,
+        "english-streak": 1,
+        "sports-streak": 1,
+        "english-listen-key": 2,
+        "sports-50m": 1,
+        "sports-jumprope": 1,
+        "math-transfer": 1,
+        "ai-key": 1,
       };
 
       const rewardGroupLimits = [
@@ -2331,6 +2500,62 @@
           coins: 3,
           keys: 0,
           note: "为了鼓励坚持；连续3次完成小练笔后，再记这1次奖励。",
+        },
+        {
+          id: "sports-daily",
+          name: "体育日常-学校体育+长高操双完成",
+          category: "体育日常",
+          coins: 3,
+          keys: 0,
+          note: "学校体育任务和长高操都完成后，才记这1次；长高操约30分钟，含跳绳、开合跳、伸展跳、高抬腿等。",
+        },
+        {
+          id: "sports-streak",
+          name: "体育日常-连续5个学习日双完成奖励",
+          category: "体育日常",
+          coins: 4,
+          keys: 0,
+          note: "连续5个学习日都完成“学校体育+长高操”后，再记这1次奖励。",
+        },
+        {
+          id: "sleep-early",
+          name: "作息日常-9点半前关灯躺好",
+          category: "作息日常",
+          coins: 1,
+          keys: 0,
+          note: "以关灯、躺好、不乱动并开启故事为准；每天最多记1次。",
+        },
+        {
+          id: "sports-morning",
+          name: "体育加成-早起空腹运动完成",
+          category: "体育加成",
+          coins: 1,
+          keys: 0,
+          note: "早起后空腹完成额外运动可记1次；作为体育加成，不算基础必做。",
+        },
+        {
+          id: "sports-50m",
+          name: "体育加成-50米成绩提升0.5秒",
+          category: "体育加成",
+          coins: 4,
+          keys: 0,
+          note: "50米测试成绩相比之前提升0.5秒，可记1次奖励。",
+        },
+        {
+          id: "sports-jumprope",
+          name: "体育加成-跳绳1分钟超过200个",
+          category: "体育加成",
+          coins: 4,
+          keys: 0,
+          note: "1分钟跳绳测试超过200个，可记1次奖励。",
+        },
+        {
+          id: "english-word",
+          name: "英语日常-背单词完成",
+          category: "英语",
+          coins: 0.5,
+          keys: 0,
+          note: "分值比听力和阅读更小，适合单词过一轮、默写一轮或背诵完成后记录。",
         },
         {
           id: "english-listen",
@@ -2570,6 +2795,11 @@
         coinInput: document.getElementById("coinInput"),
         keyInput: document.getElementById("keyInput"),
         noteInput: document.getElementById("noteInput"),
+        proofImageInput: document.getElementById("proofImageInput"),
+        clearProofBtn: document.getElementById("clearProofBtn"),
+        proofPreview: document.getElementById("proofPreview"),
+        proofPreviewImage: document.getElementById("proofPreviewImage"),
+        proofPreviewName: document.getElementById("proofPreviewName"),
         trackField: document.getElementById("trackField"),
         taskNameField: document.getElementById("taskNameField"),
         categoryField: document.getElementById("categoryField"),
@@ -2584,6 +2814,9 @@
         rewardList: document.getElementById("rewardList"),
         historyList: document.getElementById("historyList"),
         entryHistoryList: document.getElementById("entryHistoryList"),
+        historySearchInput: document.getElementById("historySearchInput"),
+        toggleHistoryBtn: document.getElementById("toggleHistoryBtn"),
+        historyCountText: document.getElementById("historyCountText"),
         coinTotal: document.getElementById("coinTotal"),
         keyTotal: document.getElementById("keyTotal"),
         coinEarned: document.getElementById("coinEarned"),
@@ -2623,6 +2856,8 @@
 
       let supabaseClient = null;
       let cloudChannel = null;
+      let historyExpanded = false;
+      let historySearchKeyword = "";
       let cloudPushTimer = null;
       let toastTimer = null;
       let lastCloudUpdatedAt = "";
@@ -2631,6 +2866,7 @@
       let activeProgressEditor = "";
       let currentRewardFilter = "all";
       let notificationsEnabled = loadNotificationPreference();
+      let pendingProofImage = null;
       let cloudStatus = {
         tone: "wait",
         text: "准备连接云端",
@@ -2801,6 +3037,58 @@
       function saveState(options = {}) {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         if (!options.skipCloud) scheduleCloudPush();
+      }
+
+      function resetProofImage() {
+        pendingProofImage = null;
+        if (dom.proofImageInput) dom.proofImageInput.value = "";
+        if (dom.proofPreview) dom.proofPreview.classList.remove("active");
+        if (dom.proofPreviewImage) dom.proofPreviewImage.removeAttribute("src");
+        if (dom.proofPreviewName) dom.proofPreviewName.textContent = "";
+      }
+
+      function setProofPreview(fileName, dataUrl) {
+        pendingProofImage = {
+          name: fileName,
+          dataUrl,
+        };
+        dom.proofPreviewImage.src = dataUrl;
+        dom.proofPreviewName.textContent = fileName;
+        dom.proofPreview.classList.add("active");
+      }
+
+      function readFileAsDataUrl(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ""));
+          reader.onerror = () => reject(new Error("图片读取失败"));
+          reader.readAsDataURL(file);
+        });
+      }
+
+      function loadImageElement(src) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => resolve(img);
+          img.onerror = () => reject(new Error("图片加载失败"));
+          img.src = src;
+        });
+      }
+
+      async function compressImageFile(file) {
+        const rawDataUrl = await readFileAsDataUrl(file);
+        const image = await loadImageElement(rawDataUrl);
+        const maxSide = 1280;
+        const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+        const width = Math.max(1, Math.round(image.width * scale));
+        const height = Math.max(1, Math.round(image.height * scale));
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return rawDataUrl;
+        ctx.drawImage(image, 0, 0, width, height);
+        return canvas.toDataURL("image/jpeg", 0.82);
       }
 
       function ensureSupabaseClient() {
@@ -3020,6 +3308,53 @@
         return templates.find((item) => item.id === id) || templates[0];
       }
 
+      function getTemplateTierMeta(template) {
+        const mustIds = new Set([
+          "math-daily",
+          "math-bigmul",
+          "chinese-daily",
+          "chinese-writing",
+          "sports-daily",
+          "sleep-early",
+          "english-listen",
+          "english-word",
+          "english-read",
+        ]);
+        const bonusIds = new Set([
+          "reading-daily",
+          "reading-streak",
+          "chinese-writing-streak",
+          "english-streak",
+          "sports-streak",
+          "sports-morning",
+          "habit-quality",
+        ]);
+        const challengeIds = new Set([
+          "math-theme",
+          "math-section",
+          "math-transfer",
+          "english-listen-key",
+          "sports-50m",
+          "sports-jumprope",
+          "ai-draft",
+          "ai-key",
+        ]);
+
+        if (mustIds.has(template.id)) {
+          return { label: "每日必做", hint: "先做这组，再考虑额外奖励或挑战任务" };
+        }
+        if (bonusIds.has(template.id)) {
+          return { label: "额外奖励", hint: "连续 / 累计达成后再记录，不算基础必做" };
+        }
+        if (challengeIds.has(template.id)) {
+          return { label: "挑战任务", hint: "高难项或主线里程碑，钥匙主要从这里来" };
+        }
+        if (template.id === "manual") {
+          return { label: "特殊录入", hint: "只用于少量例外情况" };
+        }
+        return { label: "普通任务", hint: "" };
+      }
+
       function getTemplateGuide(template) {
         const map = {
           "math-section": {
@@ -3086,6 +3421,54 @@
             output: "必须能对应到前面连续 3 次小练笔记录。",
             verify: "家长对照前面记录核验，不靠口头累计。",
           },
+          "sports-daily": {
+            unit: "按单次日常记 1 次",
+            standard: "学校体育任务和长高操都完成，才记这 1 次 3 币。",
+            timing: "这是每日必做的一部分；如果只做了其中一个，不记这一项。",
+            example: "例：学校体育完成，且长高操整套也完成后，记 1 次“体育双完成”。",
+            output: "必须两个都完成；长高操应包含跳绳、开合跳、伸展跳、高抬腿等整套内容。",
+            verify: "家长确认不是只做了学校体育或只做了长高操其中一项。",
+          },
+          "sports-streak": {
+            unit: "按连续奖励记 1 次",
+            standard: "连续 5 个学习日都完成体育双完成后，才能记这 1 次额外奖励。",
+            timing: "这是体育坚持奖励，不是单天奖励。",
+            example: "例：周一到周五每天都完成学校体育+长高操，周五或周末统一记 1 次连续奖励。",
+            output: "必须能对照出连续 5 个学习日的双完成记录。",
+            verify: "家长对照前 5 天记录核验，不靠口头累计。",
+          },
+          "sleep-early": {
+            unit: "按单次日常记 1 次",
+            standard: "9 点半前已经关灯、躺好、不再乱动，并开始听故事。",
+            timing: "这是长个相关的作息日常；每天最多记 1 次。",
+            example: "例：9 点 25 分前已经关灯躺好，进入听故事状态，就记 1 次。",
+            output: "必须已经进入安静躺好状态，不是口头说明“马上睡”。",
+            verify: "家长现场确认已关灯躺好。",
+          },
+          "sports-morning": {
+            unit: "按单次加成记 1 次",
+            standard: "早起后空腹完成额外运动，才记这 1 次加成。",
+            timing: "这是体育加成，不算基础必做；每天最多记 1 次。",
+            example: "例：早起后先完成一轮空腹运动，再开始其他安排，就记 1 次。",
+            output: "必须真有额外运动内容，不是起床走两步就算。",
+            verify: "家长确认时间点和完成情况。",
+          },
+          "sports-50m": {
+            unit: "按成绩里程碑记 1 次",
+            standard: "50 米测试成绩相比之前提升 0.5 秒。",
+            timing: "这是体育成绩奖励，不是日常项。",
+            example: "例：之前 9.6 秒，这次跑到 9.1 秒，可记 1 次奖励。",
+            output: "必须有可对照的前后测试成绩。",
+            verify: "家长记录并核对前后成绩后再记。",
+          },
+          "sports-jumprope": {
+            unit: "按成绩里程碑记 1 次",
+            standard: "1 分钟跳绳测试超过 200 个。",
+            timing: "这是体育成绩奖励，不是日常项。",
+            example: "例：1 分钟稳定跳到 205 个后，记 1 次奖励。",
+            output: "必须有完整的 1 分钟测试结果。",
+            verify: "家长现场计数或复核结果。",
+          },
           "english-listen": {
             unit: "按单次日常记 1 次",
             standard: "完成 1 次英语听力刷题。",
@@ -3093,6 +3476,14 @@
             example: "例：今天完成 1 组听力题，就记 1 次。",
             output: "必须有听力题结果，不是只说“听过了”。",
             verify: "家长确认题目确实完成，并有结果可看。",
+          },
+          "english-word": {
+            unit: "按单次日常记 1 次",
+            standard: "完成 1 次背单词任务，比如过一轮、默写一轮或当天单词背诵过关。",
+            timing: "这是英语里的轻量补充分项，所以分值比听力和阅读更小。",
+            example: "例：今天把一组单词背完并检查过后，就记 1 次背单词。",
+            output: "最好有单词页、默写结果或口头抽查结果。",
+            verify: "家长确认不是快速看一眼就算完成。",
           },
           "english-listen-key": {
             unit: "按高难项记 1 次",
@@ -3172,10 +3563,19 @@
         renderTemplateGuide(template);
       }
 
+      function formatProofName(name) {
+        return name || "已上传凭证图片";
+      }
+
       function renderTemplateGuide(template) {
         const guide = getTemplateGuide(template);
+        const tier = getTemplateTierMeta(template);
         dom.templateGuide.innerHTML = `
           <div class="guide-list">
+            <div class="guide-row">
+              <div class="guide-label">任务类型</div>
+              <div class="guide-value">${tier.label}${tier.hint ? ` · ${tier.hint}` : ""}</div>
+            </div>
             <div class="guide-row">
               <div class="guide-label">记分单位</div>
               <div class="guide-value">${guide.unit}</div>
@@ -3222,6 +3622,12 @@
       function getDailyTemplateCount(dateText, templateId) {
         return state.records.filter(
           (item) => item.kind === "earn" && item.date === dateText && item.templateId === templateId,
+        ).length;
+      }
+
+      function getWeeklyTemplateCount(weekKey, templateId) {
+        return state.records.filter(
+          (item) => item.kind === "earn" && getWeekKey(item.date) === weekKey && item.templateId === templateId,
         ).length;
       }
 
@@ -3355,6 +3761,9 @@
           "数学S挑战",
           "语文日常",
           "数学日常",
+          "体育日常",
+          "作息日常",
+          "体育加成",
           "英语",
           "AI实践",
           "学习习惯",
@@ -3533,13 +3942,25 @@
         return `${isSpend ? "-" : "+"}${Math.abs(value)}`;
       }
 
-      function buildHistoryHtml(limit = 12, emptyText = "还没有记录。先录入第一个任务吧。") {
-        const recent = [...state.records].reverse().slice(0, limit);
-        if (!recent.length) {
+      function getFilteredHistoryRecords() {
+        const keyword = historySearchKeyword.trim().toLowerCase();
+        const records = [...state.records].reverse();
+        if (!keyword) return records;
+        return records.filter((item) => {
+          const haystack = [item.name, item.category, item.track, item.note, item.date, item.proofImageName]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
+          return haystack.includes(keyword);
+        });
+      }
+
+      function buildHistoryHtml(records, emptyText = "还没有记录。先录入第一个任务吧。") {
+        if (!records.length) {
           return `<div class="empty">${emptyText}</div>`;
         }
 
-        return recent
+        return records
           .map((item) => {
             const isRedeem = item.kind === "redeem";
             const deltaClass = isRedeem ? "minus" : "plus";
@@ -3565,6 +3986,18 @@
                     ? `<div class="history-sub" style="margin-top:6px">${item.note}</div>`
                     : ""
                 }
+                ${
+                  item.proofImage
+                    ? `
+                      <div class="history-proof">
+                        <a href="${item.proofImage}" target="_blank" rel="noopener noreferrer">
+                          <img src="${item.proofImage}" alt="${formatProofName(item.proofImageName)}" />
+                          <span>查看凭证：${formatProofName(item.proofImageName)}</span>
+                        </a>
+                      </div>
+                    `
+                    : ""
+                }
               </div>
             `;
           })
@@ -3572,8 +4005,37 @@
       }
 
       function renderHistory() {
-        dom.historyList.innerHTML = buildHistoryHtml(12, "还没有记录。先录入第一个任务吧。");
-        dom.entryHistoryList.innerHTML = buildHistoryHtml(5, "这里会显示刚刚录入的最近几条记录。");
+        const filteredRecords = getFilteredHistoryRecords();
+        const visibleRecords = historySearchKeyword
+          ? filteredRecords
+          : historyExpanded
+            ? filteredRecords
+            : filteredRecords.slice(0, 12);
+        dom.historyList.innerHTML = buildHistoryHtml(
+          visibleRecords,
+          historySearchKeyword
+            ? "没有找到匹配的历史记录。"
+            : "还没有记录。先录入第一个任务吧。",
+        );
+        dom.entryHistoryList.innerHTML = buildHistoryHtml(
+          [...state.records].reverse().slice(0, 5),
+          "这里会显示刚刚录入的最近几条记录。",
+        );
+
+        if (dom.historyCountText) {
+          const total = state.records.length;
+          const filtered = filteredRecords.length;
+          const shown = visibleRecords.length;
+          dom.historyCountText.textContent = historySearchKeyword
+            ? `共找到 ${filtered} 条，当前显示 ${shown} 条。`
+            : `共有 ${total} 条记录，当前显示 ${shown} 条。`;
+        }
+
+        if (dom.toggleHistoryBtn) {
+          const shouldShowToggle = filteredRecords.length > 12 && !historySearchKeyword;
+          dom.toggleHistoryBtn.style.display = shouldShowToggle ? "inline-flex" : "none";
+          dom.toggleHistoryBtn.textContent = historyExpanded ? "收起" : "查看全部";
+        }
       }
 
       function renderProgress() {
@@ -3591,45 +4053,115 @@
       }
 
       function renderTemplates() {
-        dom.templateSelect.innerHTML = templates
-          .map(
-            (item) =>
-              `<option value="${item.id}">${item.name}（${item.coins}币${item.keys ? `，${item.keys}钥匙` : ""}）</option>`,
-          )
-          .join("");
-
-        const hot = [
-          "math-theme",
-          "math-section",
-          "math-transfer",
-          "math-bigmul",
-          "chinese-daily",
-          "chinese-writing",
-          "reading-daily",
-          "english-listen",
-          "english-read",
-          "ai-draft",
-          "manual",
+        const groups = [
+          {
+            key: "must",
+            label: "每日必做",
+            note: "先做这组，避免只挑轻松项记分。",
+            ids: [
+              "math-daily",
+              "math-bigmul",
+              "chinese-daily",
+              "chinese-writing",
+              "sports-daily",
+              "sleep-early",
+              "english-listen",
+              "english-word",
+              "english-read",
+            ],
+          },
+          {
+            key: "bonus",
+            label: "额外奖励",
+            note: "连续 / 累计达成后再记，不算当天基础必做。",
+            ids: [
+              "reading-daily",
+              "reading-streak",
+              "chinese-writing-streak",
+              "english-streak",
+              "sports-streak",
+              "sports-morning",
+              "habit-quality",
+            ],
+          },
+          {
+            key: "challenge",
+            label: "挑战任务",
+            note: "主线和高难项放这里，钥匙主要从这里来。",
+            ids: [
+              "math-theme",
+              "math-section",
+              "math-transfer",
+              "english-listen-key",
+              "sports-50m",
+              "sports-jumprope",
+              "ai-draft",
+              "ai-key",
+            ],
+          },
+          {
+            key: "manual",
+            label: "特殊录入",
+            note: "只有特殊情况才用手动项。",
+            ids: ["manual"],
+          },
         ];
 
+        dom.templateSelect.innerHTML = groups
+          .map((group) => {
+            const options = group.ids
+              .map((id) => getTemplate(id))
+              .map(
+                (item) =>
+                  `<option value="${item.id}">${item.name}（${item.coins}币${item.keys ? `，${item.keys}钥匙` : ""}）</option>`,
+              )
+              .join("");
+            return `<optgroup label="${group.label}">${options}</optgroup>`;
+          })
+          .join("");
+
         const quickLabels = {
-          "math-section": "S小节",
-          "math-theme": "A新章",
-          "math-transfer": "S拿钥匙",
+          "math-daily": "计算",
           "math-bigmul": "大数乘法",
           "chinese-daily": "字词预习",
           "chinese-writing": "小练笔",
-          "reading-daily": "语文阅读",
+          "sports-daily": "体育双完成",
+          "sports-streak": "体育连胜",
+          "sleep-early": "早睡",
+          "sports-morning": "晨练加成",
           "english-listen": "英语听力",
+          "english-word": "背单词",
           "english-read": "英语阅读",
+          "reading-daily": "语文阅读",
+          "reading-streak": "阅读连胜",
+          "chinese-writing-streak": "小练笔连胜",
+          "math-section": "S小节",
+          "math-theme": "A新章",
+          "math-transfer": "S拿钥匙",
+          "english-listen-key": "听力钥匙",
+          "sports-50m": "50米奖励",
+          "sports-jumprope": "跳绳奖励",
           "ai-draft": "AI作品",
+          "ai-key": "AI钥匙",
           manual: "特别奖励",
         };
 
-        dom.templateChips.innerHTML = hot
-          .map((id) => {
-            const template = getTemplate(id);
-            return `<button class="chip" type="button" data-template-id="${template.id}">${quickLabels[id] || template.name}</button>`;
+        dom.templateChips.innerHTML = groups
+          .map((group) => {
+            const chips = group.ids
+              .map((id) => getTemplate(id))
+              .map(
+                (template) =>
+                  `<button class="chip" type="button" data-template-id="${template.id}">${quickLabels[template.id] || template.name}</button>`,
+              )
+              .join("");
+            return `
+              <div class="template-group">
+                <div class="template-group-title">${group.label}</div>
+                <div class="quick-row">${chips}</div>
+                <div class="template-group-note">${group.note}</div>
+              </div>
+            `;
           })
           .join("");
       }
@@ -3714,6 +4246,8 @@
         const date = dom.eventDate.value || todayText();
         const track = dom.trackInput.value.trim();
         const note = dom.noteInput.value.trim();
+        const proofImage = pendingProofImage?.dataUrl || "";
+        const proofImageName = pendingProofImage?.name || "";
 
         if (!name) {
           alert("请先填写任务名称。");
@@ -3736,6 +4270,16 @@
           const usedToday = getDailyTemplateCount(date, template.id);
           if (usedToday >= dailyLimit) {
             alert(`${template.name} 今天已经记录过了。暑假版每个日常模板每天最多记 ${dailyLimit} 次。`);
+            return;
+          }
+        }
+
+        const weeklyTemplateLimit = templateWeeklyLimits[template.id];
+        if (weeklyTemplateLimit) {
+          const weekKey = getWeekKey(date);
+          const usedThisWeek = getWeeklyTemplateCount(weekKey, template.id);
+          if (usedThisWeek >= weeklyTemplateLimit) {
+            alert(`${template.name} 本周已经记录过 ${weeklyTemplateLimit} 次了。为了避免重复补记，本周先不再加这一项。`);
             return;
           }
         }
@@ -3788,6 +4332,8 @@
           date,
           track,
           note,
+          proofImage,
+          proofImageName,
         });
 
         const autoChanged = ensureAutoBonuses();
@@ -3804,6 +4350,7 @@
         alert(
           `记录成功：${name}${track ? `\n本次记录：${track}` : ""}\n本次记入 ${coins} 币${keys ? `，${keys} 钥匙` : ""}${autoText}\n当前总记录数：${recordCount} 条`,
         );
+        resetProofImage();
       }
 
       function redeemReward(rewardId) {
@@ -3857,6 +4404,7 @@
             };
             if (ensureAutoBonuses()) saveState();
             saveState();
+            resetProofImage();
             renderAll();
             alert("导入成功。");
           } catch (error) {
@@ -3876,6 +4424,7 @@
         saveState();
         fillTemplate("math-theme");
         dom.eventDate.value = todayText();
+        resetProofImage();
         renderAll();
       }
 
@@ -3930,7 +4479,28 @@
         if (file) importState(file);
         event.target.value = "";
       });
+      dom.proofImageInput.addEventListener("change", async (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        try {
+          const compressed = await compressImageFile(file);
+          setProofPreview(file.name, compressed);
+        } catch (error) {
+          console.error(error);
+          alert("图片处理失败了，换一张图片试试。");
+          resetProofImage();
+        }
+      });
+      dom.clearProofBtn.addEventListener("click", resetProofImage);
       dom.resetBtn.addEventListener("click", resetAll);
+      dom.toggleHistoryBtn.addEventListener("click", () => {
+        historyExpanded = !historyExpanded;
+        renderHistory();
+      });
+      dom.historySearchInput.addEventListener("input", (event) => {
+        historySearchKeyword = event.target.value || "";
+        renderHistory();
+      });
       dom.copyWorkspaceBtn.addEventListener("click", async () => {
         if (!applyWorkspaceCodeFromInput()) return;
         subscribeCloudRealtime();
@@ -4003,6 +4573,7 @@
         renderTemplates();
         dom.eventDate.value = todayText();
         fillTemplate("math-theme");
+        resetProofImage();
         renderCloudPanel();
         if (isLocalOnlyMode) {
           setCloudStatus("wait", "测试模式已开启");
